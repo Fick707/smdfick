@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-2-25 13:11:44 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.fick.smd.hibernate.formbean.esperbean.StockDef" table="stockdef" dynamic-insert="true" dynamic-update="true" >
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"/>
+        </id>
+        <property name="stockcode" type="java.lang.String">
+            <column name="stockcode" length="45">
+                <comment>&#185;&#201;&#198;&#177;&#180;&#250;&#194;&#235;</comment>
+            </column>
+        </property>
+        <property name="stockname" type="java.lang.String">
+            <column name="stockname" length="45">
+                <comment>&#185;&#201;&#198;&#177;&#195;&#251;&#179;&#198;</comment>
+            </column>
+        </property>
+        <property name="stockst" type="java.lang.Integer">
+            <column name="stockst">
+                <comment>stock status</comment>
+            </column>
+        </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="type">
+                <comment>&#185;&#201;&#198;&#177;&#192;&#224;&#208;&#205; 1.&#198;&#213;&#205;&#168;A&#185;&#201; 0.&#214;&#184;&#202;&#253;</comment>
+            </column>
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="remark" length="500">
+                <comment>&#177;&#184;&#215;&#162;</comment>
+            </column>
+        </property>
+        <property name="updatedt" type="java.util.Date">
+            <column name="updatedt">
+                <comment>&#184;&#252;&#208;&#194;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
