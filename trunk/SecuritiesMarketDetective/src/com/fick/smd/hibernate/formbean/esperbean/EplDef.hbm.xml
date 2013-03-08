@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-2-26 10:40:36 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.fick.smd.hibernate.formbean.esperbean.EplDef" table="epldef" dynamic-insert="true" dynamic-update="true" >
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"/>
+        </id>
+        <property name="eplname" type="java.lang.String">
+            <column name="eplname" length="45">
+                <comment>epl&#195;&#251;&#179;&#198;</comment>
+            </column>
+        </property>
+        <property name="eplrun" type="java.lang.String">
+            <column name="eplrun" length="1000">
+                <comment>epl&#212;&#203;&#208;&#208;&#177;&#237;&#180;&#239;&#202;&#189;</comment>
+            </column>
+        </property>
+        <property name="eplshow" type="java.lang.String">
+            <column name="eplshow" length="1000">
+                <comment>epl&#207;&#212;&#202;&#190;&#181;&#196;&#177;&#237;&#180;&#239;&#202;&#189;</comment>
+            </column>
+        </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="type">
+                <comment>epl type</comment>
+            </column>
+        </property>
+        <property name="listenerclassname" type="java.lang.String">
+            <column name="listenerclassname" length="500">
+                <comment>epl update listener class name</comment>
+            </column>
+        </property>
+        <property name="eplst" type="java.lang.Integer">
+            <column name="eplst">
+                <comment>epl&#215;&#180;&#204;&#172; 1. 2. 3.&#212;&#203;&#208;&#208;</comment>
+            </column>
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="remark" length="500">
+                <comment>epl&#195;&#232;&#202;&#246;</comment>
+            </column>
+        </property>
+        <property name="updatedt" type="java.util.Date">
+            <column name="updatedt">
+                <comment>epl&#184;&#252;&#208;&#194;&#200;&#213;&#198;&#218;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
