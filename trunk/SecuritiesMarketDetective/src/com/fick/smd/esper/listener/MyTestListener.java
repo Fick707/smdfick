@@ -36,17 +36,17 @@ public class MyTestListener implements UpdateListener {
 					log.info((t - y) > 0 ? "高开" : (t - y) == 0 ? "平开" : "低开");
 					isFirst = false;
 				}
+				String code = (String) bean.get("code");
+				String name = (String) bean.get("name");
+				float price = (Float) bean.get("price");
+				log.info(code + ":" + name + " 当前价格:" + price);
 				if (StockCommon.getIsWarn()) {
-					String code = (String) bean.get("code");
-					String name = (String) bean.get("name");
-					float price = (Float) bean.get("price");
 					float price_low = (Float) bean.get("price_min");
 					float price_high = (Float) bean.get("price_max");
-					log.info(code + ":" + name + " 当前价格:" + price);
-					if (price >= (price_high - 0.05)) {
+					if (price >= (price_high - 0.03)) {
 						JOptionPane.showMessageDialog(null, code + ":" + name + "基本处于最高点，可以卖出了 !price:" + price, "卖出提示", JOptionPane.WARNING_MESSAGE);
 					}
-					if (price <= (price_low + 0.05)) {
+					if (price <= (price_low + 0.03)) {
 						JOptionPane.showMessageDialog(null, code + ":" + name + "基本处于最低点，可以买入了 !price:" + price, "买入提示", JOptionPane.WARNING_MESSAGE);
 					}
 				}

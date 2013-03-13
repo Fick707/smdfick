@@ -1,4 +1,4 @@
-package com.fick.smd.hibernate.formbean.esperbean;
+package com.fick.smd.hibernate.formbean.stockbean;
 
 // Generated 2013-2-28 14:11:48 by Hibernate Tools 4.0.0
 

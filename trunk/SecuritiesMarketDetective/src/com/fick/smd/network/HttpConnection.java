@@ -12,7 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.fick.smd.common.CommonUtils;
-import com.fick.smd.hibernate.formbean.esperbean.Stock;
+import com.fick.smd.hibernate.formbean.stockbean.Stock;
 
 public class HttpConnection implements Connection {
 	private static final Log log = LogFactory.getLog(HttpConnection.class);

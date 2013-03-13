@@ -3,19 +3,23 @@ package com.fick.smd.common;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.com.webxml.ArrayOfString;
 
-import com.fick.smd.hibernate.formbean.esperbean.Stock;
+import com.fick.smd.hibernate.formbean.stockbean.Stock;
 
 public class CommonUtils {
 
 	private static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String splitFlag = " / ";
 
+	/**
+	 * webservice的ArrayOfString对象转换为Stock对象
+	 * 
+	 * @param ArrayOfString
+	 * @return
+	 */
 	public static Stock arrayToStock(ArrayOfString array) {
 		if (array == null) {
 			return null;
@@ -116,6 +120,12 @@ public class CommonUtils {
 		return retVal;
 	}
 
+	/**
+	 * String数据转换成Stock对象，用于http连接得到股票信息
+	 * 
+	 * @param strings
+	 * @return
+	 */
 	public static Stock stringsToStock(String[] strings) {
 		if (strings == null) {
 			return null;
@@ -193,7 +203,16 @@ public class CommonUtils {
 		return retVal;
 	}
 
+	/**
+	 * 将代码列表组织成'code1','code2','code3'的字符串形式；
+	 * 
+	 * @param stocks
+	 * @return
+	 */
 	public static String getStringFromList(List<String> stocks) {
+		if (stocks == null || stocks.size() < 1) {
+			return "";
+		}
 		StringBuffer sb = new StringBuffer("");
 		for (String temp : stocks) {
 			sb.append("'");
@@ -204,17 +223,12 @@ public class CommonUtils {
 		return sb.toString();
 	}
 
-	public static Map<String, Float> getcurRates(List rates) {
-		Map<String, Float> curRates = new HashMap<String, Float>();
-		if (rates != null) {
-			for (Object obj : rates) {
-				Object[] objs = (Object[]) obj;
-				curRates.put((String) objs[0], (Float) objs[1]);
-			}
-		}
-		return curRates;
-	}
-
+	/**
+	 * 根据字符串，得到Long类型值，用于解析配置文件中的Long类型值
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public static Long getLongFromString(String s) {
 		if (s != null) {
 			return Long.parseLong(s);
@@ -222,9 +236,41 @@ public class CommonUtils {
 		return null;
 	}
 
+	/**
+	 * 根据字符串，得到Integer类型值，用于解析配置文件中的Integer类型值
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public static Integer getIntegerFromString(String s) {
 		if (s != null) {
 			return Integer.parseInt(s);
+		}
+		return null;
+	}
+
+	/**
+	 * 根据字符串，得到Float类型值，用于解析配置文件中的Float类型值
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public static Float getFloatFromString(String s) {
+		if (s != null) {
+			return Float.parseFloat(s);
+		}
+		return null;
+	}
+
+	/**
+	 * 根据字符串，得到Boolean类型值，用于解析配置文件中的Boolean类型值
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public static Boolean getBooleanFromString(String s) {
+		if (s != null) {
+			return Boolean.parseBoolean(s);
 		}
 		return null;
 	}

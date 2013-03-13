@@ -1,4 +1,4 @@
-package com.fick.smd.test.esper;
+package com.fick.smd.test.stock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,13 +8,12 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.fick.smd.common.CommonUtils;
 import com.fick.smd.esper.input.InputAdapter;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockDef;
 import com.fick.smd.hibernate.dao.DaoImplStockProps;
-import com.fick.smd.hibernate.formbean.esperbean.Stock;
-import com.fick.smd.hibernate.formbean.esperbean.StockProps;
+import com.fick.smd.hibernate.formbean.stockbean.Stock;
+import com.fick.smd.hibernate.formbean.stockbean.StockProps;
 import com.fick.smd.network.Connection;
 import com.fick.smd.network.ConnectionFactory;
 
@@ -61,15 +60,6 @@ public class StockTest {
 		List<String> stocks = (List<String>) dmt.process(dao, 4);
 		String s = Arrays.deepToString(stocks.toArray());
 		System.out.println(s.substring(1, s.length() - 1));
-	}
-
-	@Test
-	public void getRatesToday() {
-		List rates = (List) dmt.process(smrdao, 1);
-		Map<String, Float> curRate = CommonUtils.getcurRates(rates);
-		for (String temp : curRate.keySet()) {
-			System.out.println(temp + ": " + curRate.get(temp));
-		}
 	}
 
 	@Test

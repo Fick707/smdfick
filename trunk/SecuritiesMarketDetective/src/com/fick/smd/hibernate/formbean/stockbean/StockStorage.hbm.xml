@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-13 15:10:02 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.fick.smd.hibernate.formbean.stockbean.StockStorage" table="stockstorage" dynamic-insert="true" dynamic-update="true">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"/>
+        </id>
+        <property name="stockcode" type="java.lang.String">
+            <column name="stockcode" length="45">
+                <comment>&#185;&#201;&#198;&#177;&#180;&#250;&#194;&#235;</comment>
+            </column>
+        </property>
+        <property name="investment" type="java.lang.Float">
+            <column name="investment" precision="12" scale="0">
+                <comment>&#179;&#245;&#202;&#188;&#205;&#182;&#200;&#235;&#215;&#202;&#189;&#240;</comment>
+            </column>
+        </property>
+        <property name="balance" type="java.lang.Float">
+            <column name="balance" precision="12" scale="0">
+                <comment>&#211;&#224;&#182;&#238;</comment>
+            </column>
+        </property>
+        <property name="dealnum" type="java.lang.Integer">
+            <column name="dealnum">
+                <comment>&#195;&#191;&#180;&#206;&#189;&#187;&#210;&#215;&#193;&#191;</comment>
+            </column>
+        </property>
+        <property name="stocknum" type="java.lang.Integer">
+            <column name="stocknum">
+                <comment>&#191;&#201;&#211;&#195;&#185;&#201;&#198;&#177;&#202;&#253;&#193;&#191;</comment>
+            </column>
+        </property>
+        <property name="lockedstocknum" type="java.lang.Integer">
+            <column name="lockedstocknum">
+                <comment>&#178;&#187;&#191;&#201;&#211;&#195;&#185;&#201;&#198;&#177;&#202;&#253;&#190;&#221;</comment>
+            </column>
+        </property>
+        <property name="storagestate" type="java.lang.Integer">
+            <column name="storagestate">
+                <comment>&#178;&#214;&#191;&#226;&#215;&#180;&#204;&#172; 1.&#213;&#253;&#179;&#163;&#189;&#187;&#210;&#215;
+                2.&#185;&#216;&#178;&#214;&#205;&#163;&#214;&#185;&#189;&#187;&#210;&#215;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,6 +1,6 @@
 package com.fick.smd.test;
 
-import com.fick.smd.hibernate.formbean.esperbean.StockDef;
+import com.fick.smd.hibernate.formbean.stockbean.StockDef;
 
 public class EqualsTest {
 

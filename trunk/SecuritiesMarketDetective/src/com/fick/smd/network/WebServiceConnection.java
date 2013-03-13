@@ -9,7 +9,7 @@ import cn.com.webxml.ChinaStockWebService;
 import cn.com.webxml.ChinaStockWebServiceSoap;
 
 import com.fick.smd.common.CommonUtils;
-import com.fick.smd.hibernate.formbean.esperbean.Stock;
+import com.fick.smd.hibernate.formbean.stockbean.Stock;
 
 public class WebServiceConnection implements Connection {
 	private static final QName SERVICE_NAME = new QName("http://WebXml.com.cn/", "ChinaStockWebService");
