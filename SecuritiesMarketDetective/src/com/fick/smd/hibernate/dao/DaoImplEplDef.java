@@ -32,14 +32,14 @@ public class DaoImplEplDef implements DaoInterface {
 		case 3:
 			return getAnalysisEplList(session);
 		default:
-			return addOrUpdateEpl(session);
+			return null;
 		}
 
 		// return null;
 	}
 
 	/**
-	 * 添加一条日志（测试用）
+	 * 添加一条EPL
 	 * 
 	 * @param session
 	 * @return

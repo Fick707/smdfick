@@ -1,4 +1,4 @@
-package com.fick.smd.hibernate.formbean.esperbean;
+package com.fick.smd.hibernate.formbean.stockbean;
 
 import java.util.Date;
 

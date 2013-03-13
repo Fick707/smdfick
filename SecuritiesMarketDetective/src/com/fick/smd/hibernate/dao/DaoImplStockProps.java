@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 
 import com.fick.smd.common.Constants;
-import com.fick.smd.hibernate.formbean.esperbean.StockProps;
+import com.fick.smd.hibernate.formbean.stockbean.StockProps;
 
 public class DaoImplStockProps implements DaoInterface {
 	private static final Log log = LogFactory.getLog(DaoImplStockProps.class);
@@ -25,7 +25,7 @@ public class DaoImplStockProps implements DaoInterface {
 		// TODO Auto-generated method stub
 		switch (methodIndex) {
 		case 1:
-			return ratesToday(session);
+			return avgMaxRateCurr(session);
 		case 2:
 			return addProps(session);
 			/* 
@@ -33,14 +33,14 @@ public class DaoImplStockProps implements DaoInterface {
 			* return getAnalysisEplList(session);
 			*/
 		default:
-			return ratesToday(session);
+			return null;
 		}
 
 		// return null;
 	}
 
-	private List ratesToday(Session session) {
-		return session.createSQLQuery("select stockcode,maxrate from stockmaxrate where updatedate > curdate()").list();
+	private List avgMaxRateCurr(Session session) {
+		return session.createSQLQuery("select stockcode,avg(maxrate) from stockprops group by stockcode").list();
 	}
 
 	private Object addProps(Session session) {

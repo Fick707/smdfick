@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 
 import com.fick.smd.common.Constants;
-import com.fick.smd.hibernate.formbean.esperbean.StockDef;
+import com.fick.smd.hibernate.formbean.stockbean.StockDef;
 import com.fick.smd.network.ConnectionFactory;
 
 public class DaoImplStockDef implements DaoInterface {
@@ -23,6 +23,7 @@ public class DaoImplStockDef implements DaoInterface {
 	 * 2.打印出所有股票代码信息；
 	 * 3.得到处于交易状态的股票代码列表
 	 * 4.得到处于分析状态的股票代码列表
+	 * 5.得到处于分析状态的指数代码列表
 	 */
 	@Override
 	public Object doProcess(Session session, int methodIndex) {
@@ -36,8 +37,10 @@ public class DaoImplStockDef implements DaoInterface {
 			return getRunStockDefList(session);
 		case 4:
 			return getAnalysisStockDefList(session);
+		case 5:
+			return getAnalysisBigStockDefList(session);
 		default:
-			return addStocks(session);
+			return null;
 		}
 
 		// return null;
@@ -101,6 +104,17 @@ public class DaoImplStockDef implements DaoInterface {
 		if (resultList != null) {
 			for (StockDef temp : resultList) {
 				stockCodes.add(temp.getStockcode());
+			}
+		}
+		return stockCodes;
+	}
+
+	private List<String> getAnalysisBigStockDefList(Session session) {
+		List<StockDef> resultList = session.createQuery("from StockDef where type = 0 and stockst = 1").list();
+		List<String> stockCodes = new ArrayList<String>();
+		if (resultList != null) {
+			for (StockDef temp : resultList) {
+				stockCodes.add("s_" + temp.getStockcode());
 			}
 		}
 		return stockCodes;

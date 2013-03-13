@@ -17,7 +17,7 @@ import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplEplDef;
 import com.fick.smd.hibernate.dao.DaoImplStockDef;
 import com.fick.smd.hibernate.formbean.esperbean.EplDef;
-import com.fick.smd.hibernate.formbean.esperbean.Stock;
+import com.fick.smd.hibernate.formbean.stockbean.Stock;
 
 public class EsperEngine {
 

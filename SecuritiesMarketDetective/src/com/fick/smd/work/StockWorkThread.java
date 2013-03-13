@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.fick.smd.common.Constants;
 import com.fick.smd.esper.input.InputAdapter;
-import com.fick.smd.hibernate.formbean.esperbean.Stock;
+import com.fick.smd.hibernate.formbean.stockbean.Stock;
 import com.fick.smd.network.Connection;
 import com.fick.smd.network.ConnectionFactory;
 

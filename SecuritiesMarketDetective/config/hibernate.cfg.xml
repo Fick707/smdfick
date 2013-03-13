@@ -12,8 +12,9 @@
   <property name="connection.username">fick707</property>
   <property name="connection.password">Fick707$%!@$@</property>
   <mapping class="com.fick.smd.hibernate.formbean.sysbean.SysChangeLog" resource="com/fick/smd/hibernate/formbean/sysbean/SysChangeLog.hbm.xml"/>
-  <mapping class="com.fick.smd.hibernate.formbean.esperbean.StockDef" resource="com/fick/smd/hibernate/formbean/esperbean/StockDef.hbm.xml"/>
+  <mapping class="com.fick.smd.hibernate.formbean.stockbean.StockDef" resource="com/fick/smd/hibernate/formbean/stockbean/StockDef.hbm.xml"/>
   <mapping class="com.fick.smd.hibernate.formbean.esperbean.EplDef" resource="com/fick/smd/hibernate/formbean/esperbean/EplDef.hbm.xml"/>
-  <mapping class="com.fick.smd.hibernate.formbean.esperbean.StockProps" resource="com/fick/smd/hibernate/formbean/esperbean/StockProps.hbm.xml"/>
+  <mapping class="com.fick.smd.hibernate.formbean.stockbean.StockProps" resource="com/fick/smd/hibernate/formbean/stockbean/StockProps.hbm.xml"/>
+  <mapping class="com.fick.smd.hibernate.formbean.stockbean.StockStorage" resource="com/fick/smd/hibernate/formbean/stockbean/StockStorage.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

@@ -1,6 +1,6 @@
 package com.fick.smd.network;
 
-import com.fick.smd.hibernate.formbean.esperbean.Stock;
+import com.fick.smd.hibernate.formbean.stockbean.Stock;
 
 public class HttpServiceCommon implements ServiceCommon {
 

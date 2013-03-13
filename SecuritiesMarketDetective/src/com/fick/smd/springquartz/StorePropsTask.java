@@ -7,11 +7,11 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.fick.smd.common.Constants;
 import com.fick.smd.common.StockCommon;
+import com.fick.smd.common.StockPropType;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockProps;
-import com.fick.smd.hibernate.formbean.esperbean.StockProps;
+import com.fick.smd.hibernate.formbean.stockbean.StockProps;
 
 public class StorePropsTask {
 	private static final Log log = LogFactory.getLog(StorePropsTask.class);
@@ -21,30 +21,30 @@ public class StorePropsTask {
 
 	public void process() {
 		log.info("begin to store props of stocks for analysising!");
-		Map<String, Map<String, Float>> propsMap = StockCommon.getStockProps();
+		Map<String, Map<StockPropType, Float>> propsMap = StockCommon.getStockProps();
 		List<StockProps> rates = new ArrayList<StockProps>();
 		StockProps rate;
 		for (String key : propsMap.keySet()) {
-			Map<String, Float> props = propsMap.get(key);
+			Map<StockPropType, Float> props = propsMap.get(key);
 			rate = new StockProps();
 			rate.setStockcode(key);
-			if (props.get(Constants.MAX_RATE) != null) {
-				rate.setMaxrate(props.get(Constants.MAX_RATE));
+			if (props.get(StockPropType.MAX_RATE) != null) {
+				rate.setMaxrate(props.get(StockPropType.MAX_RATE));
 			}
-			if (props.get(Constants.PRICE_MAX) != null) {
-				rate.setPricehighest(props.get(Constants.PRICE_MAX));
+			if (props.get(StockPropType.PRICE_MAX) != null) {
+				rate.setPricehighest(props.get(StockPropType.PRICE_MAX));
 			}
-			if (props.get(Constants.PRICE_MIN) != null) {
-				rate.setPricelowest(props.get(Constants.PRICE_MIN));
+			if (props.get(StockPropType.PRICE_MIN) != null) {
+				rate.setPricelowest(props.get(StockPropType.PRICE_MIN));
 			}
-			if (props.get(Constants.PRICE_TODAY) != null) {
-				rate.setPricetoday(props.get(Constants.PRICE_TODAY));
+			if (props.get(StockPropType.PRICE_TODAY) != null) {
+				rate.setPricetoday(props.get(StockPropType.PRICE_TODAY));
 			}
-			if (props.get(Constants.PRICE_TODAY_END) != null) {
-				rate.setPricetodayend(props.get(Constants.PRICE_TODAY_END));
+			if (props.get(StockPropType.PRICE_TODAY_END) != null) {
+				rate.setPricetodayend(props.get(StockPropType.PRICE_TODAY_END));
 			}
-			if (props.get(Constants.PRICE_YESTERDAY) != null) {
-				rate.setPriceyestoday(props.get(Constants.PRICE_YESTERDAY));
+			if (props.get(StockPropType.PRICE_YESTERDAY) != null) {
+				rate.setPriceyestoday(props.get(StockPropType.PRICE_YESTERDAY));
 			}
 			rates.add(rate);
 		}
