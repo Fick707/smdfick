@@ -27,7 +27,6 @@ public class MyTestListener implements UpdateListener {
 			public void processEvent(EventBean bean) {
 				// TODO Auto-generated method stub
 				// 1.更新振幅
-				StockCommon.upStockProps(bean);
 				if (isFirst) {
 					float t = (Float) bean.get(Constants.PRICE_TODAY);
 					float y = (Float) bean.get(Constants.PRICE_YESTERDAY);

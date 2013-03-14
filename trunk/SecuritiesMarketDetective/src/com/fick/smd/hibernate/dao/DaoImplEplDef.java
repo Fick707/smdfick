@@ -14,12 +14,17 @@ public class DaoImplEplDef implements DaoInterface {
 	private static final Log log = LogFactory.getLog(DaoImplEplDef.class);
 
 	private EplDef epl;
+	private int eplId;
+	private int eplSt;
 
 	/**
 	 * EPL定义处理类
 	 * methodIndex:
-	 * 1.添加EPL；
-	 * 2.……
+	 * 1.添加或者更新EPL；
+	 * 2.得到运行的EPL；
+	 * 3.得到分析的EPL；
+	 * 4.根据id得到EPL；
+	 * 5.根据id和状态值更新EPL状态
 	 */
 	@Override
 	public Object doProcess(Session session, int methodIndex) {
@@ -31,6 +36,10 @@ public class DaoImplEplDef implements DaoInterface {
 			return getRunEplList(session);
 		case 3:
 			return getAnalysisEplList(session);
+		case 4:
+			return getStockById(session);
+		case 5:
+			return setEplState(session);
 		default:
 			return null;
 		}
@@ -66,8 +75,26 @@ public class DaoImplEplDef implements DaoInterface {
 		return retList == null ? new ArrayList<EplDef>() : retList;
 	}
 
+	private EplDef getStockById(Session session) {
+		EplDef epl = (EplDef) session.createQuery("from EplDef where id = " + eplId).setMaxResults(1).uniqueResult();
+		return epl;
+	}
+
+	private String setEplState(Session session) {
+		session.createSQLQuery("update epldef set eplst = " + eplSt + " where id = " + eplId).executeUpdate();
+		return Constants.SUCCESS;
+	}
+
 	public void setEpl(EplDef epl) {
 		this.epl = epl;
+	}
+
+	public void setEplId(int eplId) {
+		this.eplId = eplId;
+	}
+
+	public void setEplSt(int eplSt) {
+		this.eplSt = eplSt;
 	}
 
 }

@@ -16,7 +16,7 @@ public class SocketClient {
 
 	public SocketClient() {
 		try {
-			socket = new Socket("localhost", 4512);
+			socket = new Socket("localhost", 4500);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
