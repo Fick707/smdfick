@@ -28,23 +28,17 @@ public class StorePropsTask {
 			Map<StockPropType, Float> props = propsMap.get(key);
 			rate = new StockProps();
 			rate.setStockcode(key);
-			if (props.get(StockPropType.MAX_RATE) != null) {
-				rate.setMaxrate(props.get(StockPropType.MAX_RATE));
-			}
-			if (props.get(StockPropType.PRICE_MAX) != null) {
+			if (props.get(StockPropType.PRICE_MAX) != null && props.get(StockPropType.PRICE_MIN) != null && props.get(StockPropType.PRICE_YESTERDAY) != null) {
 				rate.setPricehighest(props.get(StockPropType.PRICE_MAX));
-			}
-			if (props.get(StockPropType.PRICE_MIN) != null) {
 				rate.setPricelowest(props.get(StockPropType.PRICE_MIN));
+				rate.setPriceyestoday(props.get(StockPropType.PRICE_YESTERDAY));
+				rate.setMaxrate(getMaxRate(rate.getPricehighest(), rate.getPricelowest(), rate.getPriceyestoday()));
 			}
 			if (props.get(StockPropType.PRICE_TODAY) != null) {
 				rate.setPricetoday(props.get(StockPropType.PRICE_TODAY));
 			}
 			if (props.get(StockPropType.PRICE_TODAY_END) != null) {
 				rate.setPricetodayend(props.get(StockPropType.PRICE_TODAY_END));
-			}
-			if (props.get(StockPropType.PRICE_YESTERDAY) != null) {
-				rate.setPriceyestoday(props.get(StockPropType.PRICE_YESTERDAY));
 			}
 			rates.add(rate);
 		}
@@ -59,5 +53,9 @@ public class StorePropsTask {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private float getMaxRate(float h, float l, float y) {
+		return (h - l) * 100 / y;
 	}
 }

@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.fick.smd.common.Constants;
-import com.fick.smd.esper.input.InputAdapter;
+import com.fick.smd.common.StockCommon;
 import com.fick.smd.hibernate.formbean.stockbean.Stock;
 import com.fick.smd.network.Connection;
 import com.fick.smd.network.ConnectionFactory;
@@ -43,12 +43,12 @@ public class StockAnalysisWorkThread extends Thread {
 				if (preStock == null) {
 					preStock = stock;
 				} else if (stock.equals(preStock)) {
-					Thread.sleep(Constants.STOCK_INFO_REPEAT);
+					Thread.sleep(Constants.STOCK_ANALYSIS_REPEAT);
 					continue;
 				}
 				preStock = stock;
-				InputAdapter.sendEvent(stock);
-				Thread.sleep(Constants.STOCK_INFO_REPEAT);
+				StockCommon.dealNewStock(stock);
+				Thread.sleep(Constants.STOCK_ANALYSIS_REPEAT);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

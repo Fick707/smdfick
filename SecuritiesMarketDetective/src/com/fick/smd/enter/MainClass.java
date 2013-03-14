@@ -7,13 +7,15 @@ import java.net.Socket;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.fick.smd.common.Constants;
+
 public class MainClass {
 	private static final Log log = LogFactory.getLog(MainClass.class);
 
 	public static void main(String[] args) {
 		log.info("waiting for cmds");
 		try {
-			ServerSocket engineSocketServer = new ServerSocket(4512);
+			ServerSocket engineSocketServer = new ServerSocket(Constants.SOCKET_PORT);
 			while (true) {
 				Socket socket = engineSocketServer.accept();
 				new Processor(socket).process();

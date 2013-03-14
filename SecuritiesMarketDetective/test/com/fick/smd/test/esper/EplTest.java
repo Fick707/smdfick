@@ -11,15 +11,23 @@ public class EplTest {
 	DaoMethodTemplate dmt = new DaoMethodTemplate();
 
 	@Test
-	public void addOrUpdateEpl() {
+	public void addNewEpl() {
 		EplDef epl = new EplDef();
-		epl.setId(1);
-		epl.setEplname("epl基本查询");
-		epl.setEplrun("select code,name,datetime, price_current as price,max(price_highest) as price_max,min(price_lowest) as price_min from Stock.win:time(10 hours) group by (code)");
-		epl.setEplshow("select code,name,datetime, price_current as price,max(price_highest) as price_max,min(price_lowest) as price_min from Stock.win:time(10 hours) group by (code)");
+		epl.setEplname("epl模式匹配测试");
+		epl.setEplrun("select b from pattern[every a = Stock -> every b = Stock(b.code = a.code)]");
+		epl.setEplshow("select b from pattern[every a = Stock -> every b = Stock(b.code = a.code)]");
+		epl.setListenerclassname("com.fick.smd.esper.listener.MyPatternListener");
 		epl.setEplst(3);
 		dao.setEpl(epl);
 		dmt.process(dao, 1);
+	}
+
+	@Test
+	public void setEplSt() {
+		// 设置id及状态值
+		dao.setEplId(1);
+		dao.setEplSt(1);
+		EplDef epl = (EplDef) dmt.process(dao, 5);
 	}
 
 }

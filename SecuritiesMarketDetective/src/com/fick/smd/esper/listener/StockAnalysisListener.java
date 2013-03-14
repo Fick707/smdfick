@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
-import com.fick.smd.common.StockCommon;
 import com.fick.smd.esper.output.EventProcessorInterface;
 import com.fick.smd.esper.output.OutputAdapter;
 
@@ -22,7 +21,7 @@ public class StockAnalysisListener implements UpdateListener {
 			public void processEvent(EventBean bean) {
 				// TODO Auto-generated method stub
 				// 1.更新振幅
-				StockCommon.upStockMaxRate(bean);
+
 			}
 
 		});

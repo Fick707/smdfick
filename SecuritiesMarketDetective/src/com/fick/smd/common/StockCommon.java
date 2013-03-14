@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.espertech.esper.client.EventBean;
+import com.fick.smd.esper.input.InputAdapter;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockProps;
+import com.fick.smd.hibernate.formbean.stockbean.Stock;
+import com.fick.smd.work.StockAnalysisRunnableUnit;
+import com.fick.smd.work.StockAnalysisService;
 
 public class StockCommon {
 
@@ -39,128 +42,38 @@ public class StockCommon {
 	 * 
 	 * @param bean
 	 */
-	public static void upStockProps(EventBean bean) {
-		if (bean == null || bean.get("code") == null) {
-			return;
-		}
-		String code = (String) bean.get("code");
+	public static void upStockProps(Stock stock) {
+		String code = stock.getCode();
 		if (stockPropsToday.get(code) == null) {
 			Map<StockPropType, Float> props = new HashMap<StockPropType, Float>();
-			if (bean.get(Constants.RATE_MAX) != null && bean.get(Constants.RATE_MIN) != null) {
-				float rateMax = (Float) bean.get(Constants.RATE_MAX);
-				float rateMin = (Float) bean.get(Constants.RATE_MIN);
-				props.put(StockPropType.RATE_MAX, rateMax);
-				props.put(StockPropType.RATE_MIN, rateMin);
-				float maxRate = rateMax - rateMin;
-				if (rateMin > 0) {
-					maxRate = rateMax;
-				}
-				if (rateMax < 0) {
-					maxRate = 0 - rateMin;
-				}
-				props.put(StockPropType.MAX_RATE, maxRate);
-			}
-			if (bean.get(Constants.PRICE_MAX) != null) {
-				props.put(StockPropType.PRICE_MAX, (Float) bean.get(Constants.PRICE_MAX));
-			}
-			if (bean.get(Constants.PRICE_MIN) != null) {
-				props.put(StockPropType.PRICE_MIN, (Float) bean.get(Constants.PRICE_MIN));
-			}
-			if (bean.get(Constants.PRICE_TODAY_END) != null) {
-				props.put(StockPropType.PRICE_TODAY_END, (Float) bean.get(Constants.PRICE_TODAY_END));
-			}
-			if (bean.get(Constants.PRICE_YESTERDAY) != null) {
-				props.put(StockPropType.PRICE_YESTERDAY, (Float) bean.get(Constants.PRICE_YESTERDAY));
-			}
-			if (bean.get(Constants.PRICE_TODAY) != null) {
-				props.put(StockPropType.PRICE_TODAY, (Float) bean.get(Constants.PRICE_TODAY));
-			}
+			props.put(StockPropType.PRICE_MAX, stock.getPrice_highest());
+			props.put(StockPropType.PRICE_MIN, stock.getPrice_lowest());
+			props.put(StockPropType.PRICE_TODAY_END, stock.getPrice_current());
+			props.put(StockPropType.PRICE_YESTERDAY, stock.getPrice_yesterday());
+			props.put(StockPropType.PRICE_TODAY, stock.getPrice_today());
 			stockPropsToday.put(code, props);
 		} else {
 			Map<StockPropType, Float> props = stockPropsToday.get(code);
 
-			if (bean.get(Constants.PRICE_MAX) != null) {
-				float priceMax = (Float) bean.get(Constants.PRICE_MAX);
-				if (props.get(Constants.PRICE_MAX) == null) {
-					props.put(StockPropType.PRICE_MAX, priceMax);
-				} else if (priceMax > props.get(Constants.PRICE_MAX)) {
-					props.put(StockPropType.PRICE_MAX, priceMax);
-				}
+			float priceMax = stock.getPrice_highest();
+			if (props.get(Constants.PRICE_MAX) == null) {
+				props.put(StockPropType.PRICE_MAX, priceMax);
+			} else if (priceMax > props.get(Constants.PRICE_MAX)) {
+				props.put(StockPropType.PRICE_MAX, priceMax);
 			}
-			if (bean.get(Constants.PRICE_MIN) != null) {
-				float priceMin = (Float) bean.get(Constants.PRICE_MIN);
-				if (props.get(Constants.PRICE_MIN) == null) {
-					props.put(StockPropType.PRICE_MIN, priceMin);
-				} else if (priceMin < props.get(Constants.PRICE_MIN)) {
-					props.put(StockPropType.PRICE_MIN, priceMin);
-				}
-			}
-			if (bean.get(Constants.RATE_MAX) != null && bean.get(Constants.RATE_MIN) != null) {
-				float rateMax = (Float) bean.get(Constants.RATE_MAX);
-				float rateMin = (Float) bean.get(Constants.RATE_MIN);
-				props.put(StockPropType.RATE_MAX, rateMax);
-				props.put(StockPropType.RATE_MIN, rateMin);
-				float maxRate = rateMax - rateMin;
-				if (rateMin > 0) {
-					maxRate = rateMax;
-				}
-				if (rateMax < 0) {
-					maxRate = 0 - rateMin;
-				}
-				if (props.get(Constants.MAX_RATE) == null) {
-					props.put(StockPropType.MAX_RATE, maxRate);
-				} else if (maxRate > props.get(Constants.MAX_RATE)) {
-					props.put(StockPropType.MAX_RATE, maxRate);
-				}
-			}
-			if (bean.get(Constants.PRICE_TODAY_END) != null) {
-				float price = (Float) bean.get(Constants.PRICE_TODAY_END);
-				if (props.get(Constants.PRICE_TODAY_END) == null) {
-					props.put(StockPropType.PRICE_TODAY_END, price);
-				} else if (price != props.get(Constants.PRICE_TODAY_END)) {
-					props.put(StockPropType.PRICE_TODAY_END, price);
-				}
-			}
-			stockPropsToday.put(code, props);
-		}
-	}
 
-	/**
-	 * 更新股票的涨跌振幅
-	 * 
-	 * @param bean
-	 */
-	public static void upStockMaxRate(EventBean bean) {
-		if (bean == null || bean.get("code") == null) {
-			return;
-		}
-		String code = (String) bean.get("code");
-		if (stockPropsToday.get(code) == null) {
-			Map<StockPropType, Float> props = new HashMap<StockPropType, Float>();
-			if (bean.get(Constants.RATE_MAX) != null && bean.get(Constants.RATE_MIN) != null) {
-				float rateMax = (Float) bean.get(Constants.RATE_MAX);
-				float rateMin = (Float) bean.get(Constants.RATE_MIN);
-				float maxRate = rateMax - rateMin;
-				props.put(StockPropType.MAX_RATE, maxRate);
+			float priceMin = stock.getPrice_lowest();
+			if (props.get(Constants.PRICE_MIN) == null) {
+				props.put(StockPropType.PRICE_MIN, priceMin);
+			} else if (priceMin < props.get(Constants.PRICE_MIN)) {
+				props.put(StockPropType.PRICE_MIN, priceMin);
 			}
-			stockPropsToday.put(code, props);
-		} else {
-			Map<StockPropType, Float> props = stockPropsToday.get(code);
-			if (bean.get(Constants.RATE_MAX) != null && bean.get(Constants.RATE_MIN) != null) {
-				float rateMax = (Float) bean.get(Constants.RATE_MAX);
-				float rateMin = (Float) bean.get(Constants.RATE_MIN);
-				float maxRate = rateMax - rateMin;
-				if (rateMin > 0) {
-					maxRate = rateMax;
-				}
-				if (rateMax < 0) {
-					maxRate = 0 - rateMin;
-				}
-				if (props.get(Constants.MAX_RATE) == null) {
-					props.put(StockPropType.MAX_RATE, maxRate);
-				} else if (maxRate > props.get(Constants.MAX_RATE)) {
-					props.put(StockPropType.MAX_RATE, maxRate);
-				}
+
+			float price = stock.getPrice_current();
+			if (props.get(Constants.PRICE_TODAY_END) == null) {
+				props.put(StockPropType.PRICE_TODAY_END, price);
+			} else if (price != props.get(Constants.PRICE_TODAY_END)) {
+				props.put(StockPropType.PRICE_TODAY_END, price);
 			}
 			stockPropsToday.put(code, props);
 		}
@@ -222,4 +135,10 @@ public class StockCommon {
 		}
 		return props.get(type) == null ? null : props.get(type);
 	}
+
+	public static void dealNewStock(Stock stock) {
+		StockAnalysisService.submitAnalysis(new StockAnalysisRunnableUnit(stock));
+		InputAdapter.sendEvent(stock);
+	}
+
 }

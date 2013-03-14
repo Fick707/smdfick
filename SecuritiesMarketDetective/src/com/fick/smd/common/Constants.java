@@ -31,12 +31,20 @@ public class Constants {
 	public static final String RATE_MIN = "rate_min";
 	public static final String MAX_RATE = "max_rate";
 
+	// socket port
+	public static int SOCKET_PORT = 4500;
 	// 连接网络频率
 	public static long STOCK_INFO_REPEAT = 5000;
+	// 分析连网频率
+	public static long STOCK_ANALYSIS_REPEAT = 10000;
 	// 出栈队列容量
 	public static int OUTBOUND_QUEUE_CAPACITY = 50;
 	// 出栈线程数
 	public static int OUTBOUND_THREAD_POOL_CAPACITY = 5;
+	// 分析队列容量
+	public static int ANALYSIS_QUEUE_CAPACITY = 50;
+	// 分析线程数
+	public static int ANALYSIS_THREAD_POOL_CAPACITY = 5;
 	/*
 	 *费用相关 
 	 */
@@ -57,14 +65,26 @@ public class Constants {
 			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("properties.properties");
 			props.load(is);
 			is.close();
+			if (CommonUtils.getIntegerFromString(props.getProperty("SOCKET_PORT")) != null) {
+				SOCKET_PORT = CommonUtils.getIntegerFromString(props.getProperty("SOCKET_PORT"));
+			}
 			if (CommonUtils.getLongFromString(props.getProperty("STOCK_INFO_REPEAT")) != null) {
 				STOCK_INFO_REPEAT = CommonUtils.getLongFromString(props.getProperty("STOCK_INFO_REPEAT"));
+			}
+			if (CommonUtils.getLongFromString(props.getProperty("STOCK_ANALYSIS_REPEAT")) != null) {
+				STOCK_ANALYSIS_REPEAT = CommonUtils.getLongFromString(props.getProperty("STOCK_ANALYSIS_REPEAT"));
 			}
 			if (CommonUtils.getIntegerFromString(props.getProperty("OUTBOUND_QUEUE_CAPACITY")) != null) {
 				OUTBOUND_QUEUE_CAPACITY = CommonUtils.getIntegerFromString(props.getProperty("OUTBOUND_QUEUE_CAPACITY"));
 			}
 			if (CommonUtils.getIntegerFromString(props.getProperty("OUTBOUND_THREAD_POOL_CAPACITY")) != null) {
 				OUTBOUND_THREAD_POOL_CAPACITY = CommonUtils.getIntegerFromString(props.getProperty("OUTBOUND_THREAD_POOL_CAPACITY"));
+			}
+			if (CommonUtils.getIntegerFromString(props.getProperty("ANALYSIS_QUEUE_CAPACITY")) != null) {
+				ANALYSIS_QUEUE_CAPACITY = CommonUtils.getIntegerFromString(props.getProperty("ANALYSIS_QUEUE_CAPACITY"));
+			}
+			if (CommonUtils.getIntegerFromString(props.getProperty("ANALYSIS_THREAD_POOL_CAPACITY")) != null) {
+				ANALYSIS_THREAD_POOL_CAPACITY = CommonUtils.getIntegerFromString(props.getProperty("ANALYSIS_THREAD_POOL_CAPACITY"));
 			}
 			if (CommonUtils.getFloatFromString(props.getProperty("COMMISSION_RATE")) != null) {
 				COMMISSION_RATE = CommonUtils.getFloatFromString(props.getProperty("COMMISSION_RATE"));
