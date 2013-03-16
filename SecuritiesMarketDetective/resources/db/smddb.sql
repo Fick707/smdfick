@@ -36,18 +36,8 @@ CREATE TABLE `epldef` (
   `updatedt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'epl更新日期时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='esper epl定义表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='esper epl定义表';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `epldef`
---
-
-LOCK TABLES `epldef` WRITE;
-/*!40000 ALTER TABLE `epldef` DISABLE KEYS */;
-INSERT INTO `epldef` VALUES (1,'epl基本查询','select code,name,datetime, price_current as price,price_yesterday,price_today,max(price_highest) as price_max,min(price_lowest) as price_min,max(change_rate) as rate_max, min(change_rate) as rate_min from Stock(code in (?)).win:time(10 hours) group by (code)','select code,name,datetime, price_current as price,price_yesterday,price_today,max(price_highest) as price_max,min(price_lowest) as price_min,max(change_rate) as rate_max, min(change_rate) as rate_min from Stock(code in (?)).win:time(10 hours) group by (code)',2,'com.fick.smd.esper.listener.MyTestListener',3,'基本分析','2013-02-26 09:17:57'),(2,'股票涨跌幅分析','select code,max(change_rate) as rate_max, min(change_rate) as rate_min from Stock(code in (?)).win:time(10 hours) group by (code)','select code,max(change_rate) as rate_max, min(change_rate) as rate_min from Stock(code in (?)).win:time(10 hours) group by (code)',1,'com.fick.smd.esper.listener.StockAnalysisListener',3,'分析','2013-02-28 09:17:57');
-/*!40000 ALTER TABLE `epldef` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `stockdef`
@@ -58,26 +48,17 @@ DROP TABLE IF EXISTS `stockdef`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stockdef` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stockcode` varchar(45) DEFAULT NULL COMMENT '股票代码',
+  `stockcode` varchar(45) NOT NULL COMMENT '股票代码',
   `stockname` varchar(45) DEFAULT NULL COMMENT '股票名称',
   `stockst` int(11) DEFAULT '1' COMMENT '股票状态：\n1.分析\n3.交易',
   `type` int(11) DEFAULT '1' COMMENT '股票类型\n1.普通A股\n0.指数',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `updatedt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `stockcode_UNIQUE` (`stockcode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `stockdef`
---
-
-LOCK TABLES `stockdef` WRITE;
-/*!40000 ALTER TABLE `stockdef` DISABLE KEYS */;
-INSERT INTO `stockdef` VALUES (1,'sh600446','金证股份',1,1,NULL,'2013-02-25 13:59:38'),(3,'sz000002','万  科Ａ',1,1,NULL,'2013-02-26 09:23:11'),(8,'sh000001','上证指数',1,0,NULL,'2013-02-28 09:00:49'),(9,'sh601901','方正证券',1,1,NULL,'2013-02-28 09:00:49'),(10,'sh600000','浦发银行',3,1,NULL,'2013-02-28 09:00:49'),(11,'sh601166','兴业银行',1,1,NULL,'2013-02-28 09:00:50'),(12,'sh600036','招商银行',1,1,NULL,'2013-03-05 12:25:06');
-/*!40000 ALTER TABLE `stockdef` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `stockprops`
@@ -97,17 +78,31 @@ CREATE TABLE `stockprops` (
   `pricetodayend` float DEFAULT NULL,
   `updatedate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `stockprops`
+-- Table structure for table `stockstorage`
 --
 
-LOCK TABLES `stockprops` WRITE;
-/*!40000 ALTER TABLE `stockprops` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stockprops` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `stockstorage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stockstorage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stockcode` varchar(45) NOT NULL COMMENT '股票代码',
+  `investment` float DEFAULT NULL COMMENT '初始投入资金',
+  `balance` float DEFAULT NULL COMMENT '余额',
+  `dealnum` int(11) DEFAULT NULL COMMENT '每次交易量',
+  `expectearning` float DEFAULT '15',
+  `stocknum` int(11) DEFAULT NULL COMMENT '可用股票数量',
+  `lockedstocknum` int(11) DEFAULT NULL COMMENT '不可用股票数据',
+  `storagestate` int(11) DEFAULT NULL COMMENT '仓库状态\n1.正常交易\n2.关仓停止交易',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `stockcode_UNIQUE` (`stockcode`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='股票仓库';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `syschangelog`
@@ -126,16 +121,6 @@ CREATE TABLE `syschangelog` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='系统更新日志';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `syschangelog`
---
-
-LOCK TABLES `syschangelog` WRITE;
-/*!40000 ALTER TABLE `syschangelog` DISABLE KEYS */;
-INSERT INTO `syschangelog` VALUES (1,'1.0','Fick Song','Fick Song','系统初始更新，系统创建，数据库搭建，架构搭建','2013-02-20 12:39:43'),(6,'1.0.1','Fick Song','宋飞','测试用','2013-02-22 09:51:53');
-/*!40000 ALTER TABLE `syschangelog` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -146,4 +131,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-05 16:53:05
+-- Dump completed on 2013-03-15 15:16:19
