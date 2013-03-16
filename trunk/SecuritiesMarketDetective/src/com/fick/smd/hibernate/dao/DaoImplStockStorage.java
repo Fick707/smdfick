@@ -12,12 +12,14 @@ import com.fick.smd.hibernate.formbean.stockbean.StockStorage;
 public class DaoImplStockStorage implements DaoInterface {
 	private static final Log log = LogFactory.getLog(DaoImplStockStorage.class);
 	private StockStorage ss;
+	private List<StockStorage> stockStorages;
 
 	/**
 	 * 股票仓库操作类
 	 * methodIndex:
 	 * 1.得到所有正常交易的仓库；
-	 * 2.……
+	 * 2.添加或者更新某一个仓库；
+	 * 3.闭仓；
 	 */
 	@Override
 	public Object doProcess(Session session, int methodIndex) {
@@ -27,6 +29,8 @@ public class DaoImplStockStorage implements DaoInterface {
 			return getAllOpen(session);
 		case 2:
 			return addOrUpdateStockStorage(session);
+		case 3:
+			return closeStorages(session);
 		default:
 			return null;
 		}
@@ -41,8 +45,25 @@ public class DaoImplStockStorage implements DaoInterface {
 		return Constants.SUCCESS;
 	}
 
+	/**
+	 * 闭仓
+	 * 
+	 * @param session
+	 * @return
+	 */
+	private String closeStorages(Session session) {
+		for (StockStorage temp : stockStorages) {
+			session.saveOrUpdate(temp);
+		}
+		return Constants.SUCCESS;
+	}
+
 	public void setStockStorage(StockStorage ss) {
 		this.ss = ss;
+	}
+
+	public void setStockStorages(List<StockStorage> stockStorages) {
+		this.stockStorages = stockStorages;
 	}
 
 }

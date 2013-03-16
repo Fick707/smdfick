@@ -18,6 +18,7 @@ public class StockStorage implements java.io.Serializable {
 	private Float buyprice;
 	private Float sellprice;
 	private Integer storagestate;
+	private Float expectearning;
 
 	public StockStorage() {
 		this.todaystate = 0;
@@ -109,6 +110,14 @@ public class StockStorage implements java.io.Serializable {
 
 	public void setStoragestate(Integer storagestate) {
 		this.storagestate = storagestate;
+	}
+
+	public Float getExpectearning() {
+		return expectearning;
+	}
+
+	public void setExpectearning(Float expectearning) {
+		this.expectearning = expectearning;
 	}
 
 }
