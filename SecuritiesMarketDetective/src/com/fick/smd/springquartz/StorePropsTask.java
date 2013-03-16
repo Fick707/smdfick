@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.fick.smd.common.ServiceCommon;
 import com.fick.smd.common.StockCommon;
 import com.fick.smd.common.StockPropType;
 import com.fick.smd.hibernate.DaoMethodTemplate;
@@ -20,6 +21,9 @@ public class StorePropsTask {
 	private DaoImplStockProps rateDao = new DaoImplStockProps();
 
 	public void process() {
+		log.info("begin to close stock storages!");
+		ServiceCommon.getStockStorageService().closeStorages();
+		log.info("end to close stock storages!");
 		log.info("begin to store props of stocks for analysising!");
 		Map<String, Map<StockPropType, Float>> propsMap = StockCommon.getStockProps();
 		List<StockProps> rates = new ArrayList<StockProps>();

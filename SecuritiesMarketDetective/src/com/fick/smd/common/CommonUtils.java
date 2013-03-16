@@ -274,4 +274,8 @@ public class CommonUtils {
 		}
 		return null;
 	}
+
+	public static float getAvg(Float curr, float val) {
+		return curr == null ? val : (curr + val) / 2;
+	}
 }

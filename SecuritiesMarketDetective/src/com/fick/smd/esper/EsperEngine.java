@@ -13,6 +13,7 @@ import com.espertech.esper.client.UpdateListener;
 import com.espertech.esper.core.thread.ThreadingOption;
 import com.fick.smd.common.CommonUtils;
 import com.fick.smd.common.Constants;
+import com.fick.smd.common.ServiceCommon;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplEplDef;
 import com.fick.smd.hibernate.dao.DaoImplStockDef;
@@ -81,8 +82,12 @@ public class EsperEngine {
 
 		engine = EPServiceProviderManager.getProvider(ENGINE_URI, engineConfig);
 		engine.initialize();
+		// 启动epl
 		initEpl();
+		// 启动分析用的epl
 		initAnalysisEpl();
+		// 开仓
+		ServiceCommon.getStockStorageService().openStorages();
 		log.info("start engine successfully!");
 	}
 

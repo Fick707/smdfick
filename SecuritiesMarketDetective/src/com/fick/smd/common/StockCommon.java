@@ -4,14 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.fick.smd.esper.input.InputAdapter;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockProps;
 import com.fick.smd.hibernate.formbean.stockbean.Stock;
+import com.fick.smd.hibernate.formbean.stockbean.StockStorage;
 import com.fick.smd.work.StockAnalysisRunnableUnit;
 import com.fick.smd.work.StockAnalysisService;
 
 public class StockCommon {
+
+	private static final Log log = LogFactory.getLog(StockCommon.class);
 
 	private static Map<String, Float> avgMaxRateCurr = getAvgMaxRateCurr();
 
@@ -51,6 +57,7 @@ public class StockCommon {
 			props.put(StockPropType.PRICE_TODAY_END, stock.getPrice_current());
 			props.put(StockPropType.PRICE_YESTERDAY, stock.getPrice_yesterday());
 			props.put(StockPropType.PRICE_TODAY, stock.getPrice_today());
+			props.put(StockPropType.PRICE_AVG, CommonUtils.getAvg(props.get(StockPropType.PRICE_AVG), stock.getPrice_current()));
 			stockPropsToday.put(code, props);
 		} else {
 			Map<StockPropType, Float> props = stockPropsToday.get(code);
@@ -75,6 +82,7 @@ public class StockCommon {
 			} else if (price != props.get(Constants.PRICE_TODAY_END)) {
 				props.put(StockPropType.PRICE_TODAY_END, price);
 			}
+			props.put(StockPropType.PRICE_AVG, CommonUtils.getAvg(props.get(StockPropType.PRICE_AVG), price));
 			stockPropsToday.put(code, props);
 		}
 	}
@@ -141,4 +149,77 @@ public class StockCommon {
 		InputAdapter.sendEvent(stock);
 	}
 
+	/**
+	 * 判断指定的股票当前的价格是否可买
+	 * 
+	 * @param code
+	 * @param price
+	 * @return
+	 */
+	public static StockStorage isBuyOk(String code, float price) {
+		StockStorage stockStorage = StockStorageCommon.getStockStorageByCode(code);
+		// 判断是不是正在正常交易的股票
+		if (stockStorage == null) {
+			log.warn("股票代码:" + code + ",未开仓，请检查仓库状态！");
+			return null;
+		}
+		// 判断是否已买，如果已买，不能再买
+		if (StockStorageCommon.hasBeenBought(stockStorage)) {
+			return null;
+		}
+		// 判断是否已经卖，如果，判断当前价格是否赚钱，如果赚钱，则可买，否则不可买
+		if (StockStorageCommon.hasBeenSold(stockStorage)) {
+			float soldEarning = StockStorageCommon.getSellCostByNumAndPrice(stockStorage.getDealnum(), stockStorage.getSellprice());
+			float buyCost = StockStorageCommon.getBuyCostByNumAndPrice(stockStorage.getDealnum(), price);
+			if (soldEarning - buyCost >= stockStorage.getExpectearning()) {
+				return stockStorage;
+			} else {
+				return null;
+			}
+		}
+		// 上面条件都不满足，则判断当前价格是不是在今日平均体格之下，这个条件用来测试，最终判断可能要根据当前振幅是不是达到预期低度
+		if (price >= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
+			return null;
+		}
+		return stockStorage;
+	}
+
+	/**
+	 * 判断指定的股票当前的价格是否可卖
+	 * 
+	 * @param code
+	 * @param price
+	 * @return
+	 */
+	public static StockStorage isSellOk(String code, float price) {
+		StockStorage stockStorage = StockStorageCommon.getStockStorageByCode(code);
+		// 判断是不是正在正常交易的股票
+		if (stockStorage == null) {
+			log.warn("股票代码:" + code + ",未开仓，请检查仓库状态！");
+			return null;
+		}
+		// 判断是否有可操作股票
+		if (stockStorage.getStocknum() <= 0) {
+			return null;
+		}
+		// 判断是否已卖，如果已卖，不能再卖
+		if (StockStorageCommon.hasBeenSold(stockStorage)) {
+			return null;
+		}
+		// 判断是否已经买，如果，判断当前价格是否赚钱，如果赚钱，则可卖，否则不可卖
+		if (StockStorageCommon.hasBeenBought(stockStorage)) {
+			float soldEarning = StockStorageCommon.getSellCostByNumAndPrice(stockStorage.getDealnum(), price);
+			float buyCost = StockStorageCommon.getBuyCostByNumAndPrice(stockStorage.getDealnum(), stockStorage.getBuyprice());
+			if (soldEarning - buyCost >= stockStorage.getExpectearning()) {
+				return stockStorage;
+			} else {
+				return null;
+			}
+		}
+		// 上面条件都不满足，则判断当前价格是不是在今日平均体格之下，这个条件用来测试，最终判断可能要根据当前振幅是不是达到预期低度
+		if (price <= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
+			return null;
+		}
+		return stockStorage;
+	}
 }

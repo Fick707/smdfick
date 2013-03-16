@@ -1,10 +1,15 @@
 package com.fick.smd.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import com.fick.smd.hibernate.formbean.stockbean.StockStorage;
 
 public class StockStorageCommon {
+
+	private static Map<String, StockStorage> stockStorageMap = new HashMap<String, StockStorage>();
 
 	// 买入
 	private static final int BUY_STATE = 1;
@@ -27,6 +32,14 @@ public class StockStorageCommon {
 		stockStorage.setBuyprice(price);
 		stockStorage.setLockedstocknum(stockStorage.getLockedstocknum() + dealNum);
 		stockStorage.setBalance(stockStorage.getBalance() - getBuyCostByNumAndPrice(dealNum, price));
+	}
+
+	public static void sellAt(float price, StockStorage stockStorage) {
+		int dealNum = stockStorage.getDealnum();
+		stockStorage.setTodaystate(setBit(stockStorage.getTodaystate(), SELL_STATE));
+		stockStorage.setSellprice(price);
+		stockStorage.setStocknum(stockStorage.getStocknum() - dealNum);
+		stockStorage.setBalance(stockStorage.getBalance() + getSellCostByNumAndPrice(dealNum, price));
 	}
 
 	/**
@@ -73,9 +86,56 @@ public class StockStorageCommon {
 		return src | full;
 	}
 
+	private static boolean isBitFull(int state, int position) {
+		return (state & position) == position ? true : false;
+	}
+
+	public static void addStockStorage(StockStorage stockStorage) {
+		stockStorageMap.put(stockStorage.getStockcode(), stockStorage);
+	}
+
+	/**
+	 * 根据股票代码得到对应的仓库
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public static StockStorage getStockStorageByCode(String code) {
+		return stockStorageMap.get(code);
+	}
+
+	/**
+	 * 得到映射map，每天闭仓操作时用
+	 * 
+	 * @return
+	 */
+	public static Map<String, StockStorage> getStockStorageMap() {
+		return stockStorageMap;
+	}
+
+	/**
+	 * 判断该仓库今日是否已买
+	 * 
+	 * @param stockStorage
+	 * @return
+	 */
+	public static boolean hasBeenBought(StockStorage stockStorage) {
+		return isBitFull(stockStorage.getTodaystate(), BUY_STATE);
+	}
+
+	/**
+	 * 判断指定仓库今日是否已卖
+	 * 
+	 * @param stockStorage
+	 * @return
+	 */
+	public static boolean hasBeenSold(StockStorage stockStorage) {
+		return isBitFull(stockStorage.getTodaystate(), SELL_STATE);
+	}
+
 	@Test
 	public void testBit() {
-		System.out.println(getCostOfTransferFee(2002));
+		System.out.println(isBitFull(7, this.BUY_STATE));
 	}
 
 }
