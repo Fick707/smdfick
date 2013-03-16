@@ -1,8 +1,8 @@
 /*
--- Query: SELECT * FROM smddb.stockdef
+-- Query: SELECT * FROM smddb_test.stockdef
 LIMIT 0, 1000
 
--- Date: 2013-03-08 15:27
+-- Date: 2013-03-15 15:29
 */
 INSERT INTO `stockdef` (`id`,`stockcode`,`stockname`,`stockst`,`type`,`remark`,`updatedt`) VALUES (1,'sh600446','金证股份',1,1,NULL,'2013-02-25 13:59:38');
 INSERT INTO `stockdef` (`id`,`stockcode`,`stockname`,`stockst`,`type`,`remark`,`updatedt`) VALUES (3,'sz000002','万  科Ａ',1,1,NULL,'2013-02-26 09:23:11');
