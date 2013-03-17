@@ -15,9 +15,9 @@ public class DaoImplStockProps implements DaoInterface {
 	private List<StockProps> props;
 
 	/**
-	 * 股票每天最大涨跌幅度
+	 * 股票属性
 	 * methodIndex:
-	 * 1.添加EPL；
+	 * 1.得到平均振幅；
 	 * 2.……
 	 */
 	@Override
