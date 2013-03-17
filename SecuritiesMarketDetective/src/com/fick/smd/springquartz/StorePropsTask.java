@@ -36,7 +36,7 @@ public class StorePropsTask {
 				rate.setPricehighest(props.get(StockPropType.PRICE_MAX));
 				rate.setPricelowest(props.get(StockPropType.PRICE_MIN));
 				rate.setPriceyestoday(props.get(StockPropType.PRICE_YESTERDAY));
-				rate.setMaxrate(getMaxRate(rate.getPricehighest(), rate.getPricelowest(), rate.getPriceyestoday()));
+				rate.setMaxrate(StockCommon.getMaxRate(rate.getPricehighest(), rate.getPricelowest(), rate.getPriceyestoday()));
 			}
 			if (props.get(StockPropType.PRICE_TODAY) != null) {
 				rate.setPricetoday(props.get(StockPropType.PRICE_TODAY));
@@ -59,7 +59,4 @@ public class StorePropsTask {
 		}
 	}
 
-	private float getMaxRate(float h, float l, float y) {
-		return (h - l) * 100 / y;
-	}
 }
