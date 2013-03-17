@@ -3,11 +3,15 @@ package com.fick.smd.common;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import com.fick.smd.hibernate.formbean.stockbean.StockStorage;
 
 public class StockStorageCommon {
+
+	private static final Log log = LogFactory.getLog(StockStorageCommon.class);
 
 	private static Map<String, StockStorage> stockStorageMap = new HashMap<String, StockStorage>();
 
@@ -31,7 +35,10 @@ public class StockStorageCommon {
 		stockStorage.setTodaystate(setBit(stockStorage.getTodaystate(), BUY_STATE));
 		stockStorage.setBuyprice(price);
 		stockStorage.setLockedstocknum(stockStorage.getLockedstocknum() + dealNum);
-		stockStorage.setBalance(stockStorage.getBalance() - getBuyCostByNumAndPrice(dealNum, price));
+		float cost = getBuyCostByNumAndPrice(dealNum, price);
+		stockStorage.setBalance(stockStorage.getBalance() - cost);
+		log.info("买入！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+		log.info("股票" + stockStorage.getStockcode() + "在" + price + "买入" + dealNum + ",共花费:" + cost);
 	}
 
 	public static void sellAt(float price, StockStorage stockStorage) {
@@ -39,7 +46,10 @@ public class StockStorageCommon {
 		stockStorage.setTodaystate(setBit(stockStorage.getTodaystate(), SELL_STATE));
 		stockStorage.setSellprice(price);
 		stockStorage.setStocknum(stockStorage.getStocknum() - dealNum);
-		stockStorage.setBalance(stockStorage.getBalance() + getSellCostByNumAndPrice(dealNum, price));
+		float cost = getSellCostByNumAndPrice(dealNum, price);
+		stockStorage.setBalance(stockStorage.getBalance() + cost);
+		log.info("卖出！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+		log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共花费:" + cost);
 	}
 
 	/**
