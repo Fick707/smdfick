@@ -1,27 +1,27 @@
 USE `smddb_test`;
 
-/*!50003 CREATE*/ /*!50017 DEFINER=`fick707`@`localhost`*/ /*!50003 trigger epldef_updatedt before insert on smddb.epldef 
+/*!50003 CREATE*/ /*!50017 DEFINER=`fick707`@`localhost`*/ /*!50003 trigger epldef_updatedt before insert on smddb_test.epldef 
   for each row 
     if new.updatedt is null then 
       set new.updatedt = now(); 
     end if */;;
 DELIMITER ;
 
-/*!50003 CREATE*/ /*!50017 DEFINER=`fick707`@`localhost`*/ /*!50003 trigger syschangelog_updatedt before insert on smddb.syschangelog 
+/*!50003 CREATE*/ /*!50017 DEFINER=`fick707`@`localhost`*/ /*!50003 trigger syschangelog_updatedt before insert on smddb_test.syschangelog 
   for each row 
     if new.updatedt is null then 
       set new.updatedt = now(); 
     end if */;;
 DELIMITER ;
 
-/*!50003 CREATE*/ /*!50017 DEFINER=`fick707`@`localhost`*/ /*!50003 trigger stockprops_updatedt before insert on smddb.stockprops 
+/*!50003 CREATE*/ /*!50017 DEFINER=`fick707`@`localhost`*/ /*!50003 trigger stockprops_updatedt before insert on smddb_test.stockprops 
   for each row 
     if new.updatedate is null then 
       set new.updatedate = now(); 
     end if */;;
 DELIMITER ;
 
-/*!50003 CREATE*/ /*!50017 DEFINER=`fick707`@`localhost`*/ /*!50003 trigger stockdef_updatedt before insert on smddb.stockdef 
+/*!50003 CREATE*/ /*!50017 DEFINER=`fick707`@`localhost`*/ /*!50003 trigger stockdef_updatedt before insert on smddb_test.stockdef 
   for each row 
     if new.updatedt is null then 
       set new.updatedt = now(); 
