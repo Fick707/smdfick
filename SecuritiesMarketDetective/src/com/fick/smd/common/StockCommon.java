@@ -178,7 +178,8 @@ public class StockCommon {
 			}
 		}
 		// 上面条件都不满足，则判断当前价格是不是在今日平均体格之下，这个条件用来测试，最终判断可能要根据当前振幅是不是达到预期低度
-		if (getMaxRate(getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price, getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code) * 0.85) {
+		if (getMaxRate(getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price, getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
+				* Constants.AMPLITUDE_RATE) {
 			return null;
 		}
 		// if (price >= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
@@ -220,7 +221,8 @@ public class StockCommon {
 			}
 		}
 		// 上面条件都不满足，则判断当前价格是不是在今日平均体格之下，这个条件用来测试，最终判断可能要根据当前振幅是不是达到预期低度
-		if (getMaxRate(price, getStockPropByCodeAndType(code, StockPropType.PRICE_MIN), getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code) * 0.85) {
+		if (getMaxRate(price, getStockPropByCodeAndType(code, StockPropType.PRICE_MIN), getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
+				* Constants.AMPLITUDE_RATE) {
 			return null;
 		}
 		// if (price <= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
