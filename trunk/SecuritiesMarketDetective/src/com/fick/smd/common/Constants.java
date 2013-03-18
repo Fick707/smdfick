@@ -57,7 +57,9 @@ public class Constants {
 	// 过户费transfer fee 元/1000
 	public static float TRANSFER_FEE = 1;
 
-	// 警告开头初始
+	public static float AMPLITUDE_RATE = 0.8f;
+
+	// 警告开关初始
 	public static boolean IS_WARN_INIT = false;
 
 	static {
@@ -94,6 +96,9 @@ public class Constants {
 			}
 			if (CommonUtils.getIntegerFromString(props.getProperty("TRANSFER_FEE")) != null) {
 				TRANSFER_FEE = CommonUtils.getFloatFromString(props.getProperty("TRANSFER_FEE"));
+			}
+			if (CommonUtils.getIntegerFromString(props.getProperty("AMPLITUDE_RATE")) != null) {
+				AMPLITUDE_RATE = CommonUtils.getFloatFromString(props.getProperty("AMPLITUDE_RATE"));
 			}
 			if (CommonUtils.getBooleanFromString(props.getProperty("IS_WARN_INIT")) != null) {
 				IS_WARN_INIT = CommonUtils.getBooleanFromString(props.getProperty("IS_WARN_INIT"));

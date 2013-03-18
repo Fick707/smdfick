@@ -24,6 +24,8 @@ public class HttpConnection implements Connection {
 	private URL url;
 	private HttpURLConnection connection;
 
+	private int connectionErrorNum = 0;
+
 	public HttpConnection(String code) {
 		this.code = code;
 		try {
@@ -49,7 +51,10 @@ public class HttpConnection implements Connection {
 			return curr_line != null ? CommonUtils.stringsToStock(curr_line.split(",")) : null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			log.warn("network connection error,check the network please!");
+			connectionErrorNum++;
+			if (connectionErrorNum % 5 == 0) {
+				log.warn("network connection error,check the network please!");
+			}
 			return null;
 		} finally {
 			if (connection != null) {
