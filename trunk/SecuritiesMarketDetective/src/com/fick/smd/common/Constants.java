@@ -94,10 +94,10 @@ public class Constants {
 			if (CommonUtils.getFloatFromString(props.getProperty("STAMP_TAX_RATE")) != null) {
 				STAMP_TAX_RATE = CommonUtils.getFloatFromString(props.getProperty("STAMP_TAX_RATE"));
 			}
-			if (CommonUtils.getIntegerFromString(props.getProperty("TRANSFER_FEE")) != null) {
+			if (CommonUtils.getFloatFromString(props.getProperty("TRANSFER_FEE")) != null) {
 				TRANSFER_FEE = CommonUtils.getFloatFromString(props.getProperty("TRANSFER_FEE"));
 			}
-			if (CommonUtils.getIntegerFromString(props.getProperty("AMPLITUDE_RATE")) != null) {
+			if (CommonUtils.getFloatFromString(props.getProperty("AMPLITUDE_RATE")) != null) {
 				AMPLITUDE_RATE = CommonUtils.getFloatFromString(props.getProperty("AMPLITUDE_RATE"));
 			}
 			if (CommonUtils.getBooleanFromString(props.getProperty("IS_WARN_INIT")) != null) {

@@ -35,6 +35,14 @@
 			<param name="ConversionPattern" value="%d{ABSOLUTE} [%t] %-5p [%c{1}] %m%n"/>
 		</layout>
 	</appender>
+	
+	<appender name="stockdealevent" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="/com.fick.smd/logs/stockdeal_debug.log"/>
+		<param name="datePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} [%t] %-5p [%c{1}] %m%n"/>
+		</layout>
+	</appender>
 
 	<logger name="com.espertech.esper">
 		<level value="INFO"/>
@@ -48,8 +56,14 @@
 		<level value="INFO"/>
 	</logger>
 
-	<logger name="com.fick.smd">
-		<level value="DEBUG"/>
+	<logger name="com.fick.smd.common.StockStorageCommon">
+    	<level value="INFO" />
+    	<appender-ref ref="stockdealevent" />
+	</logger>
+
+	<logger name="com.fick.smd.stock.StockStorageServiceImpl">
+    	<level value="INFO" />
+    	<appender-ref ref="stockdealevent" />
 	</logger>
 
 	<root>

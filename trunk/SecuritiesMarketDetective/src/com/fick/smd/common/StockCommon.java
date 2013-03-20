@@ -57,7 +57,8 @@ public class StockCommon {
 			props.put(StockPropType.PRICE_TODAY_END, stock.getPrice_current());
 			props.put(StockPropType.PRICE_YESTERDAY, stock.getPrice_yesterday());
 			props.put(StockPropType.PRICE_TODAY, stock.getPrice_today());
-			props.put(StockPropType.PRICE_AVG, CommonUtils.getAvg(props.get(StockPropType.PRICE_AVG), stock.getPrice_current()));
+			// props.put(StockPropType.PRICE_AVG, CommonUtils.getAvg(props.get(StockPropType.PRICE_AVG),
+			// stock.getPrice_current()));
 			stockPropsToday.put(code, props);
 		} else {
 			Map<StockPropType, Float> props = stockPropsToday.get(code);
@@ -82,7 +83,7 @@ public class StockCommon {
 			} else if (price != props.get(Constants.PRICE_TODAY_END)) {
 				props.put(StockPropType.PRICE_TODAY_END, price);
 			}
-			props.put(StockPropType.PRICE_AVG, CommonUtils.getAvg(props.get(StockPropType.PRICE_AVG), price));
+			// props.put(StockPropType.PRICE_AVG, CommonUtils.getAvg(props.get(StockPropType.PRICE_AVG), price));
 			stockPropsToday.put(code, props);
 		}
 	}
@@ -202,12 +203,13 @@ public class StockCommon {
 			log.warn("股票代码:" + code + ",未开仓，请检查仓库状态！");
 			return null;
 		}
-		// 判断是否有可操作股票
-		if (stockStorage.getStocknum() <= 0) {
-			return null;
-		}
 		// 判断是否已卖，如果已卖，不能再卖
 		if (StockStorageCommon.hasBeenSold(stockStorage)) {
+			return null;
+		}
+		// 判断是否有可操作股票
+		if (stockStorage.getStocknum() <= 0) {
+			log.warn("股票代码:" + code + "目前没有可操作股票！");
 			return null;
 		}
 		// 判断是否已经买，如果，判断当前价格是否赚钱，如果赚钱，则可卖，否则不可卖
