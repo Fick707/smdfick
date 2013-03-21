@@ -41,6 +41,12 @@ public class StockStorageCommon {
 		log.info("股票" + stockStorage.getStockcode() + "在" + price + "买入" + dealNum + ",共花费:" + cost);
 	}
 
+	/**
+	 * 指定仓库在指定价格卖出
+	 * 
+	 * @param price
+	 * @param stockStorage
+	 */
 	public static void sellAt(float price, StockStorage stockStorage) {
 		int dealNum = stockStorage.getDealnum();
 		stockStorage.setTodaystate(setBit(stockStorage.getTodaystate(), SELL_STATE));
@@ -50,6 +56,42 @@ public class StockStorageCommon {
 		stockStorage.setBalance(stockStorage.getBalance() + cost);
 		log.info("卖出！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
 		log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共花费:" + cost);
+	}
+
+	/**
+	 * 通过socket命令，在当前价买入
+	 * 
+	 * @param code
+	 */
+	public static void buyAtByCodeViaCommand(String code) {
+		Float price = StockCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_TODAY_END);
+		if (price == null) {
+			return;
+		}
+		StockStorage stockStorage = getStockStorageByCode(code);
+		if (stockStorage == null) {
+			return;
+		}
+		log.info("股票代码:" + code + ",通过命令买入！价格:" + price);
+		buyAt(price, stockStorage);
+	}
+
+	/**
+	 * 通过socket命令，在当前价卖出
+	 * 
+	 * @param code
+	 */
+	public static void sellAtByCodeViaCommon(String code) {
+		Float price = StockCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_TODAY_END);
+		if (price == null) {
+			return;
+		}
+		StockStorage stockStorage = getStockStorageByCode(code);
+		if (stockStorage == null) {
+			return;
+		}
+		log.info("股票代码:" + code + ",通过命令卖出！价格:" + price);
+		sellAt(price, stockStorage);
 	}
 
 	/**
