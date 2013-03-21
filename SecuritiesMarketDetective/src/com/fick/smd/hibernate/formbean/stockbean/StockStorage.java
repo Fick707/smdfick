@@ -1,5 +1,7 @@
 package com.fick.smd.hibernate.formbean.stockbean;
 
+import java.util.Date;
+
 // Generated 2013-3-13 15:10:01 by Hibernate Tools 4.0.0
 
 /**
@@ -19,6 +21,8 @@ public class StockStorage implements java.io.Serializable {
 	private Float sellprice;
 	private Integer storagestate;
 	private Float expectearning;
+	private Date datetime;
+	private Float earning;
 
 	public StockStorage() {
 		this.todaystate = 0;
@@ -118,6 +122,22 @@ public class StockStorage implements java.io.Serializable {
 
 	public void setExpectearning(Float expectearning) {
 		this.expectearning = expectearning;
+	}
+
+	public Date getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(Date datetime) {
+		this.datetime = datetime;
+	}
+
+	public Float getEarning() {
+		return earning;
+	}
+
+	public void setEarning(Float earning) {
+		this.earning = earning;
 	}
 
 }

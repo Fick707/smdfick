@@ -61,6 +61,16 @@ public class SocketClient {
 		sendCmd("$4001$");
 	}
 
+	@Test
+	public void buyByCodeAtCurrPrice() {
+		sendCmd("$8001$sh600000$");
+	}
+
+	@Test
+	public void sellByCodeAtCurrPrice() {
+		sendCmd("$8002$sh600000$");
+	}
+
 	private void sendCmd(String cmd) {
 		try {
 			OutputStream out = socket.getOutputStream();

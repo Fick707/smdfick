@@ -41,13 +41,14 @@ public class Processor {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
 			String cmd = br.readLine();
 			log.info("received cmd:" + cmd);
-			if (Constants.getProperty("START_ENGINE").equals(cmd.substring(1, 5))) {
+			String command = cmd.substring(1, 5);
+			if (Constants.getProperty("START_ENGINE").equals(command)) {
 				EsperEngine engine = new EsperEngine();
 				engine.startEngine();
 				bw.write("start engine successfully!from socket server!\n");
 				bw.write("00\n");
 				bw.flush();
-			} else if (Constants.getProperty("START_STOCK_WORK_THREAD").equals(cmd.subSequence(1, 5))) {
+			} else if (Constants.getProperty("START_STOCK_WORK_THREAD").equals(command)) {
 				ThreadSwitch.switchStockWorkThread(true);
 				List<String> codes = (List<String>) dmt.process(stockDefDao, 3);
 				for (String code : codes) {
@@ -57,13 +58,13 @@ public class Processor {
 				bw.write("start stock work thread(s) successfully!from socket server!\n");
 				bw.write("00\n");
 				bw.flush();
-			} else if (Constants.getProperty("STOP_STOCK_WORK_THREAD").equals(cmd.subSequence(1, 5))) {
+			} else if (Constants.getProperty("STOP_STOCK_WORK_THREAD").equals(command)) {
 				ThreadSwitch.switchStockWorkThread(false);
 				bw.write("stop stock work thread successfully!from socket server!\n");
 				bw.write("00\n");
 				bw.flush();
 				log.info("close the StockWorkThread!");
-			} else if (Constants.getProperty("START_STOCK_ANALYSIS_WORK_THREAD").equals(cmd.subSequence(1, 5))) {
+			} else if (Constants.getProperty("START_STOCK_ANALYSIS_WORK_THREAD").equals(command)) {
 				ThreadSwitch.switchStockAnalysisWorkThread(true);
 				List<String> codes = (List<String>) dmt.process(stockDefDao, 4);
 				for (String code : codes) {
@@ -73,24 +74,26 @@ public class Processor {
 				bw.write("start stock analysis work thread(s) successfully!from socket server!\n");
 				bw.write("00\n");
 				bw.flush();
-			} else if (Constants.getProperty("STOP_STOCK_ANALYSIS_WORK_THREAD").equals(cmd.subSequence(1, 5))) {
+			} else if (Constants.getProperty("STOP_STOCK_ANALYSIS_WORK_THREAD").equals(command)) {
 				ThreadSwitch.switchStockAnalysisWorkThread(false);
 				bw.write("stop stock analysis work thread successfully!from socket server!\n");
 				bw.write("00\n");
 				bw.flush();
 				log.info("close the StockAnalysisWorkThread!");
-			} else if (Constants.getProperty("IS_WARN").equals(cmd.subSequence(1, 5))) {
+			} else if (Constants.getProperty("IS_WARN").equals(command)) {
 				StockCommon.setIsWarn(true);
 				bw.write("open the warn switch successfully!from socket server!\n");
 				bw.write("00\n");
 				bw.flush();
 				log.info("open the warn switch!");
-			} else if (Constants.getProperty("NO_WARN").equals(cmd.subSequence(1, 5))) {
+			} else if (Constants.getProperty("NO_WARN").equals(command)) {
 				StockCommon.setIsWarn(false);
 				bw.write("close the warn switch successfully!from socket server!\n");
 				bw.write("00\n");
 				bw.flush();
 				log.info("close the warn switch!");
+			} else if (Constants.getProperty("BUY_BY_CODE_AT_CURR_PRICE").equals(command)) {
+				String code = cmd.substring(6, cmd.lastIndexOf("$") - 1);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
