@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.fick.smd.common.Constants;
 import com.fick.smd.common.StockCommon;
+import com.fick.smd.common.StockStorageCommon;
 import com.fick.smd.esper.EsperEngine;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockDef;
@@ -93,7 +94,19 @@ public class Processor {
 				bw.flush();
 				log.info("close the warn switch!");
 			} else if (Constants.getProperty("BUY_BY_CODE_AT_CURR_PRICE").equals(command)) {
-				String code = cmd.substring(6, cmd.lastIndexOf("$") - 1);
+				String code = cmd.substring(6, cmd.lastIndexOf("$"));
+				StockStorageCommon.buyAtByCodeViaCommand(code);
+				bw.write("buy by code via command successfully!from socket server!\n");
+				bw.write("00\n");
+				bw.flush();
+				log.info("buy by code via command successfully!");
+			} else if (Constants.getProperty("SELL_BY_CODE_AT_CURR_PRICE").equals(command)) {
+				String code = cmd.substring(6, cmd.lastIndexOf("$"));
+				StockStorageCommon.sellAtByCodeViaCommon(code);
+				bw.write("sell by code via command successfully!from socket server!\n");
+				bw.write("00\n");
+				bw.flush();
+				log.info("sell by code via command successfully!");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

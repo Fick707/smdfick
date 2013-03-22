@@ -52,7 +52,7 @@ public class StockStorageCommon {
 		stockStorage.setTodaystate(setBit(stockStorage.getTodaystate(), SELL_STATE));
 		stockStorage.setSellprice(price);
 		stockStorage.setStocknum(stockStorage.getStocknum() - dealNum);
-		float cost = getSellCostByNumAndPrice(dealNum, price);
+		float cost = getSellEarningByNumAndPrice(dealNum, price);
 		stockStorage.setBalance(stockStorage.getBalance() + cost);
 		log.info("卖出！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
 		log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共花费:" + cost);
@@ -113,7 +113,7 @@ public class StockStorageCommon {
 	 * @return
 	 */
 	public static float getBuyCostByNumAndPrice(int dealNum, float price) {
-		return (dealNum * price * Constants.COMMISSION_RATE) + getCostOfTransferFee(dealNum);
+		return (dealNum * price) * (1 + Constants.COMMISSION_RATE) + getCostOfTransferFee(dealNum);
 	}
 
 	/**
@@ -123,8 +123,8 @@ public class StockStorageCommon {
 	 * @param price
 	 * @return
 	 */
-	public static float getSellCostByNumAndPrice(int dealNum, float price) {
-		return (dealNum * price * (Constants.COMMISSION_RATE + Constants.STAMP_TAX_RATE)) + getCostOfTransferFee(dealNum);
+	public static float getSellEarningByNumAndPrice(int dealNum, float price) {
+		return (dealNum * price) * (1 - Constants.COMMISSION_RATE - Constants.STAMP_TAX_RATE) - getCostOfTransferFee(dealNum);
 	}
 
 	/**

@@ -30,7 +30,9 @@ public class StockTest {
 	@Test
 	public void addStockDefs() {
 		// TODO Auto-generated method stub
-		dao.setStockCodes(new String[] { "sh600446", "type_0sh000001", "sz000002", "sh601901", "sh600000", "sh601166", "sh600036" });
+		dao.setStockCodes(new String[] { "sh600446", "type_0sh000001",
+				"sz000002", "sh601901", "sh600000", "sh601166",
+				"sh600036", "sh600008", "sz002431", "sh600894" });
 		dmt.process(dao, 1);
 	}
 
