@@ -170,7 +170,7 @@ public class StockCommon {
 		}
 		// 判断是否已经卖，如果，判断当前价格是否赚钱，如果赚钱，则可买，否则不可买
 		if (StockStorageCommon.hasBeenSold(stockStorage)) {
-			float soldEarning = StockStorageCommon.getSellCostByNumAndPrice(stockStorage.getDealnum(), stockStorage.getSellprice());
+			float soldEarning = StockStorageCommon.getSellEarningByNumAndPrice(stockStorage.getDealnum(), stockStorage.getSellprice());
 			float buyCost = StockStorageCommon.getBuyCostByNumAndPrice(stockStorage.getDealnum(), price);
 			if (soldEarning - buyCost >= stockStorage.getExpectearning()) {
 				return stockStorage;
@@ -214,7 +214,7 @@ public class StockCommon {
 		}
 		// 判断是否已经买，如果，判断当前价格是否赚钱，如果赚钱，则可卖，否则不可卖
 		if (StockStorageCommon.hasBeenBought(stockStorage)) {
-			float soldEarning = StockStorageCommon.getSellCostByNumAndPrice(stockStorage.getDealnum(), price);
+			float soldEarning = StockStorageCommon.getSellEarningByNumAndPrice(stockStorage.getDealnum(), price);
 			float buyCost = StockStorageCommon.getBuyCostByNumAndPrice(stockStorage.getDealnum(), stockStorage.getBuyprice());
 			if (soldEarning - buyCost >= stockStorage.getExpectearning()) {
 				return stockStorage;
