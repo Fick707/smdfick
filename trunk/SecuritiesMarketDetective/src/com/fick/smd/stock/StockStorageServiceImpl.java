@@ -28,6 +28,7 @@ public class StockStorageServiceImpl implements StockStorageService {
 		for (StockStorage temp : list) {
 			// 每天开仓前，将前一天不可用的股票设置成可用的股票；
 			temp.setStocknum(temp.getStocknum() + temp.getLockedstocknum());
+			temp.setLockedstocknum(0);
 			StockStorageCommon.addStockStorage(temp);
 			log.info("股票代码:" + temp.getStockcode() + "开仓成功！");
 		}
