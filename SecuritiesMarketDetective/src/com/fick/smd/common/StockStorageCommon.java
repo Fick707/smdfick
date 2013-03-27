@@ -55,7 +55,41 @@ public class StockStorageCommon {
 		float cost = getSellEarningByNumAndPrice(dealNum, price);
 		stockStorage.setBalance(stockStorage.getBalance() + cost);
 		log.info("卖出！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
-		log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共花费:" + cost);
+		log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共收益:" + cost);
+	}
+
+	/**
+	 * 通过命令卖出
+	 * 不设置卖出标记
+	 * 不设置今天卖出价格
+	 * 
+	 * @param price
+	 * @param stockStorage
+	 */
+	public static void sellAtViaCommand(float price, StockStorage stockStorage) {
+		int dealNum = stockStorage.getDealnum();
+		stockStorage.setStocknum(stockStorage.getStocknum() - dealNum);
+		float cost = getSellEarningByNumAndPrice(dealNum, price);
+		stockStorage.setBalance(stockStorage.getBalance() + cost);
+		log.info("通过命令卖出！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+		log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共收益:" + cost);
+	}
+
+	/**
+	 * 通过命令买入
+	 * 不设置买入标记
+	 * 不设置今天买入价格
+	 * 
+	 * @param price
+	 * @param stockStorage
+	 */
+	public static void buyAtViaCommon(float price, StockStorage stockStorage) {
+		int dealNum = stockStorage.getDealnum();
+		stockStorage.setLockedstocknum(stockStorage.getLockedstocknum() + dealNum);
+		float cost = getBuyCostByNumAndPrice(dealNum, price);
+		stockStorage.setBalance(stockStorage.getBalance() - cost);
+		log.info("通过命令买入！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+		log.info("股票" + stockStorage.getStockcode() + "在" + price + "买入" + dealNum + ",共花费:" + cost);
 	}
 
 	/**
@@ -73,7 +107,7 @@ public class StockStorageCommon {
 			return;
 		}
 		log.info("股票代码:" + code + ",通过命令买入！价格:" + price);
-		buyAt(price, stockStorage);
+		buyAtViaCommon(price, stockStorage);
 	}
 
 	/**
@@ -91,7 +125,7 @@ public class StockStorageCommon {
 			return;
 		}
 		log.info("股票代码:" + code + ",通过命令卖出！价格:" + price);
-		sellAt(price, stockStorage);
+		sellAtViaCommand(price, stockStorage);
 	}
 
 	/**
