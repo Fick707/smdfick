@@ -107,6 +107,13 @@ public class Processor {
 				bw.write("00\n");
 				bw.flush();
 				log.info("sell by code via command successfully!");
+			} else if (Constants.getProperty("ADD_STOCK_DEF_BY_CODE").equals(command)) {
+				String code = cmd.substring(6, cmd.lastIndexOf("$"));
+				StockStorageCommon.sellAtByCodeViaCommon(code);
+				bw.write("add stock def by code via command successfully!from socket server!\n");
+				bw.write("00\n");
+				bw.flush();
+				log.info("add stock def by code via command successfully!");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
