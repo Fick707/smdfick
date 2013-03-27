@@ -62,13 +62,18 @@ public class SocketClient {
 	}
 
 	@Test
-	public void buyByCodeAtCurrPrice() {
-		sendCmd("$8001$sh600000$");
+	public void buyByCodeAtCurrPrice(String code) {
+		sendCmd("$8001$" + code + "$");
 	}
 
 	@Test
-	public void sellByCodeAtCurrPrice() {
-		sendCmd("$8002$sh600000$");
+	public void sellByCodeAtCurrPrice(String code) {
+		sendCmd("$8002$" + code + "$");
+	}
+
+	@Test
+	public void addStockDefByCodeAtCurrPrice(String code) {
+		sendCmd("$8003$" + code + "$");
 	}
 
 	private void sendCmd(String cmd) {
@@ -106,6 +111,15 @@ public class SocketClient {
 				client.closeWarnSwitch();
 			} else if ("openwarn".equals(args[0])) {
 				client.openWarnSwitch();
+			} else if ("buy".equals(args[0])) {
+				String code = args[1];
+				client.buyByCodeAtCurrPrice(code);
+			} else if ("sell".equals(args[0])) {
+				String code = args[1];
+				client.sellByCodeAtCurrPrice(code);
+			} else if ("addstockdef".equals(args[0])) {
+				String code = args[1];
+				client.addStockDefByCodeAtCurrPrice(code);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
