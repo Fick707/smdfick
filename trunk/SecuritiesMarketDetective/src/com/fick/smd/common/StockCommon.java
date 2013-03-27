@@ -168,6 +168,10 @@ public class StockCommon {
 		if (StockStorageCommon.hasBeenBought(stockStorage)) {
 			return null;
 		}
+		// 判断余额是否足够
+		if (stockStorage.getBalance() < StockStorageCommon.getBuyCostByNumAndPrice(stockStorage.getDealnum(), price)) {
+			return null;
+		}
 		// 判断是否已经卖，如果，判断当前价格是否赚钱，如果赚钱，则可买，否则不可买
 		if (StockStorageCommon.hasBeenSold(stockStorage)) {
 			float soldEarning = StockStorageCommon.getSellEarningByNumAndPrice(stockStorage.getDealnum(), stockStorage.getSellprice());

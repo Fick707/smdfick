@@ -115,6 +115,16 @@ public class Constants {
 		return props.getProperty(key);
 	}
 
+	/**
+	 * 设置属性值，预留接口改变属性值
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public static void setProperty(String key, String value) {
+		props.setProperty(key, value);
+	}
+
 	public static void reload() {
 		try {
 			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("properties.properties");
