@@ -269,7 +269,7 @@ public class Stock {
 			return false;
 		}
 		Stock stock = (Stock) obj;
-		if (stock.getCode().equals(this.code) && stock.getPrice_current() == this.price_current) {
+		if (stock.getCode().equals(this.code) && stock.getDatetime().compareTo(this.getDatetime()) == 0) {
 			return true;
 		}
 		return false;

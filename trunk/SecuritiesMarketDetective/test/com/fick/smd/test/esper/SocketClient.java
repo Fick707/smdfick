@@ -76,6 +76,13 @@ public class SocketClient {
 		sendCmd("$8003$" + code + "$");
 	}
 
+	/**
+	 * 发出命令并得到返回结果
+	 * 返回结果00，01结尾，正常
+	 * 返回结果02结尾，停留3秒
+	 * 
+	 * @param cmd
+	 */
 	private void sendCmd(String cmd) {
 		try {
 			OutputStream out = socket.getOutputStream();
@@ -88,9 +95,15 @@ public class SocketClient {
 				System.out.println(retV);
 				if ("00".equals(retV) || "01".equals(retV)) {
 					return;
+				} else if ("02".equals(retV)) {
+					Thread.sleep(3000);
+					return;
 				}
 			}
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -219,6 +219,17 @@ public class StockStorageCommon {
 		return isBitFull(stockStorage.getTodaystate(), SELL_STATE);
 	}
 
+	/**
+	 * 比较买卖价看是否赚钱了
+	 * 
+	 * @param buyPrice
+	 * @param sellPrice
+	 * @param dealNum
+	 */
+	public static float compareBuyAndSell(float buyPrice, float sellPrice, int dealNum) {
+		return getSellEarningByNumAndPrice(dealNum, sellPrice) - getBuyCostByNumAndPrice(dealNum, buyPrice);
+	}
+
 	@Test
 	public void testBit() {
 		System.out.println(isBitFull(7, this.BUY_STATE));
