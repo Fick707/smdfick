@@ -15,7 +15,6 @@ import com.fick.smd.hibernate.formbean.stockbean.StockStorage;
 
 public class PatternHighestListener implements UpdateListener {
 	private static final Log log = LogFactory.getLog(PatternHighestListener.class);
-	private boolean isFirst = true;
 
 	@Override
 	public void update(EventBean[] newEvents, EventBean[] oldEvents) {
