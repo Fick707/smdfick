@@ -7,6 +7,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.fick.smd.agg.SmdAggregator;
+import com.fick.smd.agg.SmdAggregatorAvg;
 import com.fick.smd.esper.input.InputAdapter;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockProps;
@@ -20,6 +22,8 @@ public class StockCommon {
 	private static final Log log = LogFactory.getLog(StockCommon.class);
 
 	private static Map<String, Float> avgMaxRateCurr = getAvgMaxRateCurr();
+
+	private static Map<String, SmdAggregator> stockAggregatorMap = new HashMap<String, SmdAggregator>();
 
 	private static Map<String, Map<StockPropType, Float>> stockPropsToday = new HashMap<String, Map<StockPropType, Float>>();
 
@@ -50,6 +54,12 @@ public class StockCommon {
 	 */
 	public static void upStockProps(Stock stock) {
 		String code = stock.getCode();
+		SmdAggregator aggregatorAvg = stockAggregatorMap.get(code);
+		if (aggregatorAvg == null) {
+			aggregatorAvg = new SmdAggregatorAvg();
+			stockAggregatorMap.put(code, aggregatorAvg);
+		}
+		aggregatorAvg.enter(stock);
 		if (stockPropsToday.get(code) == null) {
 			Map<StockPropType, Float> props = new HashMap<StockPropType, Float>();
 			props.put(StockPropType.PRICE_MAX, stock.getPrice_highest());
@@ -57,8 +67,7 @@ public class StockCommon {
 			props.put(StockPropType.PRICE_TODAY_END, stock.getPrice_current());
 			props.put(StockPropType.PRICE_YESTERDAY, stock.getPrice_yesterday());
 			props.put(StockPropType.PRICE_TODAY, stock.getPrice_today());
-			// props.put(StockPropType.PRICE_AVG, CommonUtils.getAvg(props.get(StockPropType.PRICE_AVG),
-			// stock.getPrice_current()));
+			props.put(StockPropType.PRICE_AVG, (Float) aggregatorAvg.getValue());
 			stockPropsToday.put(code, props);
 		} else {
 			Map<StockPropType, Float> props = stockPropsToday.get(code);
@@ -83,7 +92,7 @@ public class StockCommon {
 			} else if (price != props.get(Constants.PRICE_TODAY_END)) {
 				props.put(StockPropType.PRICE_TODAY_END, price);
 			}
-			// props.put(StockPropType.PRICE_AVG, CommonUtils.getAvg(props.get(StockPropType.PRICE_AVG), price));
+			props.put(StockPropType.PRICE_AVG, (Float) aggregatorAvg.getValue());
 			stockPropsToday.put(code, props);
 		}
 	}
@@ -182,9 +191,11 @@ public class StockCommon {
 				return null;
 			}
 		}
-		// 上面条件都不满足，则判断当前价格是不是在今日平均体格之下，这个条件用来测试，最终判断可能要根据当前振幅是不是达到预期低度
+		// 两个条件：
+		// 1.振幅是否已经达到预期；
+		// 2.当前价格是否低于今日平均价格；
 		if (getMaxRate(getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price, getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
-				* Constants.AMPLITUDE_RATE) {
+				* Constants.AMPLITUDE_RATE || price >= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
 			return null;
 		}
 		// if (price >= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
@@ -226,9 +237,11 @@ public class StockCommon {
 				return null;
 			}
 		}
-		// 上面条件都不满足，则判断当前价格是不是在今日平均体格之下，这个条件用来测试，最终判断可能要根据当前振幅是不是达到预期低度
+		// 两个条件：
+		// 1.振幅是否已经达到预期；
+		// 2.当前价格是否高于今日平均价格；
 		if (getMaxRate(price, getStockPropByCodeAndType(code, StockPropType.PRICE_MIN), getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
-				* Constants.AMPLITUDE_RATE) {
+				* Constants.AMPLITUDE_RATE || price <= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
 			return null;
 		}
 		// if (price <= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
