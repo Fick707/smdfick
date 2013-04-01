@@ -1,3 +1,4 @@
+truncate table syschangelog;
 /*
 -- Query: SELECT * FROM smddb.syschangelog
 LIMIT 0, 1000

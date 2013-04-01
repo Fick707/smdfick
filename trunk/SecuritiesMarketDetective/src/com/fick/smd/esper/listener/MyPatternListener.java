@@ -11,7 +11,6 @@ import com.fick.smd.hibernate.formbean.stockbean.Stock;
 
 public class MyPatternListener implements UpdateListener {
 	private static final Log log = LogFactory.getLog(MyPatternListener.class);
-	private boolean isFirst = true;
 
 	@Override
 	public void update(EventBean[] newEvents, EventBean[] oldEvents) {

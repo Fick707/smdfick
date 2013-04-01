@@ -1,4 +1,3 @@
-truncate table stockprops;
 /*
 -- Query: SELECT * FROM smddb.stockprops
 LIMIT 0, 1000

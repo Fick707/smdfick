@@ -1,3 +1,4 @@
+truncate table stockstorage;
 /*
 -- Query: SELECT * FROM smddb_test.stockstorage
 LIMIT 0, 1000
