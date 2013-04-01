@@ -106,10 +106,6 @@ public class StockStorageCommon {
 		if (stockStorage == null) {
 			return;
 		}
-		if (stockStorage.getStocknum() <= 0) {
-			log.warn("无可操作股票，卖出命令终止！");
-			return;
-		}
 		log.info("股票代码:" + code + ",通过命令买入！价格:" + price);
 		buyAt(price, stockStorage);
 	}
@@ -126,6 +122,10 @@ public class StockStorageCommon {
 		}
 		StockStorage stockStorage = getStockStorageByCode(code);
 		if (stockStorage == null) {
+			return;
+		}
+		if (stockStorage.getStocknum() <= 0) {
+			log.warn("无可操作股票，卖出命令终止！");
 			return;
 		}
 		log.info("股票代码:" + code + ",通过命令卖出！价格:" + price);

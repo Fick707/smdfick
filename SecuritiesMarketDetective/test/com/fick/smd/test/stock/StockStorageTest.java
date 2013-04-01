@@ -16,7 +16,7 @@ public class StockStorageTest {
 	@Test
 	public void testAdd() {
 		StockStorage ss = new StockStorage();
-		ss.setStockcode("sh600000");
+		ss.setStockcode("sh601901");
 		ss.setInvestment(15000f);
 		ss.setBalance(15000f);
 		ss.setDealnum(500);
