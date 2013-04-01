@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.fick.smd.common.StockStorageCommon;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockStorage;
 import com.fick.smd.hibernate.formbean.stockbean.StockStorage;
@@ -37,5 +38,10 @@ public class StockStorageTest {
 			System.out.println(temp.getBuyprice());
 			System.out.println(Integer.toBinaryString(3));
 		}
+	}
+
+	@Test
+	public void testCompare() {
+		System.out.println(StockStorageCommon.compareBuyAndSell(10.04f, 10.09f, 500));
 	}
 }

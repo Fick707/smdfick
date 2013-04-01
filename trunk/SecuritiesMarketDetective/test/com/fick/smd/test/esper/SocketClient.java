@@ -10,6 +10,9 @@ import java.net.UnknownHostException;
 
 import org.junit.Test;
 
+import com.fick.smd.utils.ByteUtil;
+import com.fick.smd.utils.DES;
+
 public class SocketClient {
 
 	private static Socket socket = null;
@@ -88,7 +91,11 @@ public class SocketClient {
 			OutputStream out = socket.getOutputStream();
 			InputStream is = socket.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
-			out.write((cmd + "\n").getBytes());
+			// BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
+			byte[] contents = DES.encrypt(cmd.getBytes());
+			byte[] lenBytes = ByteUtil.integerToBytes(contents.length);
+			out.write(lenBytes);
+			out.write(contents);
 			out.flush();
 			String retV = "";
 			while ((retV = br.readLine()) != null) {
@@ -98,6 +105,9 @@ public class SocketClient {
 				} else if ("02".equals(retV)) {
 					Thread.sleep(3000);
 					return;
+				} else if ("-1".equals(retV)) {
+					System.err.println("command error check cmmand please!");
+					return;
 				}
 			}
 		} catch (IOException e) {
@@ -106,6 +116,10 @@ public class SocketClient {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("encrypt or decrypt error!");
 		}
 	}
 
