@@ -125,6 +125,24 @@ public class Constants {
 		props.setProperty(key, value);
 	}
 
+	/**
+	 * 设置振幅率
+	 * 
+	 * @param rate
+	 */
+	public static void setAmplitudeRate(String rate) {
+		if (rate == null) {
+			return;
+		}
+		try {
+			float rateF = Float.parseFloat(rate);
+			AMPLITUDE_RATE = rateF;
+		} catch (Exception e) {
+			log.error("set amplitude rate error.can not parse the value to float!");
+			return;
+		}
+	}
+
 	public static void reload() {
 		try {
 			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("properties.properties");

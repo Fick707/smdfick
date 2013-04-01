@@ -66,14 +66,14 @@ public class StockStorageCommon {
 	 * @param price
 	 * @param stockStorage
 	 */
-	public static void sellAtViaCommand(float price, StockStorage stockStorage) {
-		int dealNum = stockStorage.getDealnum();
-		stockStorage.setStocknum(stockStorage.getStocknum() - dealNum);
-		float cost = getSellEarningByNumAndPrice(dealNum, price);
-		stockStorage.setBalance(stockStorage.getBalance() + cost);
-		log.info("通过命令卖出！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
-		log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共收益:" + cost);
-	}
+	// public static void sellAtViaCommand(float price, StockStorage stockStorage) {
+	// int dealNum = stockStorage.getDealnum();
+	// stockStorage.setStocknum(stockStorage.getStocknum() - dealNum);
+	// float cost = getSellEarningByNumAndPrice(dealNum, price);
+	// stockStorage.setBalance(stockStorage.getBalance() + cost);
+	// log.info("通过命令卖出！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+	// log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共收益:" + cost);
+	// }
 
 	/**
 	 * 通过命令买入
@@ -83,14 +83,14 @@ public class StockStorageCommon {
 	 * @param price
 	 * @param stockStorage
 	 */
-	public static void buyAtViaCommon(float price, StockStorage stockStorage) {
-		int dealNum = stockStorage.getDealnum();
-		stockStorage.setLockedstocknum(stockStorage.getLockedstocknum() + dealNum);
-		float cost = getBuyCostByNumAndPrice(dealNum, price);
-		stockStorage.setBalance(stockStorage.getBalance() - cost);
-		log.info("通过命令买入！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
-		log.info("股票" + stockStorage.getStockcode() + "在" + price + "买入" + dealNum + ",共花费:" + cost);
-	}
+	// public static void buyAtViaCommon(float price, StockStorage stockStorage) {
+	// int dealNum = stockStorage.getDealnum();
+	// stockStorage.setLockedstocknum(stockStorage.getLockedstocknum() + dealNum);
+	// float cost = getBuyCostByNumAndPrice(dealNum, price);
+	// stockStorage.setBalance(stockStorage.getBalance() - cost);
+	// log.info("通过命令买入！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
+	// log.info("股票" + stockStorage.getStockcode() + "在" + price + "买入" + dealNum + ",共花费:" + cost);
+	// }
 
 	/**
 	 * 通过socket命令，在当前价买入
@@ -106,8 +106,12 @@ public class StockStorageCommon {
 		if (stockStorage == null) {
 			return;
 		}
+		if (stockStorage.getStocknum() <= 0) {
+			log.warn("无可操作股票，卖出命令终止！");
+			return;
+		}
 		log.info("股票代码:" + code + ",通过命令买入！价格:" + price);
-		buyAtViaCommon(price, stockStorage);
+		buyAt(price, stockStorage);
 	}
 
 	/**
@@ -125,7 +129,7 @@ public class StockStorageCommon {
 			return;
 		}
 		log.info("股票代码:" + code + ",通过命令卖出！价格:" + price);
-		sellAtViaCommand(price, stockStorage);
+		sellAt(price, stockStorage);
 	}
 
 	/**

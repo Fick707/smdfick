@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 
 import org.apache.commons.logging.Log;
@@ -17,6 +17,8 @@ import com.fick.smd.common.StockCommon;
 import com.fick.smd.common.StockDefCommon;
 import com.fick.smd.common.StockStorageCommon;
 import com.fick.smd.esper.EsperEngine;
+import com.fick.smd.utils.ByteUtil;
+import com.fick.smd.utils.DES;
 import com.fick.smd.work.ThreadSwitch;
 
 public class Processor {
@@ -28,12 +30,21 @@ public class Processor {
 	}
 
 	public void process() {
+		InputStream is = null;
+		OutputStream out = null;
+		BufferedReader br = null;
+		BufferedWriter bw = null;
 		try {
-			InputStream is = socket.getInputStream();
-			OutputStream out = socket.getOutputStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
-			String cmd = br.readLine();
+			is = socket.getInputStream();
+			out = socket.getOutputStream();
+			// br = new BufferedReader(new InputStreamReader(is, "utf-8"));
+			bw = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
+			byte[] lenb = new byte[4];
+			is.read(lenb);
+			int len = ByteUtil.bytesToInt(lenb);
+			byte[] contents = new byte[len];
+			is.read(contents);
+			String cmd = new String(DES.decrypt(contents));
 			log.info("received cmd:" + cmd);
 			if (cmd.length() <= 5) {
 				return;
@@ -124,7 +135,51 @@ public class Processor {
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			log.error("wrong cmd socket!");
+			dealErrorCommand(socket);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.warn("error command!");
+			dealErrorCommand(socket);
+		} finally {
+			try {
+				if (bw != null) {
+					bw.close();
+				}
+				if (br != null) {
+					br.close();
+				}
+				if (out != null) {
+					out.close();
+				}
+				if (is != null) {
+					is.close();
+				}
+				if (socket != null && !socket.isClosed()) {
+					socket.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	private void dealErrorCommand(Socket socket) {
+		try {
+			OutputStream out = socket.getOutputStream();
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
+			bw.write("command error!\n");
+			bw.write("-1\n");
+			bw.flush();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
