@@ -36,7 +36,26 @@ CREATE TABLE `epldef` (
   `updatedt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'epl更新日期时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='esper epl定义表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='esper epl定义表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stockdealdetail`
+--
+
+DROP TABLE IF EXISTS `stockdealdetail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stockdealdetail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stockcode` varchar(45) NOT NULL,
+  `dealtype` int(11) NOT NULL,
+  `dealprice` float NOT NULL,
+  `dealNum` int(11) NOT NULL,
+  `dealcost` float NOT NULL,
+  `dealdt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,15 +67,16 @@ DROP TABLE IF EXISTS `stockdef`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stockdef` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stockcode` varchar(45) DEFAULT NULL COMMENT '股票代码',
+  `stockcode` varchar(45) NOT NULL COMMENT '股票代码',
   `stockname` varchar(45) DEFAULT NULL COMMENT '股票名称',
   `stockst` int(11) DEFAULT '1' COMMENT '股票状态：\n1.分析\n3.交易',
   `type` int(11) DEFAULT '1' COMMENT '股票类型\n1.普通A股\n0.指数',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `updatedt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `stockcode_UNIQUE` (`stockcode`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +97,7 @@ CREATE TABLE `stockprops` (
   `pricetodayend` float DEFAULT NULL,
   `updatedate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +120,7 @@ CREATE TABLE `stockstorage` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `stockcode_UNIQUE` (`stockcode`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='股票仓库';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='股票仓库';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,4 +150,4 @@ CREATE TABLE `syschangelog` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-18  9:07:50
+-- Dump completed on 2013-04-02 16:36:49

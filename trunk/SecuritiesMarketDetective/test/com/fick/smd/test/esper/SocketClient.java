@@ -79,6 +79,16 @@ public class SocketClient {
 		sendCmd("$8003$" + code + "$");
 	}
 
+	@Test
+	public void setAmplitudeRate(String rate) {
+		sendCmd("$4002$" + rate + "$");
+	}
+
+	@Test
+	public void compareBuyAndSell(String priceBuy, String priceSell, String dealNum) {
+		sendCmd("$1100$" + priceBuy + "#" + priceSell + "#" + dealNum);
+	}
+
 	/**
 	 * 发出命令并得到返回结果
 	 * 返回结果00，01结尾，正常
@@ -147,6 +157,14 @@ public class SocketClient {
 			} else if ("addstockdef".equals(args[0])) {
 				String code = args[1];
 				client.addStockDefByCodeAtCurrPrice(code);
+			} else if ("setamplituderate".equals(args[0])) {
+				String val = args[1];
+				client.setAmplitudeRate(val);
+			} else if ("compare".equals(args[0])) {
+				String priceBuy = args[1];
+				String priceSell = args[2];
+				String dealNum = args[3];
+				client.compareBuyAndSell(priceBuy, priceSell, dealNum);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

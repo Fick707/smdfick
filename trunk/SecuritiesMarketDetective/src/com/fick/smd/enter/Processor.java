@@ -123,8 +123,8 @@ public class Processor {
 			} else if (Constants.getProperty("COMMAND_COMPARE_BUY_SELL").equals(command)) {
 				String value = cmd.substring(6, cmd.lastIndexOf("$"));
 				String[] vals = value.split("#");
-				float sellP = Float.parseFloat(vals[0]);
-				float buyP = Float.parseFloat(vals[1]);
+				float buyP = Float.parseFloat(vals[0]);
+				float sellP = Float.parseFloat(vals[1]);
 				int dealNum = Integer.parseInt(vals[2]);
 				float money = StockStorageCommon.compareBuyAndSell(buyP, sellP, dealNum);
 				bw.write("get result successfully!from socket server!\n");
