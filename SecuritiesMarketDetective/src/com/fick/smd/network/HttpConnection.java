@@ -52,7 +52,7 @@ public class HttpConnection implements Connection {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			connectionErrorNum++;
-			if (connectionErrorNum % 5 == 0) {
+			if (connectionErrorNum % 50 == 0) {
 				log.warn("network connection error,check the network please!");
 			}
 			return null;

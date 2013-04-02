@@ -42,6 +42,6 @@ public class StockStorageTest {
 
 	@Test
 	public void testCompare() {
-		System.out.println(StockStorageCommon.compareBuyAndSell(10.04f, 10.09f, 500));
+		System.out.println(StockStorageCommon.compareBuyAndSell(10.09f, 10.17f, 500));
 	}
 }
