@@ -1,15 +1,12 @@
 package com.fick.smd.esper.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import com.fick.smd.esper.output.EventProcessorInterface;
 import com.fick.smd.esper.output.OutputAdapter;
 
 public class StockAnalysisListener implements UpdateListener {
-	private static final Log log = LogFactory.getLog(StockAnalysisListener.class);
+	// private static final Log log = LogFactory.getLog(StockAnalysisListener.class);
 
 	@Override
 	public void update(EventBean[] newEvents, EventBean[] oldEvents) {

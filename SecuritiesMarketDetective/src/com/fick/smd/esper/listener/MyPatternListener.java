@@ -1,8 +1,5 @@
 package com.fick.smd.esper.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import com.fick.smd.esper.output.EventProcessorInterface;
@@ -10,7 +7,7 @@ import com.fick.smd.esper.output.OutputAdapter;
 import com.fick.smd.hibernate.formbean.stockbean.Stock;
 
 public class MyPatternListener implements UpdateListener {
-	private static final Log log = LogFactory.getLog(MyPatternListener.class);
+	// private static final Log log = LogFactory.getLog(MyPatternListener.class);
 
 	@Override
 	public void update(EventBean[] newEvents, EventBean[] oldEvents) {

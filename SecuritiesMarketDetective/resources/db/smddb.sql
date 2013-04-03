@@ -48,12 +48,12 @@ DROP TABLE IF EXISTS `stockdealdetail`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stockdealdetail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stockcode` varchar(45) NOT NULL,
-  `dealtype` int(11) NOT NULL,
-  `dealprice` float NOT NULL,
-  `dealNum` int(11) NOT NULL,
-  `dealcost` float NOT NULL,
-  `dealdt` datetime NOT NULL,
+  `stockcode` varchar(45) NOT NULL COMMENT '股票代码',
+  `dealtype` int(11) NOT NULL COMMENT '交易类型：\n0：买入\n1：卖出',
+  `dealprice` float NOT NULL COMMENT '交易价格',
+  `dealNum` int(11) NOT NULL COMMENT '交易数量',
+  `dealcost` float NOT NULL COMMENT '共花费',
+  `dealdt` datetime NOT NULL COMMENT '交易时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -150,4 +150,4 @@ CREATE TABLE `syschangelog` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-04-02 16:36:49
+-- Dump completed on 2013-04-03 12:46:53

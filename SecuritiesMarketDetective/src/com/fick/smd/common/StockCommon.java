@@ -7,8 +7,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.fick.smd.agg.SmdAggregator;
-import com.fick.smd.agg.SmdAggregatorAvg;
 import com.fick.smd.esper.input.InputAdapter;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockProps;
@@ -22,10 +20,6 @@ public class StockCommon {
 	private static final Log log = LogFactory.getLog(StockCommon.class);
 
 	private static Map<String, Float> avgMaxRateCurr = getAvgMaxRateCurr();
-
-	private static Map<String, SmdAggregator> stockAggregatorMap = new HashMap<String, SmdAggregator>();
-
-	private static Map<String, Map<StockPropType, Float>> stockPropsToday = new HashMap<String, Map<StockPropType, Float>>();
 
 	private static boolean isWarn = Constants.IS_WARN_INIT;
 
@@ -45,65 +39,6 @@ public class StockCommon {
 	 */
 	public static boolean getIsWarn() {
 		return isWarn;
-	}
-
-	/**
-	 * 更新股票属性
-	 * 
-	 * @param bean
-	 */
-	public static void upStockProps(Stock stock) {
-		String code = stock.getCode();
-		SmdAggregator aggregatorAvg = stockAggregatorMap.get(code);
-		if (aggregatorAvg == null) {
-			aggregatorAvg = new SmdAggregatorAvg();
-			stockAggregatorMap.put(code, aggregatorAvg);
-		}
-		aggregatorAvg.enter(stock);
-		if (stockPropsToday.get(code) == null) {
-			Map<StockPropType, Float> props = new HashMap<StockPropType, Float>();
-			props.put(StockPropType.PRICE_MAX, stock.getPrice_highest());
-			props.put(StockPropType.PRICE_MIN, stock.getPrice_lowest());
-			props.put(StockPropType.PRICE_TODAY_END, stock.getPrice_current());
-			props.put(StockPropType.PRICE_YESTERDAY, stock.getPrice_yesterday());
-			props.put(StockPropType.PRICE_TODAY, stock.getPrice_today());
-			props.put(StockPropType.PRICE_AVG, (Float) aggregatorAvg.getValue());
-			stockPropsToday.put(code, props);
-		} else {
-			Map<StockPropType, Float> props = stockPropsToday.get(code);
-
-			float priceMax = stock.getPrice_highest();
-			if (props.get(Constants.PRICE_MAX) == null) {
-				props.put(StockPropType.PRICE_MAX, priceMax);
-			} else if (priceMax > props.get(Constants.PRICE_MAX)) {
-				props.put(StockPropType.PRICE_MAX, priceMax);
-			}
-
-			float priceMin = stock.getPrice_lowest();
-			if (props.get(Constants.PRICE_MIN) == null) {
-				props.put(StockPropType.PRICE_MIN, priceMin);
-			} else if (priceMin < props.get(Constants.PRICE_MIN)) {
-				props.put(StockPropType.PRICE_MIN, priceMin);
-			}
-
-			float price = stock.getPrice_current();
-			if (props.get(Constants.PRICE_TODAY_END) == null) {
-				props.put(StockPropType.PRICE_TODAY_END, price);
-			} else if (price != props.get(Constants.PRICE_TODAY_END)) {
-				props.put(StockPropType.PRICE_TODAY_END, price);
-			}
-			props.put(StockPropType.PRICE_AVG, (Float) aggregatorAvg.getValue());
-			stockPropsToday.put(code, props);
-		}
-	}
-
-	/**
-	 * 得到今天分析所得的股票关键值，用于每天市后入库
-	 * 
-	 * @return
-	 */
-	public static Map<String, Map<StockPropType, Float>> getStockProps() {
-		return stockPropsToday;
 	}
 
 	/**
@@ -137,21 +72,6 @@ public class StockCommon {
 	 */
 	public static Float getAvgMaxRateByCode(String code) {
 		return avgMaxRateCurr.get(code) == null ? null : avgMaxRateCurr.get(code);
-	}
-
-	/**
-	 * 根据股票代码和属性类型，得到指定股票当前的属性值；
-	 * 
-	 * @param code
-	 * @param type
-	 * @return
-	 */
-	public static Float getStockPropByCodeAndType(String code, StockPropType type) {
-		Map<StockPropType, Float> props = stockPropsToday.get(code);
-		if (props == null) {
-			return null;
-		}
-		return props.get(type) == null ? null : props.get(type);
 	}
 
 	public static void dealNewStock(Stock stock) {
@@ -194,8 +114,10 @@ public class StockCommon {
 		// 两个条件：
 		// 1.振幅是否已经达到预期；
 		// 2.当前价格是否低于今日平均价格；
-		if (getMaxRate(getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price, getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
-				* Constants.AMPLITUDE_RATE || price >= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
+		if (getMaxRate(StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price,
+				StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
+				* Constants.AMPLITUDE_RATE
+				|| price >= StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
 			return null;
 		}
 		// if (price >= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
@@ -240,8 +162,10 @@ public class StockCommon {
 		// 两个条件：
 		// 1.振幅是否已经达到预期；
 		// 2.当前价格是否高于今日平均价格；
-		if (getMaxRate(price, getStockPropByCodeAndType(code, StockPropType.PRICE_MIN), getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
-				* Constants.AMPLITUDE_RATE || price <= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
+		if (getMaxRate(price, StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MIN),
+				StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
+				* Constants.AMPLITUDE_RATE
+				|| price <= StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
 			return null;
 		}
 		// if (price <= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {

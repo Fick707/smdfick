@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-4-3 9:51:24 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.fick.smd.hibernate.formbean.stockbean.StockDealDetail" table="stockdealdetail" dynamic-insert="true" dynamic-update="true" >
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"/>
+        </id>
+        <property name="stockcode" type="java.lang.String">
+            <column name="stockcode" length="45" not-null="true" />
+        </property>
+        <property name="dealtype" type="java.lang.Integer">
+            <column name="dealtype" not-null="true" />
+        </property>
+        <property name="dealprice" type="java.lang.Float">
+            <column name="dealprice" precision="12" scale="0" not-null="true" />
+        </property>
+        <property name="dealNum" type="java.lang.Integer">
+            <column name="dealNum" not-null="true" />
+        </property>
+        <property name="dealcost" type="java.lang.Float">
+            <column name="dealcost" precision="12" scale="0" not-null="true" />
+        </property>
+        <property name="dealdt" type="java.util.Date">
+            <column name="dealdt" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

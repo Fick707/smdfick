@@ -1,12 +1,13 @@
 package com.fick.smd.common;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.Test;
 
+import com.fick.smd.hibernate.formbean.stockbean.StockDealDetail;
 import com.fick.smd.hibernate.formbean.stockbean.StockStorage;
 
 public class StockStorageCommon {
@@ -19,10 +20,11 @@ public class StockStorageCommon {
 	private static final int BUY_STATE = 1;
 	// 卖出
 	private static final int SELL_STATE = 2;
+
 	// 买入确认
-	private static final int BUY_CONFIRM_STATE = 4;
+	// private static final int BUY_CONFIRM_STATE = 4;
 	// 卖出确认
-	private static final int SLL_CONFIRM_STATE = 8;
+	// private static final int SLL_CONFIRM_STATE = 8;
 
 	/**
 	 * 指定股票在指定价格买入
@@ -31,6 +33,7 @@ public class StockStorageCommon {
 	 * @param stockStorage
 	 */
 	public static void buyAt(float price, StockStorage stockStorage) {
+		String code = stockStorage.getStockcode();
 		int dealNum = stockStorage.getDealnum();
 		stockStorage.setTodaystate(setBit(stockStorage.getTodaystate(), BUY_STATE));
 		stockStorage.setBuyprice(price);
@@ -38,7 +41,15 @@ public class StockStorageCommon {
 		float cost = getBuyCostByNumAndPrice(dealNum, price);
 		stockStorage.setBalance(stockStorage.getBalance() - cost);
 		log.info("买入！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
-		log.info("股票" + stockStorage.getStockcode() + "在" + price + "买入" + dealNum + ",共花费:" + cost);
+		log.info("股票" + code + "在" + price + "买入" + dealNum + ",共花费:" + cost);
+		StockDealDetail detail = new StockDealDetail();
+		detail.setStockcode(code);
+		detail.setDealtype(StockDealType.BUY.ordinal());
+		detail.setDealprice(price);
+		detail.setDealNum(dealNum);
+		detail.setDealcost(cost);
+		detail.setDealdt(new Date());
+		StockDealCommon.addDetail(code, detail);
 	}
 
 	/**
@@ -48,6 +59,7 @@ public class StockStorageCommon {
 	 * @param stockStorage
 	 */
 	public static void sellAt(float price, StockStorage stockStorage) {
+		String code = stockStorage.getStockcode();
 		int dealNum = stockStorage.getDealnum();
 		stockStorage.setTodaystate(setBit(stockStorage.getTodaystate(), SELL_STATE));
 		stockStorage.setSellprice(price);
@@ -55,7 +67,15 @@ public class StockStorageCommon {
 		float cost = getSellEarningByNumAndPrice(dealNum, price);
 		stockStorage.setBalance(stockStorage.getBalance() + cost);
 		log.info("卖出！－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－");
-		log.info("股票" + stockStorage.getStockcode() + "在" + price + "卖出" + dealNum + ",共收益:" + cost);
+		log.info("股票" + code + "在" + price + "卖出" + dealNum + ",共收益:" + cost);
+		StockDealDetail detail = new StockDealDetail();
+		detail.setStockcode(code);
+		detail.setDealtype(StockDealType.SELL.ordinal());
+		detail.setDealprice(price);
+		detail.setDealNum(dealNum);
+		detail.setDealcost(cost);
+		detail.setDealdt(new Date());
+		StockDealCommon.addDetail(code, detail);
 	}
 
 	/**
@@ -98,7 +118,7 @@ public class StockStorageCommon {
 	 * @param code
 	 */
 	public static void buyAtByCodeViaCommand(String code) {
-		Float price = StockCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_TODAY_END);
+		Float price = StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_TODAY_END);
 		if (price == null) {
 			return;
 		}
@@ -116,7 +136,7 @@ public class StockStorageCommon {
 	 * @param code
 	 */
 	public static void sellAtByCodeViaCommon(String code) {
-		Float price = StockCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_TODAY_END);
+		Float price = StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_TODAY_END);
 		if (price == null) {
 			return;
 		}
@@ -232,11 +252,6 @@ public class StockStorageCommon {
 	 */
 	public static float compareBuyAndSell(float buyPrice, float sellPrice, int dealNum) {
 		return getSellEarningByNumAndPrice(dealNum, sellPrice) - getBuyCostByNumAndPrice(dealNum, buyPrice);
-	}
-
-	@Test
-	public void testBit() {
-		System.out.println(isBitFull(7, this.BUY_STATE));
 	}
 
 }

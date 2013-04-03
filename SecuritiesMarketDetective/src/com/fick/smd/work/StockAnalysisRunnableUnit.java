@@ -1,6 +1,6 @@
 package com.fick.smd.work;
 
-import com.fick.smd.common.StockCommon;
+import com.fick.smd.common.StockPropsCommon;
 import com.fick.smd.hibernate.formbean.stockbean.Stock;
 
 public class StockAnalysisRunnableUnit implements Runnable {
@@ -13,7 +13,7 @@ public class StockAnalysisRunnableUnit implements Runnable {
 
 	@Override
 	public void run() {
-		StockCommon.upStockProps(stock);
+		StockPropsCommon.upStockProps(stock);
 	}
 
 }

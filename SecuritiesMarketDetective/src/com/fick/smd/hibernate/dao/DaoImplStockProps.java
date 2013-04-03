@@ -2,15 +2,13 @@ package com.fick.smd.hibernate.dao;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 
 import com.fick.smd.common.Constants;
 import com.fick.smd.hibernate.formbean.stockbean.StockProps;
 
 public class DaoImplStockProps implements DaoInterface {
-	private static final Log log = LogFactory.getLog(DaoImplStockProps.class);
+	// private static final Log log = LogFactory.getLog(DaoImplStockProps.class);
 
 	private List<StockProps> props;
 
