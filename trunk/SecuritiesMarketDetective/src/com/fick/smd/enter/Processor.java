@@ -132,6 +132,11 @@ public class Processor {
 				bw.write("02\n");
 				bw.flush();
 				log.info("set amplitude rate via command successfully!");
+			} else {
+				bw.write("cmd not supported!\n");
+				bw.write("02\n");
+				bw.flush();
+				log.info("cmd not supported!");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
