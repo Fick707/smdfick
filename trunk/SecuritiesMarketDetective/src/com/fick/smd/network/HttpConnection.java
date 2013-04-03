@@ -39,6 +39,7 @@ public class HttpConnection implements Connection {
 	@Override
 	public synchronized Stock getStock(String code) {
 		try {
+			connectionErrorNum = 0;
 			connection = (HttpURLConnection) url.openConnection();
 			InputStream is = connection.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is, "GBK"));
@@ -52,7 +53,7 @@ public class HttpConnection implements Connection {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			connectionErrorNum++;
-			if (connectionErrorNum % 50 == 0) {
+			if (connectionErrorNum <= 5) {
 				log.warn("network connection error,check the network please!");
 			}
 			return null;

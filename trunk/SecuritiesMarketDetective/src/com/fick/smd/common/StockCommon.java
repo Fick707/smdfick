@@ -112,18 +112,16 @@ public class StockCommon {
 			}
 		}
 		// 两个条件：
-		// 1.振幅是否已经达到预期；
-		// 2.当前价格是否低于今日平均价格；
-		if (getMaxRate(StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price,
-				StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
+		// 1.振幅是否已经达到预期且当前价格低于当前平均价格；
+		// 2.当前价格低于当前平均价格一定值；
+		if ((getMaxRate(StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price,
+				StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) >= getAvgMaxRateByCode(code)
 				* Constants.AMPLITUDE_RATE
-				|| price >= StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
-			return null;
+				&& price < StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG))
+				|| (StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG) - price >= Constants.PRICE_PRICEAVG)) {
+			return stockStorage;
 		}
-		// if (price >= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
-		// return null;
-		// }
-		return stockStorage;
+		return null;
 	}
 
 	/**
@@ -160,18 +158,16 @@ public class StockCommon {
 			}
 		}
 		// 两个条件：
-		// 1.振幅是否已经达到预期；
-		// 2.当前价格是否高于今日平均价格；
-		if (getMaxRate(price, StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MIN),
-				StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) < getAvgMaxRateByCode(code)
+		// 1.振幅是否已经达到预期且当前价格高于当前平均价格；
+		// 2.当前价格比当前平均价格高出一定值；
+		if ((getMaxRate(price, StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MIN),
+				StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) >= getAvgMaxRateByCode(code)
 				* Constants.AMPLITUDE_RATE
-				|| price <= StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
-			return null;
+				&& price > StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG))
+				|| (price - StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG) >= Constants.PRICE_PRICEAVG)) {
+			return stockStorage;
 		}
-		// if (price <= getStockPropByCodeAndType(code, StockPropType.PRICE_AVG)) {
-		// return null;
-		// }
-		return stockStorage;
+		return null;
 	}
 
 	/**
