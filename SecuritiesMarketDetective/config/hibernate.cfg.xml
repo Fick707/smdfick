@@ -16,5 +16,6 @@
   <mapping class="com.fick.smd.hibernate.formbean.esperbean.EplDef" resource="com/fick/smd/hibernate/formbean/esperbean/EplDef.hbm.xml"/>
   <mapping class="com.fick.smd.hibernate.formbean.stockbean.StockProps" resource="com/fick/smd/hibernate/formbean/stockbean/StockProps.hbm.xml"/>
   <mapping class="com.fick.smd.hibernate.formbean.stockbean.StockStorage" resource="com/fick/smd/hibernate/formbean/stockbean/StockStorage.hbm.xml"/>
+  <mapping class="com.fick.smd.hibernate.formbean.stockbean.StockDealDetail" resource="com/fick/smd/hibernate/formbean/stockbean/StockDealDetail.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
