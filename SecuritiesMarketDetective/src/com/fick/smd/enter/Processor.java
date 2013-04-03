@@ -121,8 +121,8 @@ public class Processor {
 				bw.flush();
 				log.info("set amplitude rate via command successfully!");
 			} else if (Constants.getProperty("COMMAND_COMPARE_BUY_SELL").equals(command)) {
-				String value = cmd.substring(6, cmd.lastIndexOf("$"));
-				String[] vals = value.split("#");
+				String value = cmd.substring(6, cmd.length());
+				String[] vals = value.split(",");
 				float buyP = Float.parseFloat(vals[0]);
 				float sellP = Float.parseFloat(vals[1]);
 				int dealNum = Integer.parseInt(vals[2]);

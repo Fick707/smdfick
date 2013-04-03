@@ -64,29 +64,24 @@ public class SocketClient {
 		sendCmd("$4001$");
 	}
 
-	@Test
 	public void buyByCodeAtCurrPrice(String code) {
 		sendCmd("$8001$" + code + "$");
 	}
 
-	@Test
 	public void sellByCodeAtCurrPrice(String code) {
 		sendCmd("$8002$" + code + "$");
 	}
 
-	@Test
 	public void addStockDefByCodeAtCurrPrice(String code) {
 		sendCmd("$8003$" + code + "$");
 	}
 
-	@Test
 	public void setAmplitudeRate(String rate) {
 		sendCmd("$4002$" + rate + "$");
 	}
 
-	@Test
 	public void compareBuyAndSell(String priceBuy, String priceSell, String dealNum) {
-		sendCmd("$1100$" + priceBuy + "#" + priceSell + "#" + dealNum);
+		sendCmd("$1100$" + priceBuy + "," + priceSell + "," + dealNum);
 	}
 
 	/**
@@ -170,6 +165,12 @@ public class SocketClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testFunction() {
+		SocketClient client = new SocketClient();
+		client.compareBuyAndSell("10.07", "10.14", "500");
 	}
 
 }
