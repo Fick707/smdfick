@@ -47,7 +47,8 @@ public class StockWorkThread extends Thread {
 					continue;
 				}
 				preStock = stock;
-				StockCommon.dealNewStock(stock);
+				StockCommon.addToAnalysis(stock);
+				StockCommon.sendToEsper(stock);
 				Thread.sleep(Constants.STOCK_INFO_REPEAT);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
