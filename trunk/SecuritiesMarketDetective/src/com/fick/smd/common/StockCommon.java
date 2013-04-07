@@ -74,8 +74,21 @@ public class StockCommon {
 		return avgMaxRateCurr.get(code) == null ? null : avgMaxRateCurr.get(code);
 	}
 
-	public static void dealNewStock(Stock stock) {
+	/**
+	 * 分析
+	 * 
+	 * @param stock
+	 */
+	public static void addToAnalysis(Stock stock) {
 		StockAnalysisService.submitAnalysis(new StockAnalysisRunnableUnit(stock));
+	}
+
+	/**
+	 * 发送给引擎
+	 * 
+	 * @param stock
+	 */
+	public static void sendToEsper(Stock stock) {
 		InputAdapter.sendEvent(stock);
 	}
 

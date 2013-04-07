@@ -47,7 +47,7 @@ public class StockAnalysisWorkThread extends Thread {
 					continue;
 				}
 				preStock = stock;
-				StockCommon.dealNewStock(stock);
+				StockCommon.addToAnalysis(stock);
 				Thread.sleep(Constants.STOCK_ANALYSIS_REPEAT);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
