@@ -124,7 +124,7 @@ public class StockCommon {
 				return null;
 			}
 		}
-		// 两个条件：
+		// 两个条件满足其中之一即可：
 		// 1.振幅是否已经达到预期且当前价格低于当前平均价格；
 		// 2.当前价格低于当前平均价格一定值；
 		if ((getMaxRate(StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price,
@@ -170,7 +170,7 @@ public class StockCommon {
 				return null;
 			}
 		}
-		// 两个条件：
+		// 两个条件满足其中之一即可：
 		// 1.振幅是否已经达到预期且当前价格高于当前平均价格；
 		// 2.当前价格比当前平均价格高出一定值；
 		if ((getMaxRate(price, StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MIN),

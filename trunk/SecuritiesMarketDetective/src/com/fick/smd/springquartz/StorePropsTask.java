@@ -20,9 +20,8 @@ public class StorePropsTask {
 		log.info("end to store props of stocks for analysising!");
 
 		log.info("begin to store deal details!");
-
-		log.info("end to store deal details!");
 		StockDealCommon.storeDetails();
+		log.info("end to store deal details!");
 		log.info("system will shutdown 60 seconds later!");
 		try {
 			Thread.sleep(60000);
