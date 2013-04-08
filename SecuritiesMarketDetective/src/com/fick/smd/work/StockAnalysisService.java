@@ -25,6 +25,7 @@ public class StockAnalysisService {
 	public static void submitAnalysis(StockAnalysisRunnableUnit unit) {
 		try {
 			analysisQueue.put(unit);
+			// analysisQueue.add(unit);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			log.warn("submit analysis interrupted");

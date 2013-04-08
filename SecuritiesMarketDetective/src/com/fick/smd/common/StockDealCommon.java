@@ -38,7 +38,7 @@ public class StockDealCommon {
 			details.addAll(stockDeals.get(code));
 		}
 		detailDao.setDetails(details);
-		dmt.process(detailDao, 2);
+		dmt.process(detailDao, 1);
 	}
 
 }
