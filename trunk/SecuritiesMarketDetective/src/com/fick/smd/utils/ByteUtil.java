@@ -38,11 +38,12 @@ public class ByteUtil {
 
 	@Test
 	public void test() {
-		int v = 11111;
+		int v = Integer.MAX_VALUE - 1;
+
 		byte[] bs = integerToBytes(v);
-		System.out.println(bs);
+
+		System.out.println(Integer.toBinaryString(v));
 		int vv = bytesToInt(bs);
 		System.out.println(vv);
 	}
-
 }
