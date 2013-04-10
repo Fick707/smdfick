@@ -52,10 +52,6 @@
 		<level value="INFO"/>
 	</logger>
 
-	<logger name="com">
-		<level value="INFO"/>
-	</logger>
-
 	<logger name="com.fick.smd.common.StockStorageCommon">
     	<level value="INFO" />
     	<appender-ref ref="stockdealevent" />

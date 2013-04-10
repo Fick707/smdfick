@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.fick.smd.agg.SmdAggregator;
 import com.fick.smd.agg.SmdAggregatorAvg;
 import com.fick.smd.hibernate.DaoMethodTemplate;
@@ -13,7 +16,7 @@ import com.fick.smd.hibernate.formbean.stockbean.Stock;
 import com.fick.smd.hibernate.formbean.stockbean.StockProps;
 
 public class StockPropsCommon {
-	// private static final Log log = LogFactory.getLog(StockPropsCommon.class);
+	private static final Log log = LogFactory.getLog(StockPropsCommon.class);
 	private static DaoMethodTemplate dmt = new DaoMethodTemplate();
 	private static DaoImplStockProps rateDao = new DaoImplStockProps();
 
@@ -34,8 +37,9 @@ public class StockPropsCommon {
 			stockAggregatorMap.put(code, aggregatorAvg);
 		}
 		aggregatorAvg.enter(stock);
+		Map<StockPropType, Float> props;
 		if (stockPropsToday.get(code) == null) {
-			Map<StockPropType, Float> props = new HashMap<StockPropType, Float>();
+			props = new HashMap<StockPropType, Float>();
 			props.put(StockPropType.PRICE_MAX, stock.getPrice_highest());
 			props.put(StockPropType.PRICE_MIN, stock.getPrice_lowest());
 			props.put(StockPropType.PRICE_TODAY_END, stock.getPrice_current());
@@ -44,7 +48,7 @@ public class StockPropsCommon {
 			props.put(StockPropType.PRICE_AVG, (Float) aggregatorAvg.getValue());
 			stockPropsToday.put(code, props);
 		} else {
-			Map<StockPropType, Float> props = stockPropsToday.get(code);
+			props = stockPropsToday.get(code);
 
 			float priceMax = stock.getPrice_highest();
 			if (props.get(Constants.PRICE_MAX) == null) {
@@ -69,6 +73,7 @@ public class StockPropsCommon {
 			props.put(StockPropType.PRICE_AVG, (Float) aggregatorAvg.getValue());
 			stockPropsToday.put(code, props);
 		}
+		log.debug("code:" + code + "price_current:" + props.get(StockPropType.PRICE_TODAY_END) + "price_avg:" + props.get(StockPropType.PRICE_AVG));
 	}
 
 	/**
