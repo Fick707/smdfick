@@ -57,12 +57,6 @@ public class Constants {
 	// 过户费transfer fee 元/1000
 	public static float TRANSFER_FEE = 1;
 
-	// 振幅率
-	public static float AMPLITUDE_RATE = 0.8f;
-
-	// 价格与平均价格的差
-	public static float PRICE_PRICEAVG = 0.08f;
-
 	// 警告开关初始
 	public static boolean IS_WARN_INIT = false;
 
@@ -101,12 +95,6 @@ public class Constants {
 			if (CommonUtils.getFloatFromString(props.getProperty("TRANSFER_FEE")) != null) {
 				TRANSFER_FEE = CommonUtils.getFloatFromString(props.getProperty("TRANSFER_FEE"));
 			}
-			if (CommonUtils.getFloatFromString(props.getProperty("AMPLITUDE_RATE")) != null) {
-				AMPLITUDE_RATE = CommonUtils.getFloatFromString(props.getProperty("AMPLITUDE_RATE"));
-			}
-			if (CommonUtils.getFloatFromString(props.getProperty("PRICE_PRICEAVG")) != null) {
-				PRICE_PRICEAVG = CommonUtils.getFloatFromString(props.getProperty("PRICE_PRICEAVG"));
-			}
 			if (CommonUtils.getBooleanFromString(props.getProperty("IS_WARN_INIT")) != null) {
 				IS_WARN_INIT = CommonUtils.getBooleanFromString(props.getProperty("IS_WARN_INIT"));
 			}
@@ -130,24 +118,6 @@ public class Constants {
 	 */
 	public static void setProperty(String key, String value) {
 		props.setProperty(key, value);
-	}
-
-	/**
-	 * 设置振幅率
-	 * 
-	 * @param rate
-	 */
-	public static void setAmplitudeRate(String rate) {
-		if (rate == null) {
-			return;
-		}
-		try {
-			float rateF = Float.parseFloat(rate);
-			AMPLITUDE_RATE = rateF;
-		} catch (Exception e) {
-			log.error("set amplitude rate error.can not parse the value to float!");
-			return;
-		}
 	}
 
 	public static void reload() {

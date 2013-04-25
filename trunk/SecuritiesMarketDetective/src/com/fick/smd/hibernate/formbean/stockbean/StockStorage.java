@@ -23,6 +23,8 @@ public class StockStorage implements java.io.Serializable {
 	private Float expectearning;
 	private Date datetime;
 	private Float earning;
+	private Float amplituderate;
+	private Float priceavgoffset;
 
 	public StockStorage() {
 		this.todaystate = 0;
@@ -138,6 +140,22 @@ public class StockStorage implements java.io.Serializable {
 
 	public void setEarning(Float earning) {
 		this.earning = earning;
+	}
+
+	public Float getAmplituderate() {
+		return amplituderate;
+	}
+
+	public void setAmplituderate(Float amplituderate) {
+		this.amplituderate = amplituderate;
+	}
+
+	public Float getPriceavgoffset() {
+		return priceavgoffset;
+	}
+
+	public void setPriceavgoffset(Float priceavgoffset) {
+		this.priceavgoffset = priceavgoffset;
 	}
 
 }

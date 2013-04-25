@@ -48,5 +48,13 @@
                 2.&#185;&#216;&#178;&#214;&#205;&#163;&#214;&#185;&#189;&#187;&#210;&#215;</comment>
             </column>
         </property>
+        <property name="amplituderate" type="java.lang.Float">
+            <column name="amplituderate" precision="12" scale="0">
+            </column>
+        </property>
+        <property name="priceavgoffset" type="java.lang.Float">
+            <column name="priceavgoffset" precision="12" scale="0">
+            </column>
+        </property>
     </class>
 </hibernate-mapping>

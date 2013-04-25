@@ -76,10 +76,6 @@ public class SocketClient {
 		sendCmd("$8003$" + code + "$");
 	}
 
-	public void setAmplitudeRate(String rate) {
-		sendCmd("$4002$" + rate + "$");
-	}
-
 	public void compareBuyAndSell(String priceBuy, String priceSell, String dealNum) {
 		sendCmd("$1100$" + priceBuy + "," + priceSell + "," + dealNum);
 	}
@@ -152,9 +148,6 @@ public class SocketClient {
 			} else if ("addstockdef".equals(args[0])) {
 				String code = args[1];
 				client.addStockDefByCodeAtCurrPrice(code);
-			} else if ("setamplituderate".equals(args[0])) {
-				String val = args[1];
-				client.setAmplitudeRate(val);
 			} else if ("compare".equals(args[0])) {
 				String priceBuy = args[1];
 				String priceSell = args[2];
