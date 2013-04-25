@@ -113,13 +113,6 @@ public class Processor {
 				bw.write("00\n");
 				bw.flush();
 				log.info("add stock def by code via command successfully!");
-			} else if (Constants.getProperty("COMMAND_SET_AMPLITUDE_RATE").equals(command)) {
-				String value = cmd.substring(6, cmd.lastIndexOf("$"));
-				Constants.setProperty("AMPLITUDE_RATE", value);
-				bw.write("set amplitude rate via command successfully!from socket server!\n");
-				bw.write("00\n");
-				bw.flush();
-				log.info("set amplitude rate via command successfully!");
 			} else if (Constants.getProperty("COMMAND_COMPARE_BUY_SELL").equals(command)) {
 				String value = cmd.substring(6, cmd.length());
 				String[] vals = value.split(",");

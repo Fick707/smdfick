@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `smddb_test` /*!40100 DEFAULT CHARACTER SET utf8 
 USE `smddb_test`;
 -- MySQL dump 10.13  Distrib 5.6.10, for Win64 (x86_64)
 --
--- Host: localhost    Database: smddb
+-- Host: localhost    Database: smddb_test
 -- ------------------------------------------------------
 -- Server version	5.6.10-log
 
@@ -55,7 +55,7 @@ CREATE TABLE `stockdealdetail` (
   `dealcost` float NOT NULL COMMENT '共花费',
   `dealdt` datetime NOT NULL COMMENT '交易时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,14 +67,15 @@ DROP TABLE IF EXISTS `stockdef`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stockdef` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stockcode` varchar(45) DEFAULT NULL COMMENT '股票代码',
+  `stockcode` varchar(45) NOT NULL COMMENT '股票代码',
   `stockname` varchar(45) DEFAULT NULL COMMENT '股票名称',
-  `stockst` int(11) DEFAULT '1' COMMENT '股票状态：\n1.分析\n2.停止\n3.交易',
+  `stockst` int(11) DEFAULT '1' COMMENT '股票状态：\n1.分析\n3.交易',
   `type` int(11) DEFAULT '1' COMMENT '股票类型\n1.普通A股\n0.指数',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `updatedt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `stockcode_UNIQUE` (`stockcode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,7 +97,7 @@ CREATE TABLE `stockprops` (
   `pricetodayend` float DEFAULT NULL,
   `updatedate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,15 +112,17 @@ CREATE TABLE `stockstorage` (
   `stockcode` varchar(45) NOT NULL COMMENT '股票代码',
   `investment` float DEFAULT NULL COMMENT '初始投入资金',
   `balance` float DEFAULT NULL COMMENT '余额',
-  `dealnum` int(11) DEFAULT NULL COMMENT '每次交易量',
+  `dealnum` int(11) NOT NULL DEFAULT '500' COMMENT '每次交易量',
   `expectearning` float DEFAULT '15',
   `stocknum` int(11) DEFAULT NULL COMMENT '可用股票数量',
   `lockedstocknum` int(11) DEFAULT NULL COMMENT '不可用股票数据',
-  `storagestate` int(11) DEFAULT NULL COMMENT '仓库状态\n1.正常交易\n2.关仓停止交易',
+  `storagestate` int(11) NOT NULL DEFAULT '1' COMMENT '仓库状态\n1.正常交易\n2.关仓停止交易',
+  `amplituderate` float DEFAULT NULL,
+  `priceavgoffset` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `stockcode_UNIQUE` (`stockcode`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='股票仓库';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='股票仓库';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,4 +152,4 @@ CREATE TABLE `syschangelog` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-04-19 16:13:36
+-- Dump completed on 2013-04-25 16:49:26

@@ -40,6 +40,7 @@ public class StockWorkThread extends Thread {
 				if (stock.getDatetime().before(calendar.getTime())) {
 					continue;
 				}
+				// log.debug(stock.getCode() + " price:" + stock.getPrice_current());
 				if (preStock == null) {
 					preStock = stock;
 				} else if (stock.equals(preStock)) {

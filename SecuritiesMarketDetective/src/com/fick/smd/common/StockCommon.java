@@ -129,9 +129,9 @@ public class StockCommon {
 		// 2.当前价格低于当前平均价格一定值；
 		if ((getMaxRate(StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MAX), price,
 				StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) >= getAvgMaxRateByCode(code)
-				* Constants.AMPLITUDE_RATE
+				* stockStorage.getAmplituderate()
 				&& price < StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG))
-				|| (StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG) - price >= Constants.PRICE_PRICEAVG)) {
+				|| (StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG) - price >= stockStorage.getPriceavgoffset())) {
 			return stockStorage;
 		}
 		return null;
@@ -175,9 +175,9 @@ public class StockCommon {
 		// 2.当前价格比当前平均价格高出一定值；
 		if ((getMaxRate(price, StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_MIN),
 				StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_YESTERDAY)) >= getAvgMaxRateByCode(code)
-				* Constants.AMPLITUDE_RATE
+				* stockStorage.getAmplituderate()
 				&& price > StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG))
-				|| (price - StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG) >= Constants.PRICE_PRICEAVG)) {
+				|| (price - StockPropsCommon.getStockPropByCodeAndType(code, StockPropType.PRICE_AVG) >= stockStorage.getPriceavgoffset())) {
 			return stockStorage;
 		}
 		return null;
