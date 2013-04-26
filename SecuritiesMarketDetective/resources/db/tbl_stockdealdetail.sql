@@ -3,7 +3,7 @@ truncate table stockdealdetail;
 -- Query: SELECT * FROM smddb.stockdealdetail
 LIMIT 0, 1000
 
--- Date: 2013-04-25 16:48
+-- Date: 2013-04-26 15:51
 */
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (1,'sh600000',1,10.09,500,5031.39,'2013-04-09 10:04:57');
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (2,'sh600446',1,9.18,500,4577.52,'2013-04-09 09:46:33');
@@ -40,3 +40,5 @@ INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (33,'sh600446',0,9.4,500,4708.05,'2013-04-25 14:21:06');
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (34,'sh601901',1,7.33,500,3654.84,'2013-04-25 10:53:03');
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (35,'sh600008',0,7.65,500,3831.74,'2013-04-25 14:51:02');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (36,'sh601901',0,7.18,500,3596.39,'2013-04-26 14:19:25');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (37,'sh600008',0,7.44,500,3726.58,'2013-04-26 13:06:44');
