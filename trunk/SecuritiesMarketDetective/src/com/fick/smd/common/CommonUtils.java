@@ -150,6 +150,7 @@ public class CommonUtils {
 			retVal.setPrice_sell(Float.parseFloat(strings[8]));
 			retVal.setTurnover(Float.parseFloat(strings[9]));
 			retVal.setTurnover_sum(Float.parseFloat(strings[10]));
+			retVal.setPrice_avg(retVal.getTurnover_sum() / retVal.getTurnover());
 			float[] vals = new float[2];
 			vals[0] = Float.parseFloat(strings[12]);
 			vals[1] = Float.parseFloat(strings[11]);

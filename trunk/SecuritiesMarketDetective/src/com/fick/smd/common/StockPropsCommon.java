@@ -8,8 +8,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.fick.smd.agg.SmdAggregator;
-import com.fick.smd.agg.SmdAggregatorAvg;
 import com.fick.smd.hibernate.DaoMethodTemplate;
 import com.fick.smd.hibernate.dao.DaoImplStockProps;
 import com.fick.smd.hibernate.formbean.stockbean.Stock;
@@ -20,7 +18,7 @@ public class StockPropsCommon {
 	private static DaoMethodTemplate dmt = new DaoMethodTemplate();
 	private static DaoImplStockProps rateDao = new DaoImplStockProps();
 
-	private static Map<String, SmdAggregator> stockAggregatorMap = new HashMap<String, SmdAggregator>();
+	// private static Map<String, SmdAggregator> stockAggregatorMap = new HashMap<String, SmdAggregator>();
 
 	private static Map<String, Map<StockPropType, Float>> stockPropsToday = new HashMap<String, Map<StockPropType, Float>>();
 
@@ -31,12 +29,12 @@ public class StockPropsCommon {
 	 */
 	public static void upStockProps(Stock stock) {
 		String code = stock.getCode();
-		SmdAggregator aggregatorAvg = stockAggregatorMap.get(code);
-		if (aggregatorAvg == null) {
-			aggregatorAvg = new SmdAggregatorAvg();
-			stockAggregatorMap.put(code, aggregatorAvg);
-		}
-		aggregatorAvg.enter(stock);
+		// SmdAggregator aggregatorAvg = stockAggregatorMap.get(code);
+		// if (aggregatorAvg == null) {
+		// aggregatorAvg = new SmdAggregatorAvg();
+		// stockAggregatorMap.put(code, aggregatorAvg);
+		// }
+		// aggregatorAvg.enter(stock);
 		Map<StockPropType, Float> props;
 		if (stockPropsToday.get(code) == null) {
 			props = new HashMap<StockPropType, Float>();
@@ -45,7 +43,7 @@ public class StockPropsCommon {
 			props.put(StockPropType.PRICE_TODAY_END, stock.getPrice_current());
 			props.put(StockPropType.PRICE_YESTERDAY, stock.getPrice_yesterday());
 			props.put(StockPropType.PRICE_TODAY, stock.getPrice_today());
-			props.put(StockPropType.PRICE_AVG, (Float) aggregatorAvg.getValue());
+			props.put(StockPropType.PRICE_AVG, stock.getPrice_avg());
 			stockPropsToday.put(code, props);
 		} else {
 			props = stockPropsToday.get(code);
@@ -64,16 +62,11 @@ public class StockPropsCommon {
 				props.put(StockPropType.PRICE_MIN, priceMin);
 			}
 
-			float price = stock.getPrice_current();
-			if (props.get(Constants.PRICE_TODAY_END) == null) {
-				props.put(StockPropType.PRICE_TODAY_END, price);
-			} else if (price != props.get(Constants.PRICE_TODAY_END)) {
-				props.put(StockPropType.PRICE_TODAY_END, price);
-			}
-			props.put(StockPropType.PRICE_AVG, (Float) aggregatorAvg.getValue());
+			props.put(StockPropType.PRICE_TODAY_END, stock.getPrice_current());
+			props.put(StockPropType.PRICE_AVG, stock.getPrice_avg());
 			stockPropsToday.put(code, props);
 		}
-		log.debug("code:" + code + "price_current:" + props.get(StockPropType.PRICE_TODAY_END) + "price_avg:" + props.get(StockPropType.PRICE_AVG));
+		log.info("code:" + code + " price_current:" + stock.getPrice_current() + ", price_avg:" + stock.getPrice_avg());
 	}
 
 	/**

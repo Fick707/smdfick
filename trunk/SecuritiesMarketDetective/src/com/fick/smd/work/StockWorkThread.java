@@ -32,12 +32,15 @@ public class StockWorkThread extends Thread {
 			try {
 				stock = ConnectionFactory.getServiceCommon().getStockInfoByCode(code, this.connection);
 				if (stock == null) {
+					Thread.sleep(5000);
 					continue;
 				}
 				if (stock.getPrice_current() == 0) {
+					Thread.sleep(5000);
 					continue;
 				}
 				if (stock.getDatetime().before(calendar.getTime())) {
+					Thread.sleep(5000);
 					continue;
 				}
 				// log.debug(stock.getCode() + " price:" + stock.getPrice_current());
