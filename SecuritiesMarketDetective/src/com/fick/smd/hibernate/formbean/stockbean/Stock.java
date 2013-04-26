@@ -29,6 +29,7 @@ public class Stock {
 	private String name;
 	private Date datetime;
 	private float price_current;
+	private float price_avg;
 	private float price_yesterday;
 	private float price_today;
 	private float price_change;
@@ -258,6 +259,14 @@ public class Stock {
 
 	public void setValue_current(float value_current) {
 		this.value_current = value_current;
+	}
+
+	public float getPrice_avg() {
+		return price_avg;
+	}
+
+	public void setPrice_avg(float price_avg) {
+		this.price_avg = price_avg;
 	}
 
 	/**
