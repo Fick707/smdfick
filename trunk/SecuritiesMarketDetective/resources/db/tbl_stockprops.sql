@@ -3,7 +3,7 @@ truncate table stockprops;
 -- Query: SELECT * FROM smddb.stockprops
 LIMIT 0, 1000
 
--- Date: 2013-04-19 16:42
+-- Date: 2013-04-26 15:52
 */
 INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (1,'sz000002',6.01852,10.98,10.33,10.8,10.75,10.48,'2013-03-15 15:05:03');
 INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (2,'sh600000',5.26316,10.93,10.38,10.45,10.47,10.51,'2013-03-15 15:05:03');
@@ -193,3 +193,12 @@ INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest
 INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (186,'sz002431',4.13027,26.2,25.16,25.18,25.25,26.19,'2013-04-19 15:05:04');
 INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (187,'sh600008',5.45455,8,7.58,7.7,7.67,7.91,'2013-04-19 15:05:04');
 INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (188,'sh600016',9.29729,10.17,9.31,9.25,9.05,10.11,'2013-04-19 15:05:04');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (189,'sz000002',1.82149,11.19,10.99,10.98,10.99,11.05,'2013-04-26 15:05:05');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (190,'sh600894',4.07608,7.6,7.3,7.36,7.3,7.37,'2013-04-26 15:05:05');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (191,'sh600036',1.88216,12.34,12.11,12.22,12.28,12.16,'2013-04-26 15:05:05');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (192,'sh601166',3.07186,18.65,18.09,18.23,18.41,18.13,'2013-04-26 15:05:05');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (193,'sh600446',4.25532,9.45,9.05,9.4,9.38,9.07,'2013-04-26 15:05:05');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (194,'sh601901',5.42005,7.5,7.1,7.38,7.43,7.19,'2013-04-26 15:05:05');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (195,'sz002431',9.12846,24,21.79,24.21,24,22.14,'2013-04-26 15:05:05');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (196,'sh600008',8.76963,7.78,7.11,7.64,7.68,7.36,'2013-04-26 15:05:05');
+INSERT INTO `stockprops` (`id`,`stockcode`,`maxrate`,`pricehighest`,`pricelowest`,`priceyestoday`,`pricetoday`,`pricetodayend`,`updatedate`) VALUES (197,'sh600016',3.42397,10.07,9.73,9.93,9.97,9.81,'2013-04-26 15:05:05');
