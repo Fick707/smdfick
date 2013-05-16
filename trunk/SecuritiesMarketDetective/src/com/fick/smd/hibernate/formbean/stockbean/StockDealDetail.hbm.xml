@@ -26,5 +26,8 @@
         <property name="dealdt" type="java.util.Date">
             <column name="dealdt" length="19" not-null="true" />
         </property>
+        <property name="dealst" type="java.lang.Integer">
+            <column name="dealst" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>
