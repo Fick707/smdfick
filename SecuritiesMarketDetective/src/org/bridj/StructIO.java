@@ -393,7 +393,9 @@ public class StructIO {
      */
 	protected List<FieldDecl> listFields() {
 		List<FieldDecl> list = new ArrayList<FieldDecl>();
-		for (Method method : structClass.getMethods()) {
+//		for (Method method : structClass.getMethods()) {
+		//包含private方法
+		for (Method method : structClass.getDeclaredMethods()) {
             if (acceptFieldGetter(method, true)) {
                 FieldDecl io = createFieldDecl(method);
                 try {
