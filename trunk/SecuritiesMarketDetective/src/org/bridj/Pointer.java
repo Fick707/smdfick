@@ -1,15 +1,27 @@
 package org.bridj;
-import org.bridj.util.*;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import static org.bridj.AbstractIntegral.safeIntCast;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
-import java.nio.*;
-import java.lang.annotation.Annotation;
-import java.util.*;
-import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.CharBuffer;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
+import java.nio.ShortBuffer;
 import java.nio.charset.Charset;
-import static org.bridj.SizeT.safeIntCast;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
+
+import org.bridj.util.Utf8Utils;
+import org.bridj.util.Utils;
 
 /**
  * Pointer to a native memory location.<br>
@@ -6318,7 +6330,14 @@ public abstract class Pointer<T> implements Comparable<Pointer<?>>, Iterable<T>
 				return new String(getBytesAtOffset(byteOffset, safeIntCast(len)), charset(charset));
 			case C:
 				len = strlen(byteOffset);
-				return new String(getBytesAtOffset(byteOffset, safeIntCast(len)), charset(charset));
+				byte[] bytes = getBytesAtOffset(byteOffset, safeIntCast(len));
+				Charset customCharset = null;
+				if(Utf8Utils.isMultiByteUtf8(bytes)) {
+					customCharset = Charset.forName("UTF-8");
+				} else {
+					customCharset = Charset.forName("GBK");
+				}
+				return new String(getBytesAtOffset(byteOffset, safeIntCast(len)), charset(customCharset));
 			case WideC:
 				len = wcslen(byteOffset);
 				return new String(getCharsAtOffset(byteOffset, safeIntCast(len)));
