@@ -2,12 +2,11 @@ package org.hraink.futures.jctp.md;
 
 import org.bridj.BridJ;
 import org.bridj.Pointer;
-import org.bridj.ann.Virtual;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqUserLoginField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserLogoutField;
 import org.hraink.futures.ctp.thostmduserapi.CThostFtdcMdApi;
 import org.hraink.futures.ctp.thostmduserapi.CThostFtdcMdSpi;
-import org.hraink.futures.ctp.util.JCTPLibraryUtil;
+import org.hraink.futures.jctp.util.JCTPLibraryUtil;
 
 /**
  * CThostFtdcMdApi封装类

@@ -1,6 +1,7 @@
 package org.hraink.futures.jctp.trader;
 
 import org.bridj.Pointer;
+import org.bridj.StructObject;
 import org.bridj.ann.Virtual;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcAccountregisterField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcBrokerTradingAlgosField;
@@ -54,6 +55,7 @@ import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTransferSerialFie
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserLogoutField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserPasswordUpdateField;
 import org.hraink.futures.ctp.thosttraderapi.CThostFtdcTraderSpi;
+import static org.hraink.futures.jctp.util.JCTPStructUtil.*;
 
 /**
  * TraderSpi适配器类
@@ -66,27 +68,23 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	
 	private JCTPTraderSpi traderSpi;
 	
-	public JCTPTraderSpiAdapter(JCTPTraderSpi traderSpi) {
-		this.traderSpi = traderSpi;
+	public JCTPTraderSpiAdapter(JCTPTraderSpi traderSpi) {this.traderSpi = traderSpi;
 	}
 	@Override
 	@Virtual(0)
 	public void OnFrontConnected() {
-		
 		traderSpi.onFrontConnected();
 	}
 
 	@Override
 	@Virtual(1)
 	public void OnFrontDisconnected(int nReason) {
-		
 		traderSpi.onFrontDisconnected(nReason);
 	}
 
 	@Override
 	@Virtual(2)
 	public void OnHeartBeatWarning(int nTimeLapse) {
-		
 		traderSpi.onHeartBeatWarning(nTimeLapse);
 	}
 
@@ -96,8 +94,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcRspAuthenticateField> pRspAuthenticateField,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspAuthenticate(pRspAuthenticateField.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspAuthenticate(getStructObject(pRspAuthenticateField), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -106,8 +103,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcRspUserLoginField> pRspUserLogin,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspUserLogin(pRspUserLogin.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspUserLogin(getStructObject(pRspUserLogin), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -115,8 +111,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnRspUserLogout(Pointer<CThostFtdcUserLogoutField> pUserLogout,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspUserLogout(pUserLogout.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspUserLogout(getStructObject(pUserLogout), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -125,8 +120,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcUserPasswordUpdateField> pUserPasswordUpdate,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspUserPasswordUpdate(pUserPasswordUpdate.get(), pRspInfo.get(), nRequestID,
+		traderSpi.onRspUserPasswordUpdate(getStructObject(pUserPasswordUpdate), getStructObject(pRspInfo), nRequestID,
 				bIsLast);
 	}
 
@@ -136,9 +130,8 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcTradingAccountPasswordUpdateField> pTradingAccountPasswordUpdate,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspTradingAccountPasswordUpdate(pTradingAccountPasswordUpdate.get(),
-				pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspTradingAccountPasswordUpdate(getStructObject(pTradingAccountPasswordUpdate),
+				getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -147,8 +140,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcInputOrderField> pInputOrder,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspOrderInsert(pInputOrder.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspOrderInsert(getStructObject(pInputOrder), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -157,8 +149,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcParkedOrderField> pParkedOrder,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspParkedOrderInsert(pParkedOrder.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspParkedOrderInsert(getStructObject(pParkedOrder), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -167,8 +158,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcParkedOrderActionField> pParkedOrderAction,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspParkedOrderAction(pParkedOrderAction.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspParkedOrderAction(getStructObject(pParkedOrderAction), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -177,8 +167,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcInputOrderActionField> pInputOrderAction,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspOrderAction(pInputOrderAction.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspOrderAction(getStructObject(pInputOrderAction), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -187,8 +176,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcQueryMaxOrderVolumeField> pQueryMaxOrderVolume,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQueryMaxOrderVolume(pQueryMaxOrderVolume.get(), pRspInfo.get(), nRequestID,
+		traderSpi.onRspQueryMaxOrderVolume(getStructObject(pQueryMaxOrderVolume), getStructObject(pRspInfo), nRequestID,
 				bIsLast);
 	}
 
@@ -198,8 +186,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcSettlementInfoConfirmField> pSettlementInfoConfirm,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspSettlementInfoConfirm(pSettlementInfoConfirm.get(), pRspInfo.get(), nRequestID,
+		traderSpi.onRspSettlementInfoConfirm(getStructObject(pSettlementInfoConfirm), getStructObject(pRspInfo), nRequestID,
 				bIsLast);
 	}
 
@@ -209,8 +196,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcRemoveParkedOrderField> pRemoveParkedOrder,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspRemoveParkedOrder(pRemoveParkedOrder.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspRemoveParkedOrder(getStructObject(pRemoveParkedOrder), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -219,8 +205,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcRemoveParkedOrderActionField> pRemoveParkedOrderAction,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspRemoveParkedOrderAction(pRemoveParkedOrderAction.get(), pRspInfo.get(),
+		traderSpi.onRspRemoveParkedOrderAction(getStructObject(pRemoveParkedOrderAction), pRspInfo.get(),
 				nRequestID, bIsLast);
 	}
 
@@ -229,8 +214,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnRspQryOrder(Pointer<CThostFtdcOrderField> pOrder,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryOrder(pOrder.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryOrder(getStructObject(pOrder), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -238,8 +222,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnRspQryTrade(Pointer<CThostFtdcTradeField> pTrade,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryTrade(pTrade.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryTrade(getStructObject(pTrade), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -248,8 +231,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcInvestorPositionField> pInvestorPosition,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryInvestorPosition(pInvestorPosition.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryInvestorPosition(getStructObject(pInvestorPosition), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -258,8 +240,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcTradingAccountField> pTradingAccount,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryTradingAccount(pTradingAccount.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryTradingAccount(getStructObject(pTradingAccount), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -267,8 +248,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnRspQryInvestor(Pointer<CThostFtdcInvestorField> pInvestor,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryInvestor(pInvestor.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryInvestor(getStructObject(pInvestor), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -277,8 +257,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcTradingCodeField> pTradingCode,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryTradingCode(pTradingCode.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryTradingCode(getStructObject(pTradingCode), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -287,8 +266,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcInstrumentMarginRateField> pInstrumentMarginRate,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryInstrumentMarginRate(pInstrumentMarginRate.get(), pRspInfo.get(), nRequestID,
+		traderSpi.onRspQryInstrumentMarginRate(getStructObject(pInstrumentMarginRate), getStructObject(pRspInfo), nRequestID,
 				bIsLast);
 	}
 
@@ -298,8 +276,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcInstrumentCommissionRateField> pInstrumentCommissionRate,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryInstrumentCommissionRate(pInstrumentCommissionRate.get(), pRspInfo.get(),
+		traderSpi.onRspQryInstrumentCommissionRate(getStructObject(pInstrumentCommissionRate), getStructObject(pRspInfo),
 				nRequestID, bIsLast);
 	}
 
@@ -308,8 +285,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnRspQryExchange(Pointer<CThostFtdcExchangeField> pExchange,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryExchange(pExchange.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryExchange(getStructObject(pExchange), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -318,8 +294,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcInstrumentField> pInstrument,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryInstrument(pInstrument.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryInstrument(getStructObject(pInstrument), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -328,8 +303,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcDepthMarketDataField> pDepthMarketData,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryDepthMarketData(pDepthMarketData.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryDepthMarketData(getStructObject(pDepthMarketData), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -338,8 +312,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcSettlementInfoField> pSettlementInfo,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQrySettlementInfo(pSettlementInfo.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQrySettlementInfo(getStructObject(pSettlementInfo), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -348,8 +321,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcTransferBankField> pTransferBank,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryTransferBank(pTransferBank.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryTransferBank(getStructObject(pTransferBank), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -358,8 +330,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcInvestorPositionDetailField> pInvestorPositionDetail,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryInvestorPositionDetail(pInvestorPositionDetail.get(), pRspInfo.get(),
+		traderSpi.onRspQryInvestorPositionDetail(getStructObject(pInvestorPositionDetail), getStructObject(pRspInfo),
 				nRequestID, bIsLast);
 	}
 
@@ -368,8 +339,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnRspQryNotice(Pointer<CThostFtdcNoticeField> pNotice,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryNotice(pNotice.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryNotice(getStructObject(pNotice), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -378,8 +348,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcSettlementInfoConfirmField> pSettlementInfoConfirm,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQrySettlementInfoConfirm(pSettlementInfoConfirm.get(), pRspInfo.get(),
+		traderSpi.onRspQrySettlementInfoConfirm(getStructObject(pSettlementInfoConfirm), getStructObject(pRspInfo),
 				nRequestID, bIsLast);
 	}
 
@@ -389,9 +358,8 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcInvestorPositionCombineDetailField> pInvestorPositionCombineDetail,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryInvestorPositionCombineDetail(pInvestorPositionCombineDetail.get(),
-				pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryInvestorPositionCombineDetail(getStructObject(pInvestorPositionCombineDetail), 
+				getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -400,8 +368,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcCFMMCTradingAccountKeyField> pCFMMCTradingAccountKey,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryCFMMCTradingAccountKey(pCFMMCTradingAccountKey.get(), pRspInfo.get(),
+		traderSpi.onRspQryCFMMCTradingAccountKey(getStructObject(pCFMMCTradingAccountKey), getStructObject(pRspInfo),
 				nRequestID, bIsLast);
 	}
 
@@ -411,8 +378,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcEWarrantOffsetField> pEWarrantOffset,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryEWarrantOffset(pEWarrantOffset.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryEWarrantOffset(getStructObject(pEWarrantOffset), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -421,8 +387,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcTransferSerialField> pTransferSerial,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryTransferSerial(pTransferSerial.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryTransferSerial(getStructObject(pTransferSerial), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -431,30 +396,26 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcAccountregisterField> pAccountregister,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryAccountregister(pAccountregister.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryAccountregister(getStructObject(pAccountregister), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
 	@Virtual(37)
 	public void OnRspError(Pointer<CThostFtdcRspInfoField> pRspInfo,
 			int nRequestID, boolean bIsLast) {
-		
-		traderSpi.onRspError(pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspError(getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
 	@Virtual(38)
 	public void OnRtnOrder(Pointer<CThostFtdcOrderField> pOrder) {
-		
-		traderSpi.onRtnOrder(pOrder.get());
+		traderSpi.onRtnOrder(getStructObject(pOrder));
 	}
 
 	@Override
 	@Virtual(39)
 	public void OnRtnTrade(Pointer<CThostFtdcTradeField> pTrade) {
-		
-		traderSpi.onRtnTrade(pTrade.get());
+		traderSpi.onRtnTrade(getStructObject(pTrade));
 	}
 
 	@Override
@@ -462,8 +423,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnErrRtnOrderInsert(
 			Pointer<CThostFtdcInputOrderField> pInputOrder,
 			Pointer<CThostFtdcRspInfoField> pRspInfo) {
-		
-		traderSpi.onErrRtnOrderInsert(pInputOrder.get(), pRspInfo.get());
+		traderSpi.onErrRtnOrderInsert(getStructObject(pInputOrder), getStructObject(pRspInfo));
 	}
 
 	@Override
@@ -471,32 +431,28 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnErrRtnOrderAction(
 			Pointer<CThostFtdcOrderActionField> pOrderAction,
 			Pointer<CThostFtdcRspInfoField> pRspInfo) {
-		
-		traderSpi.onErrRtnOrderAction(pOrderAction.get(), pRspInfo.get());
+		traderSpi.onErrRtnOrderAction(getStructObject(pOrderAction), getStructObject(pRspInfo));
 	}
 
 	@Override
 	@Virtual(42)
 	public void OnRtnInstrumentStatus(
 			Pointer<CThostFtdcInstrumentStatusField> pInstrumentStatus) {
-		
-		traderSpi.onRtnInstrumentStatus(pInstrumentStatus.get());
+		traderSpi.onRtnInstrumentStatus(getStructObject(pInstrumentStatus));
 	}
 
 	@Override
 	@Virtual(43)
 	public void OnRtnTradingNotice(
 			Pointer<CThostFtdcTradingNoticeInfoField> pTradingNoticeInfo) {
-		
-		traderSpi.onRtnTradingNotice(pTradingNoticeInfo.get());
+		traderSpi.onRtnTradingNotice(getStructObject(pTradingNoticeInfo));
 	}
 
 	@Override
 	@Virtual(44)
 	public void OnRtnErrorConditionalOrder(
 			Pointer<CThostFtdcErrorConditionalOrderField> pErrorConditionalOrder) {
-		
-		traderSpi.onRtnErrorConditionalOrder(pErrorConditionalOrder.get());
+		traderSpi.onRtnErrorConditionalOrder(getStructObject(pErrorConditionalOrder));
 	}
 
 	@Override
@@ -505,8 +461,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcContractBankField> pContractBank,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryContractBank(pContractBank.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryContractBank(getStructObject(pContractBank), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -515,8 +470,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcParkedOrderField> pParkedOrder,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryParkedOrder(pParkedOrder.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryParkedOrder(getStructObject(pParkedOrder), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -525,8 +479,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcParkedOrderActionField> pParkedOrderAction,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryParkedOrderAction(pParkedOrderAction.get(), pRspInfo.get(), nRequestID,
+		traderSpi.onRspQryParkedOrderAction(getStructObject(pParkedOrderAction), getStructObject(pRspInfo), nRequestID,
 				bIsLast);
 	}
 
@@ -536,8 +489,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcTradingNoticeField> pTradingNotice,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryTradingNotice(pTradingNotice.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspQryTradingNotice(getStructObject(pTradingNotice), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -546,8 +498,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcBrokerTradingParamsField> pBrokerTradingParams,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryBrokerTradingParams(pBrokerTradingParams.get(), pRspInfo.get(), nRequestID,
+		traderSpi.onRspQryBrokerTradingParams(getStructObject(pBrokerTradingParams), getStructObject(pRspInfo), nRequestID,
 				bIsLast);
 	}
 
@@ -557,8 +508,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcBrokerTradingAlgosField> pBrokerTradingAlgos,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQryBrokerTradingAlgos(pBrokerTradingAlgos.get(), pRspInfo.get(), nRequestID,
+		traderSpi.onRspQryBrokerTradingAlgos(getStructObject(pBrokerTradingAlgos), getStructObject(pRspInfo), nRequestID,
 				bIsLast);
 	}
 
@@ -566,72 +516,63 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	@Virtual(51)
 	public void OnRtnFromBankToFutureByBank(
 			Pointer<CThostFtdcRspTransferField> pRspTransfer) {
-		
-		traderSpi.onRtnFromBankToFutureByBank(pRspTransfer.get());
+		traderSpi.onRtnFromBankToFutureByBank(getStructObject(pRspTransfer));
 	}
 
 	@Override
 	@Virtual(52)
 	public void OnRtnFromFutureToBankByBank(
 			Pointer<CThostFtdcRspTransferField> pRspTransfer) {
-		
-		traderSpi.onRtnFromFutureToBankByBank(pRspTransfer.get());
+		traderSpi.onRtnFromFutureToBankByBank(getStructObject(pRspTransfer));
 	}
 
 	@Override
 	@Virtual(53)
 	public void OnRtnRepealFromBankToFutureByBank(
 			Pointer<CThostFtdcRspRepealField> pRspRepeal) {
-		
-		traderSpi.onRtnRepealFromBankToFutureByBank(pRspRepeal.get());
+		traderSpi.onRtnRepealFromBankToFutureByBank(getStructObject(pRspRepeal));
 	}
 
 	@Override
 	@Virtual(54)
 	public void OnRtnRepealFromFutureToBankByBank(
 			Pointer<CThostFtdcRspRepealField> pRspRepeal) {
-		
-		traderSpi.onRtnRepealFromFutureToBankByBank(pRspRepeal.get());
+		traderSpi.onRtnRepealFromFutureToBankByBank(getStructObject(pRspRepeal));
 	}
 
 	@Override
 	@Virtual(55)
 	public void OnRtnFromBankToFutureByFuture(
 			Pointer<CThostFtdcRspTransferField> pRspTransfer) {
-		
-		traderSpi.onRtnFromBankToFutureByFuture(pRspTransfer.get());
+		traderSpi.onRtnFromBankToFutureByFuture(getStructObject(pRspTransfer));
 	}
 
 	@Override
 	@Virtual(56)
 	public void OnRtnFromFutureToBankByFuture(
 			Pointer<CThostFtdcRspTransferField> pRspTransfer) {
-		
-		traderSpi.onRtnFromFutureToBankByFuture(pRspTransfer.get());
+		traderSpi.onRtnFromFutureToBankByFuture(getStructObject(pRspTransfer));
 	}
 
 	@Override
 	@Virtual(57)
 	public void OnRtnRepealFromBankToFutureByFutureManual(
 			Pointer<CThostFtdcRspRepealField> pRspRepeal) {
-		
-		traderSpi.onRtnRepealFromBankToFutureByFutureManual(pRspRepeal.get());
+		traderSpi.onRtnRepealFromBankToFutureByFutureManual(getStructObject(pRspRepeal));
 	}
 
 	@Override
 	@Virtual(58)
 	public void OnRtnRepealFromFutureToBankByFutureManual(
 			Pointer<CThostFtdcRspRepealField> pRspRepeal) {
-		
-		traderSpi.onRtnRepealFromFutureToBankByFutureManual(pRspRepeal.get());
+		traderSpi.onRtnRepealFromFutureToBankByFutureManual(getStructObject(pRspRepeal));
 	}
 
 	@Override
 	@Virtual(59)
 	public void OnRtnQueryBankBalanceByFuture(
 			Pointer<CThostFtdcNotifyQueryAccountField> pNotifyQueryAccount) {
-		
-		traderSpi.onRtnQueryBankBalanceByFuture(pNotifyQueryAccount.get());
+		traderSpi.onRtnQueryBankBalanceByFuture(getStructObject(pNotifyQueryAccount));
 	}
 
 	@Override
@@ -639,8 +580,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnErrRtnBankToFutureByFuture(
 			Pointer<CThostFtdcReqTransferField> pReqTransfer,
 			Pointer<CThostFtdcRspInfoField> pRspInfo) {
-		
-		traderSpi.onErrRtnBankToFutureByFuture(pReqTransfer.get(), pRspInfo.get());
+		traderSpi.onErrRtnBankToFutureByFuture(getStructObject(pReqTransfer), getStructObject(pRspInfo));
 	}
 
 	@Override
@@ -648,8 +588,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnErrRtnFutureToBankByFuture(
 			Pointer<CThostFtdcReqTransferField> pReqTransfer,
 			Pointer<CThostFtdcRspInfoField> pRspInfo) {
-		
-		traderSpi.onErrRtnFutureToBankByFuture(pReqTransfer.get(), pRspInfo.get());
+		traderSpi.onErrRtnFutureToBankByFuture(getStructObject(pReqTransfer), getStructObject(pRspInfo));
 	}
 
 	@Override
@@ -657,8 +596,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnErrRtnRepealBankToFutureByFutureManual(
 			Pointer<CThostFtdcReqRepealField> pReqRepeal,
 			Pointer<CThostFtdcRspInfoField> pRspInfo) {
-		
-		traderSpi.onErrRtnRepealBankToFutureByFutureManual(pReqRepeal.get(), pRspInfo.get());
+		traderSpi.onErrRtnRepealBankToFutureByFutureManual(getStructObject(pReqRepeal), getStructObject(pRspInfo));
 	}
 
 	@Override
@@ -666,8 +604,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnErrRtnRepealFutureToBankByFutureManual(
 			Pointer<CThostFtdcReqRepealField> pReqRepeal,
 			Pointer<CThostFtdcRspInfoField> pRspInfo) {
-		
-		traderSpi.onErrRtnRepealFutureToBankByFutureManual(pReqRepeal.get(), pRspInfo.get());
+		traderSpi.onErrRtnRepealFutureToBankByFutureManual(getStructObject(pReqRepeal), getStructObject(pRspInfo));
 	}
 
 	@Override
@@ -675,24 +612,21 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	public void OnErrRtnQueryBankBalanceByFuture(
 			Pointer<CThostFtdcReqQueryAccountField> pReqQueryAccount,
 			Pointer<CThostFtdcRspInfoField> pRspInfo) {
-		
-		traderSpi.onErrRtnQueryBankBalanceByFuture(pReqQueryAccount.get(), pRspInfo.get());
+		traderSpi.onErrRtnQueryBankBalanceByFuture(getStructObject(pReqQueryAccount), getStructObject(pRspInfo));
 	}
 
 	@Override
 	@Virtual(65)
 	public void OnRtnRepealFromBankToFutureByFuture(
 			Pointer<CThostFtdcRspRepealField> pRspRepeal) {
-		
-		traderSpi.onRtnRepealFromBankToFutureByFuture(pRspRepeal.get());
+		traderSpi.onRtnRepealFromBankToFutureByFuture(getStructObject(pRspRepeal));
 	}
 
 	@Override
 	@Virtual(66)
 	public void OnRtnRepealFromFutureToBankByFuture(
 			Pointer<CThostFtdcRspRepealField> pRspRepeal) {
-		
-		traderSpi.onRtnRepealFromFutureToBankByFuture(pRspRepeal.get());
+		traderSpi.onRtnRepealFromFutureToBankByFuture(getStructObject(pRspRepeal));
 	}
 
 	@Override
@@ -701,8 +635,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcReqTransferField> pReqTransfer,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspFromBankToFutureByFuture(pReqTransfer.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspFromBankToFutureByFuture(getStructObject(pReqTransfer), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -711,8 +644,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcReqTransferField> pReqTransfer,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspFromFutureToBankByFuture(pReqTransfer.get(), pRspInfo.get(), nRequestID, bIsLast);
+		traderSpi.onRspFromFutureToBankByFuture(getStructObject(pReqTransfer), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -721,8 +653,7 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 			Pointer<CThostFtdcReqQueryAccountField> pReqQueryAccount,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		
-		traderSpi.onRspQueryBankAccountMoneyByFuture(pReqQueryAccount.get(), pRspInfo.get(),
+		traderSpi.onRspQueryBankAccountMoneyByFuture(getStructObject(pReqQueryAccount), getStructObject(pRspInfo),
 				nRequestID, bIsLast);
 	}
 
@@ -730,25 +661,20 @@ public class JCTPTraderSpiAdapter extends CThostFtdcTraderSpi{
 	@Virtual(70)
 	public void OnRtnOpenAccountByBank(
 			Pointer<CThostFtdcOpenAccountField> pOpenAccount) {
-		
-		traderSpi.onRtnOpenAccountByBank(pOpenAccount.get());
+		traderSpi.onRtnOpenAccountByBank(getStructObject(pOpenAccount));
 	}
 
 	@Override
 	@Virtual(71)
 	public void OnRtnCancelAccountByBank(
 			Pointer<CThostFtdcCancelAccountField> pCancelAccount) {
-		
-		traderSpi.onRtnCancelAccountByBank(pCancelAccount.get());
+		traderSpi.onRtnCancelAccountByBank(getStructObject(pCancelAccount));
 	}
 
 	@Override
 	@Virtual(72)
 	public void OnRtnChangeAccountByBank(
 			Pointer<CThostFtdcChangeAccountField> pChangeAccount) {
-		
-		traderSpi.onRtnChangeAccountByBank(pChangeAccount.get());
+		traderSpi.onRtnChangeAccountByBank(getStructObject(pChangeAccount));
 	}
-	
 }
-
