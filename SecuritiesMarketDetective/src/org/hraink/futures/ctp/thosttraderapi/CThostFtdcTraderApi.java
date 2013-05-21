@@ -49,7 +49,6 @@ import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcSettlementInfoCon
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTradingAccountPasswordUpdateField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserLogoutField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserPasswordUpdateField;
-import org.hraink.futures.ctp.util.JCTPLibraryUtil;
 
 /**
  * CTP交易API
@@ -369,11 +368,5 @@ public class CThostFtdcTraderApi extends CPPObject {
 	protected native int ReqQueryBankAccountMoneyByFuture(@Ptr long pReqQueryAccount, int nRequestID);
 	public CThostFtdcTraderApi(Pointer pointer) {
 		super(pointer);
-	}
-	
-	@Override
-	protected void finalize() throws Throwable {
-		System.out.println("************* CThostFtdcTraderApi 被回收啦 *************");
-		super.finalize();
 	}
 }

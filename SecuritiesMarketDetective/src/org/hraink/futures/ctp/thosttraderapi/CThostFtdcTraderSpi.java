@@ -38,7 +38,6 @@ import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRemoveParkedOrder
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqQueryAccountField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqRepealField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqTransferField;
-import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqUserLoginField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspAuthenticateField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspInfoField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspRepealField;
@@ -56,7 +55,6 @@ import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTransferBankField
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTransferSerialField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserLogoutField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserPasswordUpdateField;
-import org.hraink.futures.ctp.util.JCTPLibraryUtil;
 
 /**
  * CTP交易SPI
