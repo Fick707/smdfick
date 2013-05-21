@@ -18,11 +18,12 @@ public class MyMdSpi extends JCTPMdSpi {
 	
 	@Override
 	public void onFrontConnected() {
+		System.out.println("sdfsdf");
 		//登陆
 		CThostFtdcReqUserLoginField userLoginField = new CThostFtdcReqUserLoginField();
-//		userLoginField.BrokerID("2030");
-//		userLoginField.UserID("888888");
-//		userLoginField.Password("888888");
+		userLoginField.setBrokerID("1111");
+//		userLoginField.setUserID("Kingnew_014");
+//		userLoginField.setPassword("888888");
 		
 		mdApi.reqUserLogin(userLoginField, 112);
 
@@ -33,16 +34,18 @@ public class MyMdSpi extends JCTPMdSpi {
 	public void onRspUserLogin(CThostFtdcRspUserLoginField pRspUserLogin, CThostFtdcRspInfoField pRspInfo, int nRequestID,
 			boolean bIsLast) {
 		System.out.println("登录回调");
+		System.out.println(pRspUserLogin.getLoginTime());
 		//订阅
 		int subResult = -1;
 		
-		subResult = mdApi.subscribeMarketData("ru1305","IF1305");
+		subResult = mdApi.subscribeMarketData("IF1303");
 		System.out.println(subResult == 0 ? "订阅成功" : "订阅失败");
 	}
 
 	@Override
 	public void onRtnDepthMarketData(CThostFtdcDepthMarketDataField pDepthMarketData) {
-		System.out.println(pDepthMarketData.InstrumentID().getCString());
+		System.out.print(pDepthMarketData.getUpdateTime() + " " + pDepthMarketData.getUpdateMillisec() + "   ");
+		System.out.println(pDepthMarketData.getInstrumentID());
 	}
 //	
 	@Override
@@ -50,7 +53,8 @@ public class MyMdSpi extends JCTPMdSpi {
 			boolean bIsLast) {
 		
 		System.out.println("订阅回报:" + bIsLast);
-//		System.out.println("InstrumentID:" + pSpecificInstrument.InstrumentID().getCString());
+		System.out.println(pRspInfo.getErrorID());
+//		System.out.println("InstrumentID:" + pSpecificInstrument.InstrumentID());
 	}
 	
 	@Override
