@@ -1,0 +1,78 @@
+公网地址：116.228.234.67 trade 41205端口,  md41213端口
+
+客户账户：020000000711 ，密码123321
+
+配置：
+
+<SubTitle name="hbzq"/>
+		<BrokerID name="2011"/>
+		<UserID name="020000000711"/>
+		<DefaultGroup Index="0"/>
+		<Update url=""/>
+		<LoginMode Mode="0"/>
+		<ConnectionGroup name="模拟测试" IsUsingUdpMd="0">
+			<TradeFront Address="tcp://116.228.234.67:41205"/>
+			<MarketFront Address="tcp://116.228.234.67:41213"/>
+
+多front的情况处理：
+在启动系统时先行RegisterFront，然后再根据需要选择front进行登录操作。
+
+
+特殊说明：
+BROKER ID=2011
+
+行情订阅的时候，pExchageID:上海市场：SSE,深圳市场：SZE
+两个市场的行情必须分队列订阅。
+
+查询整个市场的证券代码，可以通过交易端口去查合约
+
+	///请求查询合约
+	virtual int ReqQryInstrument(CZQThostFtdcQryInstrumentField *pQryInstrument, int nRequestID) = 0;
+请求的字段都填空就OK了,就可以查全部了。
+
+行情是需要订阅的：
+这个合约ID就可通过查询合约来获取。
+///订阅行情。
+	///@param ppInstrumentID 合约ID  
+	///@param nCount 要订阅/退订行情的合约个数
+	///@remark 
+	virtual int SubscribeMarketData(char *ppInstrumentID[], int nCount, char* pExchageID) = 0;
+
+	///退订行情。
+	///@param ppInstrumentID 合约ID  
+	///@param nCount 要订阅/退订行情的合约个数
+	///@remark 
+	virtual int UnSubscribeMarketData(char *ppInstrumentID[], int nCount, char* pExchageID) = 0;
+
+level2行情可以合并订阅。level2行情只能在生产环境中有。
+
+
+ThostFtdcUserApiDataTypeSSE.h可以查委托指令 等。
+
+在接入时，实例：
+zqtd.cpp中
+// 产生一个CThostFtdcTraderApi实例
+	m_pTdApi = CZQThostFtdcTraderApi::CreateFtdcTraderApi(".\\flow\\td");
+
+".\\flow\\td"必须指定到真实的绝对路径中。请注意！
+
+撤单时：
+CZQThostFtdcInputOrderActionField req:
+
+  撤单的字段都可以从报单回报中得到：
+ 不要自己填
+ 还有少了 很多字段没填上
+ UserID，OrderLocalID,,TraderID
+ 都不要自己填，从报单回报那里Copy过来
+
+
+比如合约信息里面，Pricetick、InstLifePhase、PositionType都有错误,这些字段在股票中没有用的。
+股票的TICK是0.01，基金则是0.001，就是报价步长。
+我们系统不设置涨跌停板，也不提供涨跌停价格信息，交易所会控制。
+目前我们的模拟撮合系统是根据客户报单来完成撮合的，不限制价格，为保证有更多资金可用，可以采用
+报价999.99卖出来增加资金。
+由于深圳交易所的接口文档是DBF格式，在模拟撮合中，由于众多投资者批量的测试，会出现程序冲击奔溃的问题，
+请用上海的股票做测试。在正式生产环境中，经过测试，不会出现类似情况，请理解！
+若有问题，请联系：
+黄善刚，18621823565
+huangshangang@cnhbstock.com
