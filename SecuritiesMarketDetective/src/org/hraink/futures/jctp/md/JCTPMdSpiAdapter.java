@@ -2,6 +2,7 @@ package org.hraink.futures.jctp.md;
 
 import org.bridj.BridJ;
 import org.bridj.Pointer;
+import org.bridj.StructObject;
 import org.bridj.ann.Virtual;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcDepthMarketDataField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspInfoField;
@@ -9,6 +10,7 @@ import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspUserLoginField
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcSpecificInstrumentField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserLogoutField;
 import org.hraink.futures.ctp.thostmduserapi.CThostFtdcMdSpi;
+import static org.hraink.futures.jctp.util.JCTPStructUtil.*;
 
 /**
  * MdSpi适配器类
@@ -49,7 +51,7 @@ public final class JCTPMdSpiAdapter extends CThostFtdcMdSpi{
 			Pointer<CThostFtdcRspUserLoginField> pRspUserLogin,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		mdSpi.onRspUserLogin(pRspUserLogin.get(), pRspInfo.get(), nRequestID, bIsLast);
+		mdSpi.onRspUserLogin(getStructObject(pRspUserLogin), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -57,14 +59,14 @@ public final class JCTPMdSpiAdapter extends CThostFtdcMdSpi{
 	public void OnRspUserLogout(Pointer<CThostFtdcUserLogoutField> pUserLogout,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		mdSpi.onRspUserLogout(pUserLogout.get(), pRspInfo.get(), nRequestID, bIsLast);
+		mdSpi.onRspUserLogout(getStructObject(pUserLogout), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
 	@Virtual(5)
 	public void OnRspError(Pointer<CThostFtdcRspInfoField> pRspInfo,
 			int nRequestID, boolean bIsLast) {
-		mdSpi.onRspError(pRspInfo.get(), nRequestID, bIsLast);
+		mdSpi.onRspError(getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -73,7 +75,7 @@ public final class JCTPMdSpiAdapter extends CThostFtdcMdSpi{
 			Pointer<CThostFtdcSpecificInstrumentField> pSpecificInstrument,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		mdSpi.onRspSubMarketData(pSpecificInstrument.get(), pRspInfo.get(), nRequestID, bIsLast);
+		mdSpi.onRspSubMarketData(getStructObject(pSpecificInstrument), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
@@ -82,42 +84,25 @@ public final class JCTPMdSpiAdapter extends CThostFtdcMdSpi{
 			Pointer<CThostFtdcSpecificInstrumentField> pSpecificInstrument,
 			Pointer<CThostFtdcRspInfoField> pRspInfo, int nRequestID,
 			boolean bIsLast) {
-		mdSpi.onRspUnSubMarketData(pSpecificInstrument.get(), pRspInfo.get(), nRequestID, bIsLast);
+		mdSpi.onRspUnSubMarketData(getStructObject(pSpecificInstrument), getStructObject(pRspInfo), nRequestID, bIsLast);
 	}
 
 	@Override
 	@Virtual(8)
 	public void OnRtnDepthMarketData(
 			Pointer<CThostFtdcDepthMarketDataField> pDepthMarketData) {
-		mdSpi.onRtnDepthMarketData(pDepthMarketData.get());
+		mdSpi.onRtnDepthMarketData(getStructObject(pDepthMarketData));
 	}
-//	@Override
-//	@Virtual(3)
-//	protected void OnRspUserLogin(@Ptr long pRspUserLogin,
-//			@Ptr long pRspInfo, int nRequestID, boolean bIsLast) {
-//	}
-//	@Override
-//	@Virtual(4)
-//	protected void OnRspUserLogout(@Ptr long pUserLogout, @Ptr long pRspInfo,
-//			int nRequestID, boolean bIsLast) {
-//	}
-//	@Override
-//	@Virtual(5)
-//	protected void OnRspError(@Ptr long pRspInfo, int nRequestID,
-//			boolean bIsLast) {
-//	}
-//	@Override
-//	@Virtual(6)
-//	protected void OnRspSubMarketData(@Ptr long pSpecificInstrument,
-//			@Ptr long pRspInfo, int nRequestID, boolean bIsLast) {
-//	}
-//	@Override
-//	@Virtual(7)
-//	protected void OnRspUnSubMarketData(@Ptr long pSpecificInstrument,
-//			@Ptr long pRspInfo, int nRequestID, boolean bIsLast) {
-//	}
-//	@Override
-//	@Virtual(8)
-//	protected void OnRtnDepthMarketData(@Ptr long pDepthMarketData) {
-//	}
+	
+	/**
+	 * 获得Field
+	 * 
+	 * 对可能出现的null值做处理
+	 * @param <T>
+	 * @param field field的指针对象
+	 * @return
+	 */
+	private <T extends StructObject> T getField(Pointer<T> field) {
+		return field == null ? null : field.get();
+	}
 }
