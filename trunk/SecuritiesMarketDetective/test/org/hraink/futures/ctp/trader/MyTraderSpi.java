@@ -7,17 +7,59 @@ import static org.hraink.futures.ctp.thostftdcuserapidatatype.ThostFtdcUserApiDa
 import static org.hraink.futures.ctp.thostftdcuserapidatatype.ThostFtdcUserApiDataTypeLibrary.THOST_FTDC_TC_GFD;
 import static org.hraink.futures.ctp.thostftdcuserapidatatype.ThostFtdcUserApiDataTypeLibrary.THOST_FTDC_VC_AV;
 
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcAccountregisterField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcBrokerTradingAlgosField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcBrokerTradingParamsField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcCFMMCTradingAccountKeyField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcCancelAccountField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcChangeAccountField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcContractBankField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcDepthMarketDataField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcEWarrantOffsetField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcErrorConditionalOrderField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcExchangeField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInputOrderActionField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInputOrderField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInstrumentCommissionRateField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInstrumentField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInstrumentMarginRateField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInstrumentStatusField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInvestorField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInvestorPositionCombineDetailField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInvestorPositionDetailField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcInvestorPositionField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcNoticeField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcNotifyQueryAccountField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcOpenAccountField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcOrderActionField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcOrderField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcParkedOrderActionField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcParkedOrderField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcQryInvestorPositionDetailField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcQueryMaxOrderVolumeField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRemoveParkedOrderActionField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRemoveParkedOrderField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqQueryAccountField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqRepealField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqTransferField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcReqUserLoginField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspAuthenticateField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspInfoField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspRepealField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspTransferField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcRspUserLoginField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcSettlementInfoConfirmField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcSettlementInfoField;
 import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTradeField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTradingAccountField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTradingAccountPasswordUpdateField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTradingCodeField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTradingNoticeField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTradingNoticeInfoField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTransferBankField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcTransferSerialField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserLogoutField;
+import org.hraink.futures.ctp.thostftdcuserapistruct.CThostFtdcUserPasswordUpdateField;
 import org.hraink.futures.jctp.trader.JCTPTraderApi;
 import org.hraink.futures.jctp.trader.JCTPTraderSpi;
 
@@ -27,7 +69,7 @@ import org.hraink.futures.jctp.trader.JCTPTraderSpi;
  * @author Hraink E-mail:Hraink@Gmail.com
  * @version 2013-1-25 下午11:46:13
  */
-public class MyTraderSpi extends JCTPTraderSpi {
+public class MyTraderSpi implements JCTPTraderSpi {
 
 	JCTPTraderApi traderApi;
 	int nRequestID = 0;
@@ -178,5 +220,379 @@ public class MyTraderSpi extends JCTPTraderSpi {
 	public void onErrRtnOrderInsert(CThostFtdcInputOrderField pInputOrder,
 			CThostFtdcRspInfoField pRspInfo) {
 		System.out.println("报单录入错误回调");
+	}
+
+	@Override
+	public void onFrontDisconnected(int nReason) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onHeartBeatWarning(int nTimeLapse) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspAuthenticate(CThostFtdcRspAuthenticateField pRspAuthenticateField, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspUserLogout(CThostFtdcUserLogoutField pUserLogout, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspUserPasswordUpdate(CThostFtdcUserPasswordUpdateField pUserPasswordUpdate, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspTradingAccountPasswordUpdate(CThostFtdcTradingAccountPasswordUpdateField pTradingAccountPasswordUpdate, CThostFtdcRspInfoField pRspInfo, int nRequestID,
+			boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspParkedOrderInsert(CThostFtdcParkedOrderField pParkedOrder, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspParkedOrderAction(CThostFtdcParkedOrderActionField pParkedOrderAction, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField pQueryMaxOrderVolume, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspRemoveParkedOrder(CThostFtdcRemoveParkedOrderField pRemoveParkedOrder, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField pRemoveParkedOrderAction, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryOrder(CThostFtdcOrderField pOrder, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryTrade(CThostFtdcTradeField pTrade, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryTradingAccount(CThostFtdcTradingAccountField pTradingAccount, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryInvestor(CThostFtdcInvestorField pInvestor, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryTradingCode(CThostFtdcTradingCodeField pTradingCode, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField pInstrumentMarginRate, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryInstrumentCommissionRate(CThostFtdcInstrumentCommissionRateField pInstrumentCommissionRate, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryExchange(CThostFtdcExchangeField pExchange, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryInstrument(CThostFtdcInstrumentField pInstrument, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryDepthMarketData(CThostFtdcDepthMarketDataField pDepthMarketData, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQrySettlementInfo(CThostFtdcSettlementInfoField pSettlementInfo, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryTransferBank(CThostFtdcTransferBankField pTransferBank, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryNotice(CThostFtdcNoticeField pNotice, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField pSettlementInfoConfirm, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryInvestorPositionCombineDetail(CThostFtdcInvestorPositionCombineDetailField pInvestorPositionCombineDetail, CThostFtdcRspInfoField pRspInfo, int nRequestID,
+			boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryCFMMCTradingAccountKey(CThostFtdcCFMMCTradingAccountKeyField pCFMMCTradingAccountKey, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryEWarrantOffset(CThostFtdcEWarrantOffsetField pEWarrantOffset, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryTransferSerial(CThostFtdcTransferSerialField pTransferSerial, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryAccountregister(CThostFtdcAccountregisterField pAccountregister, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onErrRtnOrderAction(CThostFtdcOrderActionField pOrderAction, CThostFtdcRspInfoField pRspInfo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnInstrumentStatus(CThostFtdcInstrumentStatusField pInstrumentStatus) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnTradingNotice(CThostFtdcTradingNoticeInfoField pTradingNoticeInfo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnErrorConditionalOrder(CThostFtdcErrorConditionalOrderField pErrorConditionalOrder) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryContractBank(CThostFtdcContractBankField pContractBank, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryParkedOrder(CThostFtdcParkedOrderField pParkedOrder, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryParkedOrderAction(CThostFtdcParkedOrderActionField pParkedOrderAction, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryTradingNotice(CThostFtdcTradingNoticeField pTradingNotice, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryBrokerTradingParams(CThostFtdcBrokerTradingParamsField pBrokerTradingParams, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQryBrokerTradingAlgos(CThostFtdcBrokerTradingAlgosField pBrokerTradingAlgos, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnFromBankToFutureByBank(CThostFtdcRspTransferField pRspTransfer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnFromFutureToBankByBank(CThostFtdcRspTransferField pRspTransfer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnRepealFromBankToFutureByBank(CThostFtdcRspRepealField pRspRepeal) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnRepealFromFutureToBankByBank(CThostFtdcRspRepealField pRspRepeal) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnFromBankToFutureByFuture(CThostFtdcRspTransferField pRspTransfer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnFromFutureToBankByFuture(CThostFtdcRspTransferField pRspTransfer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnRepealFromBankToFutureByFutureManual(CThostFtdcRspRepealField pRspRepeal) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnRepealFromFutureToBankByFutureManual(CThostFtdcRspRepealField pRspRepeal) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnQueryBankBalanceByFuture(CThostFtdcNotifyQueryAccountField pNotifyQueryAccount) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onErrRtnBankToFutureByFuture(CThostFtdcReqTransferField pReqTransfer, CThostFtdcRspInfoField pRspInfo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onErrRtnFutureToBankByFuture(CThostFtdcReqTransferField pReqTransfer, CThostFtdcRspInfoField pRspInfo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onErrRtnRepealBankToFutureByFutureManual(CThostFtdcReqRepealField pReqRepeal, CThostFtdcRspInfoField pRspInfo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onErrRtnRepealFutureToBankByFutureManual(CThostFtdcReqRepealField pReqRepeal, CThostFtdcRspInfoField pRspInfo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onErrRtnQueryBankBalanceByFuture(CThostFtdcReqQueryAccountField pReqQueryAccount, CThostFtdcRspInfoField pRspInfo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnRepealFromBankToFutureByFuture(CThostFtdcRspRepealField pRspRepeal) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnRepealFromFutureToBankByFuture(CThostFtdcRspRepealField pRspRepeal) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspFromBankToFutureByFuture(CThostFtdcReqTransferField pReqTransfer, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspFromFutureToBankByFuture(CThostFtdcReqTransferField pReqTransfer, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRspQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField pReqQueryAccount, CThostFtdcRspInfoField pRspInfo, int nRequestID, boolean bIsLast) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnOpenAccountByBank(CThostFtdcOpenAccountField pOpenAccount) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnCancelAccountByBank(CThostFtdcCancelAccountField pCancelAccount) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onRtnChangeAccountByBank(CThostFtdcChangeAccountField pChangeAccount) {
+		// TODO Auto-generated method stub
+
 	}
 }
