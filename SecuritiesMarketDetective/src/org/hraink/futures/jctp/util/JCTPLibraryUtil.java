@@ -15,9 +15,12 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.Vector;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.bridj.BridJ;
 import org.bridj.Platform;
-
+import org.hraink.futures.jctp.commons.CtpConstants;
+import org.junit.Test;
 
 /**
  * JCTPLibrary工具类
@@ -27,14 +30,16 @@ import org.bridj.Platform;
  */
 
 public class JCTPLibraryUtil {
+	private static final Log log = LogFactory.getLog(JCTPLibraryUtil.class);
+
 	private static final String OS_NAME = System.getProperty("os.name", "");
 
 	private static boolean inited;
-	
-	private static final String CTP_NAME = "CTP";
 
-	private static final String CTP_LIB_PATH = "org/hraink/futures/ctp/lib/";
-	private static final String[] CTP_LIBS = { "thosttraderapi", "thostmduserapi" };
+	private static final String CTP_NAME = "CTP_FICK";
+
+	private static final String CTP_LIB_PATH = CtpConstants.getProperty("CTP_LIB_PATH");
+	private static final String[] CTP_LIBS = CtpConstants.getPropertyValues("CTP_LIBS_FILE_NAMES");
 
 	private static File extractedLibrariesTempDir;
 
@@ -42,18 +47,22 @@ public class JCTPLibraryUtil {
 
 	static {
 		try {
+			// 创建临时文件夹
 			extractedLibrariesTempDir = createTempDir("CTPExtractedLibraries");
+			log.debug(extractedLibrariesTempDir.getAbsolutePath());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
 
+	/**
+	 * 初始加载动态链接库
+	 */
 	public static synchronized void initLibrary() {
 		if (inited) {
 			return;
 		}
-		inited = true;
 
 		for (String ctpLib : CTP_LIBS) {
 			boolean loaded = false;
@@ -85,15 +94,19 @@ public class JCTPLibraryUtil {
 				}
 			}
 		}
+		inited = true;
 	}
 
+	/**
+	 * 释放链接库
+	 */
 	public static synchronized void release() {
 		BridJ.releaseAll();
 
 		for (String ctpLibName : CTP_LIBS) {
 			unloadNativeLibs(ctpLibName);
 		}
-		
+
 		for (File libraryFile : temporaryExtractedLibraryCanonicalFiles) {
 			libraryFile.delete();
 		}
@@ -106,17 +119,20 @@ public class JCTPLibraryUtil {
 		InputStream in = Platform.getResourceAsStream(path);
 		if (in == null) {
 			File f = new File(path);
-			if (!f.exists())
+			if (!f.exists()) {
 				f = new File(f.getName());
-			if (f.exists())
+			}
+			if (f.exists()) {
 				return f.getCanonicalFile();
+			}
 		}
 		String fileName = new File(path).getName();
 		File libFile = new File(extractedLibrariesTempDir, fileName);
 		OutputStream out = new BufferedOutputStream(new FileOutputStream(
 				libFile));
-		while ((len = in.read(b)) > 0)
+		while ((len = in.read(b)) > 0) {
 			out.write(b, 0, len);
+		}
 		out.close();
 		in.close();
 
@@ -131,6 +147,7 @@ public class JCTPLibraryUtil {
 		for (int i = 0; i < maxTempFileAttempts; i++) {
 			dir = File.createTempFile(prefix, "");
 			if (dir.delete() && dir.mkdirs()) {
+				dir.deleteOnExit();
 				return dir;
 			}
 		}
@@ -149,52 +166,61 @@ public class JCTPLibraryUtil {
 
 		canonicalFile.deleteOnExit();
 	}
-	
+
 	public static boolean isInited() {
 		return inited;
 	}
-	
-    private static void unloadNativeLibs(String dllName) {
-        try {
-            ClassLoader classLoader = JCTPLibraryUtil.class.getClassLoader();
-            Field field = ClassLoader.class.getDeclaredField("nativeLibraries");
-            field.setAccessible(true);
-            Vector libs = (Vector) field.get(classLoader);
-            Iterator it = libs.iterator();
-            Object o;
-            
-            if (Platform.isWindows()) {
-            	dllName = dllName.concat(".dll");
+
+	private static void unloadNativeLibs(String dllName) {
+		try {
+			ClassLoader classLoader = JCTPLibraryUtil.class.getClassLoader();
+			Field field = ClassLoader.class.getDeclaredField("nativeLibraries");
+			field.setAccessible(true);
+			Vector libs = (Vector) field.get(classLoader);
+			Iterator it = libs.iterator();
+			Object o;
+
+			if (Platform.isWindows()) {
+				dllName = dllName.concat(".dll");
 			} else if (Platform.isLinux()) {
-				//TODO linux
+				// TODO linux
 				// System.out.println("暂时不对linux提供支持");
 			}
-            
-            while (it.hasNext()) {
-                o = it.next();
-                
-                Field[] fs = o.getClass().getDeclaredFields();   
-                
-                boolean hasInit = false;   
-                for (int k = 0; k < fs.length; k++) {   
-	                if (fs[k].getName().equals("name")) {   
-	                	fs[k].setAccessible(true);   
-	                	String dllPath = fs[k].get(o).toString();   
-	                	if (dllPath.endsWith(dllName)) {   
-	                		hasInit = true;   
-	                	}
-	                }   
-                }
-                
-                if (hasInit) { 
-                	Method finalize = o.getClass().getDeclaredMethod("finalize", new Class[0]);
-                    finalize.setAccessible(true);
-                    finalize.invoke(o, new Object[0]);
-                }
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
+
+			while (it.hasNext()) {
+				o = it.next();
+
+				Field[] fs = o.getClass().getDeclaredFields();
+
+				boolean hasInit = false;
+				for (int k = 0; k < fs.length; k++) {
+					if (fs[k].getName().equals("name")) {
+						fs[k].setAccessible(true);
+						String dllPath = fs[k].get(o).toString();
+						if (dllPath.endsWith(dllName)) {
+							hasInit = true;
+						}
+					}
+				}
+
+				if (hasInit) {
+					Method finalize = o.getClass().getDeclaredMethod("finalize", new Class[0]);
+					finalize.setAccessible(true);
+					finalize.invoke(o, new Object[0]);
+				}
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	@Test
+	public void test() {
+		System.out.println(this.CTP_LIB_PATH);
+		System.out.println(this.CTP_NAME);
+		for (String t : this.CTP_LIBS) {
+			System.out.println(t);
+		}
+	}
 
 }
