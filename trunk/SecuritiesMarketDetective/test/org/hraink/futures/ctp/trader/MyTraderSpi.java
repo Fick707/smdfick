@@ -225,12 +225,13 @@ public class MyTraderSpi implements JCTPTraderSpi {
 	@Override
 	public void onFrontDisconnected(int nReason) {
 		// TODO Auto-generated method stub
-
+		System.out.println("前置断开连接回调");
 	}
 
 	@Override
 	public void onHeartBeatWarning(int nTimeLapse) {
 		// TODO Auto-generated method stub
+		System.out.println("心跳警告回调");
 
 	}
 
