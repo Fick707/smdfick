@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `smddb` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `smddb`;
 -- MySQL dump 10.13  Distrib 5.6.10, for Win64 (x86_64)
 --
--- Host: localhost    Database: smddb_test
+-- Host: localhost    Database: smddb
 -- ------------------------------------------------------
 -- Server version	5.6.10-log
 
@@ -55,7 +55,7 @@ CREATE TABLE `stockdealdetail` (
   `dealcost` float NOT NULL COMMENT '共花费',
   `dealdt` datetime NOT NULL COMMENT '交易时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `stockprops` (
   `pricetodayend` float DEFAULT NULL,
   `updatedate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=360 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `stockstorage` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `stockcode_UNIQUE` (`stockcode`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='股票仓库';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='股票仓库';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,4 +152,4 @@ CREATE TABLE `syschangelog` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-04-25 16:49:26
+-- Dump completed on 2013-05-28 11:08:40
