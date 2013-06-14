@@ -3,7 +3,7 @@ truncate table stockdealdetail;
 -- Query: SELECT * FROM smddb.stockdealdetail
 LIMIT 0, 1000
 
--- Date: 2013-05-28 11:13
+-- Date: 2013-06-14 16:38
 */
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (1,'sh600000',1,10.09,500,5031.39,'2013-04-09 10:04:57');
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (2,'sh600446',1,9.18,500,4577.52,'2013-04-09 09:46:33');
@@ -77,3 +77,25 @@ INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (70,'sh600446',0,11.19,500,5604.39,'2013-05-27 14:23:54');
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (71,'sh600008',1,8.52,500,4248.35,'2013-05-27 09:42:41');
 INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (72,'sh600008',0,8.44,500,4227.33,'2013-05-27 09:50:38');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (73,'sh600008',1,8.48,500,4228.4,'2013-05-29 10:48:59');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (74,'sh600008',0,8.4,500,4207.3,'2013-05-29 10:49:00');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (75,'sh600446',1,11.18,500,5575.02,'2013-05-30 14:57:40');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (76,'sh600008',1,8.44,500,4208.45,'2013-05-30 10:26:53');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (77,'sh600008',0,8.36,500,4187.27,'2013-05-30 10:29:44');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (78,'sh600446',0,10.9,500,5459.18,'2013-05-31 14:26:43');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (79,'sh600446',1,10.99,500,5480.26,'2013-05-31 14:26:44');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (80,'sh600008',1,8.47,500,4223.41,'2013-05-31 13:09:54');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (81,'sh600008',0,8.39,500,4202.29,'2013-05-31 14:04:10');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (82,'sh600446',0,10.57,500,5293.93,'2013-06-03 14:22:13');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (83,'sh600008',0,8.12,500,4067.09,'2013-06-03 09:49:58');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (84,'sh600008',0,7.91,500,3961.93,'2013-06-04 13:27:20');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (85,'sh600008',1,7.99,500,3984.01,'2013-06-04 14:31:14');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (86,'sh601901',0,7.31,500,3661.48,'2013-06-07 11:23:43');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (87,'sh600008',0,7.52,500,3766.64,'2013-06-07 11:06:14');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (88,'sh601901',0,6.67,500,3341,'2013-06-13 13:30:34');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (89,'sh600446',1,9.75,500,4861.81,'2013-06-13 09:31:44');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (90,'sh600446',0,9.6,500,4808.2,'2013-06-13 09:31:45');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (91,'sh600008',0,7.15,500,3581.36,'2013-06-13 09:31:27');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (92,'sh600008',1,7.23,500,3604.96,'2013-06-13 13:10:45');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (93,'sh600446',1,9.55,500,4762.06,'2013-06-14 12:59:44');
+INSERT INTO `stockdealdetail` (`id`,`stockcode`,`dealtype`,`dealprice`,`dealNum`,`dealcost`,`dealdt`) VALUES (94,'sh600446',0,9.46,500,4738.1,'2013-06-14 13:32:21');

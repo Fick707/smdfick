@@ -3,7 +3,7 @@ truncate table stockdef;
 -- Query: SELECT * FROM smddb.stockdef
 LIMIT 0, 1000
 
--- Date: 2013-05-28 11:14
+-- Date: 2013-06-14 16:38
 */
 INSERT INTO `stockdef` (`id`,`stockcode`,`stockname`,`stockst`,`type`,`remark`,`updatedt`) VALUES (1,'sh600446','金证股份',3,1,NULL,'2013-02-25 13:59:38');
 INSERT INTO `stockdef` (`id`,`stockcode`,`stockname`,`stockst`,`type`,`remark`,`updatedt`) VALUES (3,'sz000002','万  科Ａ',1,1,NULL,'2013-02-26 09:23:11');
