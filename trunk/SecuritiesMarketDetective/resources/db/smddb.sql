@@ -55,7 +55,7 @@ CREATE TABLE `stockdealdetail` (
   `dealcost` float NOT NULL COMMENT '共花费',
   `dealdt` datetime NOT NULL COMMENT '交易时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `stockprops` (
   `pricetodayend` float DEFAULT NULL,
   `updatedate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=360 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=459 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,4 +152,4 @@ CREATE TABLE `syschangelog` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-28 11:08:40
+-- Dump completed on 2013-06-14 16:09:26
